@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import apiRecipe from "../services/api-recipe";
 
-interface Recipes {
+export interface Recipe {
   id: number;
   name: string;
   ingredients: string[];
@@ -9,12 +9,12 @@ interface Recipes {
 }
 
 const useRecipes = () => {
-  const [recipes, setRecipes] = useState<Recipes[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     apiRecipe
-      .get<Recipes[]>("/recipes")
+      .get<Recipe[]>("/recipes")
       .then((res) => {
         setRecipes(res.data);
       })

@@ -11,7 +11,7 @@ function App() {
       }}
       templateColumns={{
         base: "1fr",
-        lg: "200px, 1fr",
+        lg: "200px 1fr",
       }}
     >
       <GridItem area="nav">
@@ -19,10 +19,9 @@ function App() {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" bg="blue.300">
-          aside
         </GridItem>
       </Show>
-      <GridItem area="main" bg="pink.300">
+      <GridItem area="main">
         <RecipesGrid/>
       </GridItem>
     </Grid>

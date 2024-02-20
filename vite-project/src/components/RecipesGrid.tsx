@@ -1,5 +1,6 @@
 import useRecipes from "../hooks/useRecipes";
 import { Text } from "@chakra-ui/react";
+import RecipeCard from "./RecipeCard";
 
 const RecipesGrid = () => {
   const { recipes, error } = useRecipes();
@@ -9,7 +10,7 @@ const RecipesGrid = () => {
       {error && <Text>{error}</Text>}
       <ul>
         {recipes.map((recipe) => (
-          <li key={recipe.id}>{recipe.name}</li>
+          <RecipeCard recipe={recipe}/>
         ))}
       </ul>
     </>
