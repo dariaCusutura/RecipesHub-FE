@@ -13,6 +13,7 @@ const RecipeCard = ({ recipe }: Props) => {
       <CardBody>
         <Heading>{recipe.name}</Heading>
         <Text>Ingredients: {recipe.ingredients.length}</Text>
+        <Text>Category: {recipe.category}</Text>
       </CardBody>
     </Card>
   );
