@@ -1,5 +1,5 @@
 import useRecipes from "../hooks/useRecipes";
-import { Text } from "@chakra-ui/react";
+import { List, ListItem, Text } from "@chakra-ui/react";
 import RecipeCard from "./RecipeCard";
 
 interface Props {
@@ -12,11 +12,13 @@ const RecipesGrid = ({ path }: Props) => {
   return (
     <>
       {error && <Text>{error}</Text>}
-      <ul>
+      <List>
         {recipes.map((recipe) => (
-          <RecipeCard recipe={recipe} />
+          <ListItem paddingRight={5} marginY={3}>
+            <RecipeCard recipe={recipe} />
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </>
   );
 };
