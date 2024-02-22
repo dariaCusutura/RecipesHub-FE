@@ -2,8 +2,10 @@ import { Grid, GridItem, Show } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import RecipesGrid from "./components/RecipesGrid";
 import CategorySelector from "./components/CategorySelector";
+import { useState } from "react";
 
 function App() {
+  const [path, setPath] = useState("/recipes");
   return (
     <Grid
       templateAreas={{
@@ -22,8 +24,12 @@ function App() {
         <GridItem area="aside" bg="blue.300"></GridItem>
       </Show>
       <GridItem area="main">
-        <CategorySelector />
-        <RecipesGrid />
+        <CategorySelector
+          onSelectCategory={(category) => {
+            setPath("/recipes/" + category.toLowerCase());
+          }}
+        />
+        <RecipesGrid path={path} />
       </GridItem>
     </Grid>
   );

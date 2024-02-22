@@ -7,19 +7,22 @@ export interface Recipe {
   ingredients: string[];
   category: string;
 }
+interface Props {
+  path: string;
+}
 
-const useRecipes = () => {
+const useRecipes = ({ path }: Props) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     apiRecipe
-      .get<Recipe[]>("/recipes")
+      .get<Recipe[]>(path)
       .then((res) => {
         setRecipes(res.data);
       })
       .catch((err) => setError(err.message));
-  }, []);
+  }, [path]);
 
   return { recipes, error };
 };
