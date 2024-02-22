@@ -24,9 +24,9 @@ function App() {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
-          <List paddingLeft={2} spacing={4}>
+          <List paddingLeft={3} spacing={4}>
             <ListItem>
-              <AllRecipesSelector />
+              <AllRecipesSelector onSelectAll={() => setPath("/recipes")} />
             </ListItem>
             <ListItem>
               <FavouritesSelector />
