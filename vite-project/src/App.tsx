@@ -1,4 +1,4 @@
-import { Grid, GridItem, Show } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Show } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import RecipesGrid from "./components/RecipesGrid";
 import CategorySelector from "./components/CategorySelector";
@@ -21,14 +21,17 @@ function App() {
         <NavBar />
       </GridItem>
       <Show above="lg">
-        <GridItem area="aside" bg="blue.300"></GridItem>
+        <GridItem area="aside">
+        <Box paddingLeft={2}>
+          <CategorySelector 
+            onSelectCategory={(category) => {
+              setPath("/recipes/" + category.toLowerCase());
+            }}
+          />
+          </Box>
+        </GridItem>
       </Show>
       <GridItem area="main">
-        <CategorySelector
-          onSelectCategory={(category) => {
-            setPath("/recipes/" + category.toLowerCase());
-          }}
-        />
         <RecipesGrid path={path} />
       </GridItem>
     </Grid>
