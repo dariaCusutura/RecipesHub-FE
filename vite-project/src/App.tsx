@@ -4,6 +4,7 @@ import RecipesGrid from "./components/RecipesGrid";
 import CategorySelector from "./components/CategorySelector";
 import { useState } from "react";
 import AllRecipesSelector from "./components/AllRecipesSelector";
+import FavouritesSelector from "./components/FavouritesSelector";
 
 function App() {
   const [path, setPath] = useState("/recipes");
@@ -23,9 +24,12 @@ function App() {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
-          <List paddingLeft={2} spacing={2}>
+          <List paddingLeft={2} spacing={4}>
             <ListItem>
               <AllRecipesSelector />
+            </ListItem>
+            <ListItem>
+              <FavouritesSelector />
             </ListItem>
             <ListItem>
               <CategorySelector
