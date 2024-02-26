@@ -4,13 +4,13 @@ import {
   Divider,
   HStack,
   Heading,
-  IconButton,
   Image,
   Text,
 } from "@chakra-ui/react";
 import img from "./NoImg.jpg";
 import { Recipe } from "../hooks/useRecipes";
-import { FaRegHeart } from "react-icons/fa";
+import HeartButton from "./HeartButton";
+
 
 interface Props {
   recipe: Recipe;
@@ -21,9 +21,9 @@ const RecipeCard = ({ recipe }: Props) => {
     <Card padding="10px" borderRadius={10} direction="row" overflow="hidden">
       <Image borderRadius={10} src={img} boxSize="170px" />
       <CardBody>
-        <HStack justifyContent="space-between">
-          <Heading paddingBottom={1}>{recipe.name}</Heading>
-          <IconButton aria-label="heart" icon={<FaRegHeart />}></IconButton>
+        <HStack justifyContent="space-between" paddingBottom={1}>
+          <Heading >{recipe.name}</Heading>
+          <HeartButton recipe={recipe}/>
         </HStack>
         <Divider marginBottom={1} />
         <Text>Ingredients: {recipe.ingredients.length}</Text>
