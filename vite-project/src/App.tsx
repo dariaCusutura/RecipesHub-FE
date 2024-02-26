@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RecipesPage from "./pages/RecipesPage";
 import Login from "./pages/Login";
