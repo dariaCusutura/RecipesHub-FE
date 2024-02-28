@@ -12,9 +12,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,7 +27,8 @@ const Login = () => {
         { email: email, password: password },
         { withCredentials: true }
       )
-      .catch((err) => setError(err.response.data));
+      .catch((err) => setError(err.response.data))
+      .then(() => navigate("/"));
   };
   return (
     <Box position="relative" h="400px">
