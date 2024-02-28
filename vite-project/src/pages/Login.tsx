@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -11,9 +12,21 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
-  const [values, setValues] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const handleSubmit = async () => {
+    await axios
+      .post(
+        "http://localhost:3000/login",
+        { email: email, password: password },
+        { withCredentials: true }
+      )
+      .catch((err) => setError(err.response.data));
+  };
   return (
     <Box position="relative" h="400px">
       <AbsoluteCenter axis="both">
@@ -25,21 +38,25 @@ const Login = () => {
           centerContent={true}
         >
           <Heading size="lg">Login</Heading>
-          <FormControl paddingBlock={3} onSubmit={(e) => e.preventDefault()}>
+          <FormControl
+            paddingBlock={3}
+            onSubmit={(e) => e.preventDefault()}
+            isInvalid={error !== ""}
+          >
             <FormLabel>Email adress</FormLabel>
             <Input
               type="email"
               placeholder="Email"
-              onChange={(e) =>
-                setValues({ ...values, [e.target.name]: e.target.value })
-              }
+              onChange={(e) => setEmail(e.target.value)}
             />
+            <FormLabel paddingTop={3}>Password</FormLabel>
+            <Input
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && <FormErrorMessage>{error}</FormErrorMessage>}
           </FormControl>
-          <FormControl paddingBlock={3} onSubmit={(e) => e.preventDefault()}>
-            <FormLabel>Password</FormLabel>
-            <Input placeholder="Password" />
-          </FormControl>
-          <Button>Submit</Button>
+          <Button onClick={() => handleSubmit()}>Submit</Button>
           <Text paddingBlock={3}>
             Not a member?{" "}
             <Link color="gray.500" href="/register">

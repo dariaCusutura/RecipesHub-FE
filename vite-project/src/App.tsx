@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RecipesPage from "./pages/RecipesPage";
 import Login from "./pages/Login";
 import Register from "./pages/RegisterPage";
+import "react-toastify/ReactToastify.css";
 
 function App() {
   return (

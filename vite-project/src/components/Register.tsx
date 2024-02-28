@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -16,18 +17,17 @@ import axios from "axios";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const handleSubmit = async () => {
-    try {
-      await axios.post(
+    await axios
+      .post(
         "http://localhost:3000/register",
         { email: email, password: password },
         {
           withCredentials: true,
         }
-      );
-    } catch (error) {
-      console.log(error);
-    }
+      )
+      .catch((err) => setError(err.response.data));
   };
 
   return (
@@ -41,27 +41,28 @@ const Register = () => {
           centerContent={true}
         >
           <Heading size="lg">Register</Heading>
-          <FormControl paddingBlock={3} onSubmit={(e) => e.preventDefault()}>
+          <FormControl
+            paddingBlock={3}
+            onSubmit={(e) => e.preventDefault()}
+            isInvalid={error !== ""}
+          >
             <FormLabel>Email adress</FormLabel>
             <Input
               type="email"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <FormLabel>Password</FormLabel>
+            <FormLabel paddingTop={3}>Password</FormLabel>
             <Input
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            {error && <FormErrorMessage>{error}</FormErrorMessage>}
           </FormControl>
-          {/* <FormControl paddingBlock={3} onSubmit={(e) => handleSubmit(e)}>
-            <FormLabel>Password</FormLabel>
-            <Input placeholder="Password" />
-          </FormControl> */}
-          <Button type="submit" onClick={() => handleSubmit()}>
+          <Button marginTop={3} type="submit" onClick={() => handleSubmit()}>
             Submit
           </Button>
-          <Text paddingBlock={3}>
+          <Text marginTop={3}>
             Already have an account?{" "}
             <Link color="gray.500" href="/login">
               Login
