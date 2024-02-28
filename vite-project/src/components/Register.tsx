@@ -11,9 +11,25 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import axios from "axios";
 
 const Register = () => {
-  const [values, setValues] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = async () => {
+    try {
+      await axios.post(
+        "http://localhost:3000/register",
+        { email: email, password: password },
+        {
+          withCredentials: true,
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box position="relative" h="400px">
       <AbsoluteCenter axis="both">
@@ -30,16 +46,21 @@ const Register = () => {
             <Input
               type="email"
               placeholder="Email"
-              onChange={(e) =>
-                setValues({ ...values, [e.target.name]: e.target.value })
-              }
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <FormLabel>Password</FormLabel>
+            <Input
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
-          <FormControl paddingBlock={3} onSubmit={(e) => e.preventDefault()}>
+          {/* <FormControl paddingBlock={3} onSubmit={(e) => handleSubmit(e)}>
             <FormLabel>Password</FormLabel>
             <Input placeholder="Password" />
-          </FormControl>
-          <Button>Submit</Button>
+          </FormControl> */}
+          <Button type="submit" onClick={() => handleSubmit()}>
+            Submit
+          </Button>
           <Text paddingBlock={3}>
             Already have an account?{" "}
             <Link color="gray.500" href="/login">
