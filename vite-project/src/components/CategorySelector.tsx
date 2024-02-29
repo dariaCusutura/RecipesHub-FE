@@ -26,6 +26,7 @@ const CategorySelector = ({ onSelectCategory }: Props) => {
               setSelectedCateg(category);
               onSelectCategory(category);
             }}
+            key={category}
           >
             {category}
           </MenuItem>

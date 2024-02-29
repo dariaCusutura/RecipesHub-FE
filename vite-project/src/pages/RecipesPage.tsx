@@ -2,12 +2,39 @@ import { Grid, GridItem, List, ListItem, Show } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 import RecipesGrid from "../components/RecipesGrid";
 import CategorySelector from "../components/CategorySelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AllRecipesSelector from "../components/AllRecipesSelector";
 import FavouritesSelector from "../components/FavouritesSelector";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
 function RecipesPage() {
   const [path, setPath] = useState("/recipes");
+  const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookie, setCookie, removeCookie] = useCookies([]);
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      if (!cookie.jwt) navigate("/login");
+      else {
+        await axios.post("http://localhost:3000").then((res) => {
+          if (!res.status) {
+            removeCookie("jwt");
+            navigate("/login");
+          }
+        });
+      }
+    };
+    verifyUser();
+  }, [cookie, removeCookie, navigate]);
+
+  const manageLogout = () => {
+    removeCookie("jwt");
+    navigate("/login");
+  };
+
   return (
     <Grid
       templateAreas={{
@@ -20,7 +47,7 @@ function RecipesPage() {
       }}
     >
       <GridItem area="nav">
-        <NavBar />
+        <NavBar Logout={() => manageLogout()} />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" marginY={3}>

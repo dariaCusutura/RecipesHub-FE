@@ -14,7 +14,7 @@ const RecipesGrid = ({ path }: Props) => {
       {error && <Text>{error}</Text>}
       <List>
         {recipes.map((recipe) => (
-          <ListItem paddingRight={5} marginY={3}>
+          <ListItem paddingRight={5} marginY={3} key={recipe.name}>
             <RecipeCard recipe={recipe} />
           </ListItem>
         ))}
