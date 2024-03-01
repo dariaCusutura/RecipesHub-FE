@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -29,8 +29,13 @@ const Register = () => {
           withCredentials: true,
         }
       )
-      .catch((err) => setError(err.response.data))
-      .then(() => navigate("/login"));
+      .catch((res) => {
+        setError(res.response.data);
+      })
+      .then((res) => {
+        if (res !== undefined && (res as AxiosResponse).status === 200)
+          navigate("/");
+      });
   };
 
   return (
@@ -49,14 +54,18 @@ const Register = () => {
             onSubmit={(e) => e.preventDefault()}
             isInvalid={error !== ""}
           >
-            <FormLabel>Email adress</FormLabel>
+            <FormLabel htmlFor="RegisterEmail">Email adress </FormLabel>
             <Input
+              id="RegisterEmail"
               type="email"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <FormLabel paddingTop={3}>Password</FormLabel>
+            <FormLabel htmlFor="RegisterPassword" paddingTop={3}>
+              Password{" "}
+            </FormLabel>
             <Input
+              id="RegisterPassword"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
