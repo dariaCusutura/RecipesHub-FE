@@ -14,30 +14,29 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
+import { useCookies } from "react-cookie";
 
-const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookie, setCookie, removeCookie] = useCookies([]);
+  if (cookie.jwt) removeCookie("jwt");
   const handleSubmit = async () => {
     await axios
       .post(
-        "http://localhost:3000/register",
+        "http://localhost:3000/login",
         { email: email, password: password },
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       )
-      .catch((res) => {
-        setError(res.response.data);
-      })
+      .catch((err) => setError(err.response.data))
       .then((res) => {
         if (res !== undefined && (res as AxiosResponse).status === 200)
           navigate("/");
       });
   };
-
   return (
     <Box position="relative" h="400px">
       <AbsoluteCenter axis="both">
@@ -48,36 +47,35 @@ const Register = () => {
           maxW="2xl"
           centerContent={true}
         >
-          <Heading size="lg">Register</Heading>
+          <Heading size="lg">Login</Heading>
           <FormControl
             paddingBlock={3}
             onSubmit={(e) => e.preventDefault()}
             isInvalid={error !== ""}
           >
-            <FormLabel htmlFor="RegisterEmail">Email adress </FormLabel>
+            <FormLabel htmlFor="LoginEmail">Email adress </FormLabel>
             <Input
-              id="RegisterEmail"
               type="email"
+              id="LoginEmail"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <FormLabel htmlFor="RegisterPassword" paddingTop={3}>
-              Password{" "}
+            <FormLabel htmlFor="LoginPassword" paddingTop={3}>
+              Password
             </FormLabel>
             <Input
-              id="RegisterPassword"
               placeholder="Password"
+              type="password"
+              id="LoginPassword"
               onChange={(e) => setPassword(e.target.value)}
             />
             {error && <FormErrorMessage>{error}</FormErrorMessage>}
           </FormControl>
-          <Button marginTop={3} type="submit" onClick={() => handleSubmit()}>
-            Submit
-          </Button>
-          <Text marginTop={3}>
-            Already have an account?{" "}
-            <Link color="gray.500" href="/login">
-              Login
+          <Button onClick={() => handleSubmit()}>Submit</Button>
+          <Text paddingBlock={3}>
+            Not a member?{" "}
+            <Link color="gray.500" href="/register">
+              Register
             </Link>
           </Text>
         </Container>
@@ -86,4 +84,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

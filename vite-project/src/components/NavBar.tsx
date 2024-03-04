@@ -6,11 +6,11 @@ interface Props {
   Logout: () => void;
 }
 
-const NavBar = ({Logout} : Props) => {
+const NavBar = ({ Logout }: Props) => {
   return (
     <HStack justifyContent="space-between" padding="5px">
       <Image src={logo} boxSize="60px" />
-      <Input placeholder="Search a recipe..." />
+      <Input id="SearchRecipe" placeholder="Search a recipe..." />
       {/* <ColorModeSwitch /> */}
       <Button onClick={Logout}>Log out</Button>
     </HStack>
