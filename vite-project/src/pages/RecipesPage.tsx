@@ -1,4 +1,11 @@
-import { Grid, GridItem, List, ListItem, Show } from "@chakra-ui/react";
+import {
+  Grid,
+  GridItem,
+  Heading,
+  List,
+  ListItem,
+  Show,
+} from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 import RecipesGrid from "../components/RecipesGrid";
 import CategorySelector from "../components/CategorySelector";
@@ -11,6 +18,7 @@ import axios from "axios";
 
 function RecipesPage() {
   const [path, setPath] = useState("/recipes");
+  const [heading, setHeading] = useState("All");
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([]);
@@ -53,14 +61,25 @@ function RecipesPage() {
         <GridItem area="aside" marginY={3}>
           <List paddingLeft={3} spacing={4}>
             <ListItem>
-              <AllRecipesSelector onSelectAll={() => setPath("/recipes")} />
+              <AllRecipesSelector
+                onSelectAll={() => {
+                  setPath("/recipes");
+                  setHeading("All");
+                }}
+              />
             </ListItem>
             <ListItem>
-              <FavouritesSelector />
+              <FavouritesSelector
+                manageClick={() => {
+                  setPath("/recipes/favorites/list");
+                  setHeading("My Favorite");
+                }}
+              />
             </ListItem>
             <ListItem>
               <CategorySelector
                 onSelectCategory={(category) => {
+                  setHeading(category);
                   setPath("/recipes/" + category.toLowerCase());
                 }}
               />
@@ -69,6 +88,7 @@ function RecipesPage() {
         </GridItem>
       </Show>
       <GridItem area="main">
+        <Heading marginY={3}>{heading} Recipes</Heading>
         <RecipesGrid path={path} />
       </GridItem>
     </Grid>

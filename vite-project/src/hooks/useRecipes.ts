@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import apiRecipe from "../services/api-recipe";
 
 export interface Recipe {
-  id: number;
+  _id: number;
   name: string;
   ingredients: string[];
   category: string;
@@ -21,7 +21,11 @@ const useRecipes = ({ path }: Props) => {
       .then((res) => {
         setRecipes(res.data);
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        setError(err.response.data);
+      });
+
+    return () => setError("");
   }, [path]);
 
   return { recipes, error };
