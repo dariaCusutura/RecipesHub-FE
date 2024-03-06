@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import apiRecipe from "../services/api-recipe";
+import { RecipesQuery } from "../pages/RecipesPage";
 
 export interface Recipe {
   _id: number;
@@ -11,13 +12,17 @@ interface Props {
   path: string;
 }
 
-const useRecipes = ({ path }: Props) => {
+const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     apiRecipe
-      .get<Recipe[]>(path)
+      .get<Recipe[]>(path, {
+        params: {
+          category: recipesQuery.category
+        }
+      })
       .then((res) => {
         setRecipes(res.data);
       })
@@ -26,7 +31,7 @@ const useRecipes = ({ path }: Props) => {
       });
 
     return () => setError("");
-  }, [path]);
+  }, [path, recipesQuery]);
 
   return { recipes, error };
 };

@@ -16,7 +16,14 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
+export interface RecipesQuery {
+  category: string;
+}
+
 function RecipesPage() {
+  const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
+    {} as RecipesQuery
+  );
   const [path, setPath] = useState("/recipes");
   const [heading, setHeading] = useState("All");
   const navigate = useNavigate();
@@ -80,7 +87,7 @@ function RecipesPage() {
               <CategorySelector
                 onSelectCategory={(category) => {
                   setHeading(category);
-                  setPath("/recipes/" + category.toLowerCase());
+                  setRecipesQuery({ ...recipesQuery, category });
                 }}
               />
             </ListItem>
@@ -89,7 +96,7 @@ function RecipesPage() {
       </Show>
       <GridItem area="main">
         <Heading marginY={3}>{heading} Recipes</Heading>
-        <RecipesGrid path={path} />
+        <RecipesGrid path={path} recipesQuery={recipesQuery}/>
       </GridItem>
     </Grid>
   );

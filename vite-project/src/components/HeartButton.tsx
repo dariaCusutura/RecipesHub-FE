@@ -10,26 +10,28 @@ interface Props {
 }
 
 const HeartButton = ({ recipe }: Props) => {
-  const [liked, setLiked] = useState(false);
   const [favArray, setFavArray] = useState<number[]>([]);
+  const [liked, setLiked] = useState(favArray.includes(recipe._id));
   useEffect(() => {
     apiRecipe
       .get<number[]>("/recipes/favorites/array")
-      .then((res) => setFavArray(res.data))
+      .then((res) => {
+        setFavArray(res.data);
+      })
       .catch((err) => console.log(err.message));
   }, [favArray]);
+
   const manageClick = async () => {
-    setLiked(!liked);
     await axios
       .put(
         "http://localhost:3000/liked",
-        { recipe: recipe._id, liked: liked },
+        { recipe: recipe._id, liked: favArray.includes(recipe._id) },
         { withCredentials: true }
       )
       .catch((err) => {
         console.log(err);
-        console.log(recipe._id);
       });
+    setLiked(!liked);
   };
 
   return (
