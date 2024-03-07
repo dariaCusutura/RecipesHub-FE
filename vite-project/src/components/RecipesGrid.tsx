@@ -1,13 +1,15 @@
 import useRecipes from "../hooks/useRecipes";
 import { Heading, List, ListItem } from "@chakra-ui/react";
 import RecipeCard from "./RecipeCard";
+import { RecipesQuery } from "../pages/RecipesPage";
 
 interface Props {
   path: string;
+  recipesQuery: RecipesQuery;
 }
 
-const RecipesGrid = ({ path }: Props) => {
-  const { recipes, error } = useRecipes({ path: path});
+const RecipesGrid = ({ path, recipesQuery }: Props) => {
+  const { recipes, error } = useRecipes({ path: path }, recipesQuery);
 
   return (
     <>
