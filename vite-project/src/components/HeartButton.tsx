@@ -19,7 +19,7 @@ const HeartButton = ({ recipe }: Props) => {
         setFavArray(res.data);
       })
       .catch((err) => console.log(err.message));
-  }, [favArray]);
+  }, [liked]);
 
   const manageClick = async () => {
     await axios

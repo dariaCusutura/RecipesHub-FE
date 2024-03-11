@@ -1,5 +1,4 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { BiFoodMenu } from "react-icons/bi";
 
@@ -9,7 +8,6 @@ interface Props {
 
 const CategorySelector = ({ onSelectCategory }: Props) => {
   const categories = ["Sweet", "Savoury"];
-  const [selectedCategory, setSelectedCateg] = useState("");
   return (
     <Menu>
       <MenuButton
@@ -17,13 +15,12 @@ const CategorySelector = ({ onSelectCategory }: Props) => {
         rightIcon={<BsChevronDown />}
         leftIcon={<BiFoodMenu />}
       >
-        {selectedCategory === "" ? "Categories" : selectedCategory}
+        Categories
       </MenuButton>
       <MenuList>
         {categories.map((category) => (
           <MenuItem
             onClick={() => {
-              setSelectedCateg(category);
               onSelectCategory(category);
             }}
             key={category}

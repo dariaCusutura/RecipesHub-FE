@@ -15,6 +15,7 @@ import FavouritesSelector from "../components/FavouritesSelector";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import IngredientsSelector from "../components/IngredientsSelector";
 
 export interface RecipesQuery {
   category: string;
@@ -22,13 +23,28 @@ export interface RecipesQuery {
 
 function RecipesPage() {
   const [path, setPath] = useState("/recipes");
-  const [heading, setHeading] = useState("All");
+  const [heading, setHeading] = useState("");
+  const [selectedIngredients, setSelectedIngr] = useState([]);
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([]);
+  const ingredients = ["Eggs", "Milk", "Water", "Salt", "Rice"];
+
+  const handleSelectIngredientsChange = (ingredient) => {
+    const isSelected = selectedIngredients.includes(ingredient.toLowerCase());
+    if (isSelected) {
+      // If ingredient is already selected, remove it from the array
+      setSelectedIngr(
+        selectedIngredients.filter((item) => item !== ingredient.toLowerCase())
+      );
+    } else {
+      // If ingredient is not selected, add it to the array
+      setSelectedIngr([...selectedIngredients, ingredient.toLowerCase()]);
+    }
+  };
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -70,8 +86,9 @@ function RecipesPage() {
             <ListItem>
               <AllRecipesSelector
                 onSelectAll={() => {
+                  setRecipesQuery({} as RecipesQuery);
                   setPath("/recipes");
-                  setHeading("All");
+                  setHeading("");
                 }}
               />
             </ListItem>
@@ -79,7 +96,8 @@ function RecipesPage() {
               <FavouritesSelector
                 manageClick={() => {
                   setPath("/recipes/favorites/list");
-                  setHeading("My Favorite");
+                  setRecipesQuery({} as RecipesQuery);
+                  setHeading("Favorite");
                 }}
               />
             </ListItem>
@@ -87,16 +105,28 @@ function RecipesPage() {
               <CategorySelector
                 onSelectCategory={(category) => {
                   setHeading(category);
+                  setPath("/recipes");
                   setRecipesQuery({ ...recipesQuery, category });
                 }}
+              />
+            </ListItem>
+            <ListItem>
+              <IngredientsSelector
+                ingredients={ingredients}
+                selectedIngredients={selectedIngredients}
+                setSelectedIngr={handleSelectIngredientsChange}
               />
             </ListItem>
           </List>
         </GridItem>
       </Show>
       <GridItem area="main">
-        <Heading marginY={3}>{heading} Recipes</Heading>
-        <RecipesGrid path={path} recipesQuery={recipesQuery} />
+        <Heading marginY={3}>{"My" + " " + heading + " " + "Recipes"}</Heading>
+        <RecipesGrid
+          path={path}
+          recipesQuery={recipesQuery}
+          selectedIngredients={selectedIngredients}
+        />
       </GridItem>
     </Grid>
   );
