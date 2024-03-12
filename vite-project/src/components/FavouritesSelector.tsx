@@ -7,7 +7,12 @@ interface Props {
 
 const FavouritesSelector = ({ manageClick }: Props) => {
   return (
-    <Button onClick={() => manageClick()} leftIcon={<FaRegHeart />}>
+    <Button
+      width={160}
+      justifyContent={"left"}
+      onClick={() => manageClick()}
+      leftIcon={<FaRegHeart />}
+    >
       {" "}
       Favorites{" "}
     </Button>

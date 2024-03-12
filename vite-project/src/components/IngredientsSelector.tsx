@@ -7,6 +7,7 @@ import {
   MenuOptionGroup,
 } from "@chakra-ui/react";
 import { TbMeat } from "react-icons/tb";
+import { BsChevronDown } from "react-icons/bs";
 
 const IngredientsSelector = ({
   ingredients,
@@ -15,9 +16,19 @@ const IngredientsSelector = ({
 }) => {
   return (
     <Menu closeOnSelect={false}>
-      <MenuButton as={Button} leftIcon={<TbMeat size={17} />}>
+      <MenuButton
+        as={Button}
+        width={160}
+        leftIcon={<TbMeat size={19} />}
+        rightIcon={
+          selectedIngredients.length !== 0 ? (
+            selectedIngredients.length
+          ) : (
+            <BsChevronDown />
+          )
+        }
+      >
         Ingredients{" "}
-        {selectedIngredients.length !== 0 && selectedIngredients.length}
       </MenuButton>
       <MenuList>
         <MenuOptionGroup type="checkbox">

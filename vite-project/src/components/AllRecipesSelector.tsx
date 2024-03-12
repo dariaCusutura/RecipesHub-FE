@@ -7,7 +7,12 @@ interface Props {
 
 const AllRecipesSelector = ({ onSelectAll }: Props) => {
   return (
-    <Button leftIcon={<IoHomeOutline />} onClick={() => onSelectAll()}>
+    <Button
+      width={160}
+      justifyContent={"left"}
+      leftIcon={<IoHomeOutline />}
+      onClick={() => onSelectAll()}
+    >
       All recipes
     </Button>
   );

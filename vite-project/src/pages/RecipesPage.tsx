@@ -81,7 +81,7 @@ function RecipesPage() {
         <NavBar Logout={() => manageLogout()} />
       </GridItem>
       <Show above="lg">
-        <GridItem area="aside" marginY={3}>
+        <GridItem area="aside" marginY={5}>
           <List paddingLeft={3} spacing={4}>
             <ListItem>
               <AllRecipesSelector
