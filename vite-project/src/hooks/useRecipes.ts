@@ -15,6 +15,8 @@ interface Props {
 const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState("");
+  // Serializing recipesQuery for dependency array. Consider performance implications.
+  const serializedRecipesQuery = JSON.stringify(recipesQuery);
 
   useEffect(() => {
     apiRecipe
@@ -29,7 +31,7 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
       });
 
     return () => setError("");
-  }, [path, recipesQuery]);
+  }, [path, recipesQuery?.category, serializedRecipesQuery]);
 
   return { recipes, error };
 };

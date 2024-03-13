@@ -11,7 +11,6 @@ interface Props {
 
 const RecipesGrid = ({ path, recipesQuery, selectedIngredients }: Props) => {
   const { recipes, error } = useRecipes({ path: path }, recipesQuery);
-
   const hasIngredients = (parent, subset) => {
     return subset.every((e) => {
       return parent.includes(e);

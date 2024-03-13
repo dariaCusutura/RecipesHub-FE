@@ -22,6 +22,7 @@ export interface RecipesQuery {
 }
 
 function RecipesPage() {
+  const ingredients = ["Eggs", "Milk", "Rice", "Flour", "Chocolate", "Cheese", "Chicken", "Potatoes", ];
   const [path, setPath] = useState("/recipes");
   const [heading, setHeading] = useState("");
   const [selectedIngredients, setSelectedIngr] = useState([]);
@@ -31,7 +32,6 @@ function RecipesPage() {
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([]);
-  const ingredients = ["Eggs", "Milk", "Water", "Salt", "Rice"];
 
   const handleSelectIngredientsChange = (ingredient) => {
     const isSelected = selectedIngredients.includes(ingredient.toLowerCase());
