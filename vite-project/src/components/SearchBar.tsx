@@ -13,9 +13,10 @@ import { useEffect, useRef, useState } from "react";
 
 interface Props {
   submitInput: (result: string) => void;
+  manageClick: () => void;
 }
 
-const SearchBar = ({ submitInput }: Props) => {
+const SearchBar = ({ submitInput, manageClick }: Props) => {
   const { recipes } = useRecipes({ path: "/recipes" }, {} as RecipesQuery);
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
@@ -74,6 +75,7 @@ const SearchBar = ({ submitInput }: Props) => {
           placeholder="Search a recipe..."
           onChange={(e) => setInput(e.target.value)}
           ref={inputRef}
+          onClick={manageClick}
         />
       </InputGroup>
       {results.length !== 0 && (

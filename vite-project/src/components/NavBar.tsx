@@ -6,13 +6,14 @@ import SearchBar from "./SearchBar";
 interface Props {
   Logout: () => void;
   submitInput: (result: string) => void;
+  manageClick: () => void;
 }
 
-const NavBar = ({ Logout, submitInput }: Props) => {
+const NavBar = ({ Logout, submitInput, manageClick }: Props) => {
   return (
     <HStack justifyContent="space-between" padding="5px">
       <Image src={logo} boxSize="60px" />
-      <SearchBar submitInput={(result) => submitInput(result)} />
+      <SearchBar submitInput={(result) => submitInput(result)} manageClick={manageClick} />
       {/* <ColorModeSwitch /> */}
       <Button onClick={Logout}>Log out</Button>
     </HStack>

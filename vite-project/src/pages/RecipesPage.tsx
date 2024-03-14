@@ -91,6 +91,11 @@ function RecipesPage() {
         <NavBar
           Logout={() => manageLogout()}
           submitInput={(result) => setSearchResult(result)}
+          manageClick={() => {
+            setHeading("");
+            setPath("/recipes");
+            setRecipesQuery({} as RecipesQuery);
+          }}
         />
       </GridItem>
       <Show above="lg">
@@ -112,6 +117,7 @@ function RecipesPage() {
                   setPath("/recipes/favorites/list");
                   setRecipesQuery({} as RecipesQuery);
                   setHeading("Favorite");
+                  setSearchResult("");
                 }}
               />
             </ListItem>
@@ -121,6 +127,7 @@ function RecipesPage() {
                   setHeading(category);
                   setPath("/recipes");
                   setRecipesQuery({ ...recipesQuery, category });
+                  setSearchResult("");
                 }}
               />
             </ListItem>
