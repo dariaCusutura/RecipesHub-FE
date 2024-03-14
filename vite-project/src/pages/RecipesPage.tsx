@@ -22,10 +22,20 @@ export interface RecipesQuery {
 }
 
 function RecipesPage() {
-  const ingredients = ["Eggs", "Milk", "Rice", "Flour", "Chocolate", "Cheese", "Chicken", "Potatoes", ];
+  const ingredients = [
+    "Eggs",
+    "Milk",
+    "Rice",
+    "Flour",
+    "Chocolate",
+    "Cheese",
+    "Chicken",
+    "Potatoes",
+  ];
   const [path, setPath] = useState("/recipes");
   const [heading, setHeading] = useState("");
   const [selectedIngredients, setSelectedIngr] = useState([]);
+  const [searchResult, setSearchResult] = useState("");
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
@@ -78,7 +88,10 @@ function RecipesPage() {
       }}
     >
       <GridItem area="nav">
-        <NavBar Logout={() => manageLogout()} />
+        <NavBar
+          Logout={() => manageLogout()}
+          submitInput={(result) => setSearchResult(result)}
+        />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" marginY={5}>
@@ -89,6 +102,7 @@ function RecipesPage() {
                   setRecipesQuery({} as RecipesQuery);
                   setPath("/recipes");
                   setHeading("");
+                  setSearchResult("");
                 }}
               />
             </ListItem>
@@ -123,6 +137,7 @@ function RecipesPage() {
       <GridItem area="main">
         <Heading marginY={3}>{"My" + " " + heading + " " + "Recipes"}</Heading>
         <RecipesGrid
+          result={searchResult}
           path={path}
           recipesQuery={recipesQuery}
           selectedIngredients={selectedIngredients}
