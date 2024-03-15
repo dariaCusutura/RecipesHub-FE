@@ -2,6 +2,7 @@ import useRecipes from "../hooks/useRecipes";
 import { Heading, List, ListItem } from "@chakra-ui/react";
 import RecipeCard from "./RecipeCard";
 import { RecipesQuery } from "../pages/RecipesPage";
+import RecipesSkeletons from "./RecipesSkeletons";
 
 interface Props {
   path: string;
@@ -16,7 +17,10 @@ const RecipesGrid = ({
   selectedIngredients,
   result,
 }: Props) => {
-  const { recipes, error } = useRecipes({ path: path }, recipesQuery);
+  const { recipes, error, isLoading } = useRecipes(
+    { path: path },
+    recipesQuery
+  );
 
   // Function to check if a recipe contains all selected ingredients
   const hasAllIngredients = (recipeIngredients: string[]) => {
@@ -30,6 +34,7 @@ const RecipesGrid = ({
     : selectedIngredients.length !== 0
     ? recipes.filter((recipe) => hasAllIngredients(recipe.ingredients))
     : recipes;
+  const skeletons = [1, 2, 3];
 
   if (error) {
     return (
@@ -40,6 +45,14 @@ const RecipesGrid = ({
   } else
     return (
       <List marginY={3}>
+{/* show skeletons when loading */}
+        {isLoading &&
+          skeletons.map((skeleton) => (
+            <ListItem paddingRight={5} marginY={3} key={skeleton}>
+              <RecipesSkeletons />
+            </ListItem>
+          ))}
+{/* show recipes */}
         {filteredRecipes.map((recipe) => (
           <ListItem paddingRight={5} marginY={3} key={recipe.name}>
             <RecipeCard recipe={recipe} />
