@@ -5,9 +5,10 @@ import {
   Container,
   FormControl,
   FormErrorMessage,
-  FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputLeftElement,
   Link,
   Text,
 } from "@chakra-ui/react";
@@ -15,6 +16,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { useCookies } from "react-cookie";
+import { MdOutlineEmail } from "react-icons/md";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -47,31 +50,50 @@ const Login = () => {
           maxW="2xl"
           centerContent={true}
         >
-          <Heading size="lg">Login</Heading>
-          <FormControl
-            paddingBlock={3}
-            onSubmit={(e) => e.preventDefault()}
-            isInvalid={error !== ""}
+          <Heading size="lg" marginBottom={5}>
+            Login
+          </Heading>
+          <form
+            onSubmit={(e) => {
+              handleSubmit();
+              e.preventDefault();
+            }}
           >
-            <FormLabel htmlFor="LoginEmail">Email adress </FormLabel>
-            <Input
-              type="email"
-              id="LoginEmail"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <FormLabel htmlFor="LoginPassword" paddingTop={3}>
-              Password
-            </FormLabel>
-            <Input
-              placeholder="Password"
-              type="password"
-              id="LoginPassword"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {error && <FormErrorMessage>{error}</FormErrorMessage>}
-          </FormControl>
-          <Button onClick={() => handleSubmit()}>Submit</Button>
+            <FormControl
+              paddingBlock={3}
+              onSubmit={(e) => e.preventDefault()}
+              isInvalid={error !== ""}
+            >
+              <InputGroup marginBottom={5}>
+                <InputLeftElement>
+                  <MdOutlineEmail size={20} />
+                </InputLeftElement>
+                <Input
+                  id="RegisterEmail"
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="username"
+                />
+              </InputGroup>
+              <InputGroup>
+                <InputLeftElement>
+                  <RiLockPasswordLine size={20} />
+                </InputLeftElement>
+                <Input
+                  id="RegisterPassword"
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                />
+              </InputGroup>
+              {error && <FormErrorMessage>{error}</FormErrorMessage>}
+            </FormControl>
+            <Button marginTop={3} type="submit" width="100%">
+              Submit
+            </Button>
+          </form>
           <Text paddingBlock={3}>
             Not a member?{" "}
             <Link color="gray.500" href="/register">
