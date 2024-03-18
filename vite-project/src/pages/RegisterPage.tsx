@@ -5,9 +5,10 @@ import {
   Container,
   FormControl,
   FormErrorMessage,
-  FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputLeftElement,
   Link,
   Text,
 } from "@chakra-ui/react";
@@ -15,11 +16,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { useCookies } from "react-cookie";
+import { MdOutlineEmail } from "react-icons/md";
+import { VscAccount } from "react-icons/vsc";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([]);
@@ -28,7 +33,7 @@ const Register = () => {
     await axios
       .post(
         "http://localhost:3000/register",
-        { email: email, password: password },
+        { name: name, email: email, password: password },
         {
           withCredentials: true,
         }
@@ -53,32 +58,58 @@ const Register = () => {
           centerContent={true}
         >
           <Heading size="lg">Register</Heading>
-          <FormControl
-            paddingBlock={3}
-            onSubmit={(e) => e.preventDefault()}
-            isInvalid={error !== ""}
+          <form
+            onSubmit={(e) => {
+              handleSubmit();
+              e.preventDefault();
+            }}
           >
-            <FormLabel htmlFor="RegisterEmail">Email adress </FormLabel>
-            <Input
-              id="RegisterEmail"
-              type="email"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <FormLabel htmlFor="RegisterPassword" paddingTop={3}>
-              Password{" "}
-            </FormLabel>
-            <Input
-              id="RegisterPassword"
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {error && <FormErrorMessage>{error}</FormErrorMessage>}
-          </FormControl>
-          <Button marginTop={3} type="submit" onClick={() => handleSubmit()}>
-            Submit
-          </Button>
+            <FormControl
+              paddingBlock={3}
+              onSubmit={(e) => e.preventDefault()}
+              isInvalid={error !== ""}
+            >
+              <InputGroup marginBottom={5}>
+                <InputLeftElement>
+                  <VscAccount size={20} />
+                </InputLeftElement>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Name"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup marginBottom={5}>
+                <InputLeftElement>
+                  <MdOutlineEmail size={20} />
+                </InputLeftElement>
+                <Input
+                  id="RegisterEmail"
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="username"
+                />
+              </InputGroup>
+              <InputGroup>
+                <InputLeftElement>
+                  <RiLockPasswordLine size={20} />
+                </InputLeftElement>
+                <Input
+                  id="RegisterPassword"
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                />
+              </InputGroup>
+              {error && <FormErrorMessage>{error}</FormErrorMessage>}
+            </FormControl>
+            <Button marginTop={3} type="submit" width="100%">
+              Submit
+            </Button>
+          </form>
           <Text marginTop={3}>
             Already have an account?{" "}
             <Link color="gray.500" href="/login">
