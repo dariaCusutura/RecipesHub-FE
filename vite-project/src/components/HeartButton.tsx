@@ -36,6 +36,7 @@ const HeartButton = ({ recipe }: Props) => {
 
   return (
     <IconButton
+    marginTop={4}
       aria-label="heart"
       icon={favArray.includes(recipe._id) ? <FaHeart /> : <FaRegHeart />}
       onClick={() => manageClick()}

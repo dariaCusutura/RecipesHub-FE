@@ -7,6 +7,8 @@ export interface Recipe {
   name: string;
   ingredients: string[];
   category: string;
+  author: string;
+  image: string;
 }
 interface Props {
   path: string;

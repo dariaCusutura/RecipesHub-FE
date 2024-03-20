@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import IngredientsSelector from "../components/IngredientsSelector";
+import AddRecipe from "../components/AddRecipe";
 
 export interface RecipesQuery {
   category: string;
@@ -138,6 +139,7 @@ function RecipesPage() {
                 setSelectedIngr={handleSelectIngredientsChange}
               />
             </ListItem>
+            <ListItem><AddRecipe/></ListItem>
           </List>
         </GridItem>
       </Show>
