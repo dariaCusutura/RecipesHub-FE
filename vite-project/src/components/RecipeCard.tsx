@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardBody,
   Divider,
@@ -12,12 +13,14 @@ import {
 import img from "./NoImg.jpg";
 import { Recipe } from "../hooks/useRecipes";
 import HeartButton from "./HeartButton";
+import React from "react";
 
 interface Props {
   recipe: Recipe;
+  selectAuthor: (author: string) => void;
 }
 
-const RecipeCard = ({ recipe }: Props) => {
+const RecipeCard = React.memo(({ recipe, selectAuthor }: Props) => {
   return (
     <Card padding="10px" borderRadius={10} direction="row" overflow="hidden">
       <Image
@@ -32,9 +35,14 @@ const RecipeCard = ({ recipe }: Props) => {
         <HStack justifyContent="space-between">
           <VStack alignItems="flex-start">
             <Heading marginBottom={-1}>{recipe.name}</Heading>
-            <Text marginBottom={1} fontSize={15}>
+            <Button
+              variant={"link"}
+              marginBottom={1}
+              fontSize={15}
+              onClick={() => selectAuthor(recipe.author)}
+            >
               by {recipe.author}
-            </Text>
+            </Button>
           </VStack>
           <HeartButton recipe={recipe} />
         </HStack>
@@ -51,6 +59,6 @@ const RecipeCard = ({ recipe }: Props) => {
       </CardBody>
     </Card>
   );
-};
+});
 
 export default RecipeCard;

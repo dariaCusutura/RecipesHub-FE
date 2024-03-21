@@ -18,7 +18,7 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // Serializing recipesQuery for dependency array. Consider performance implications.
+  // Serializing recipesQuery for dependency array
   const serializedRecipesQuery = JSON.stringify(recipesQuery);
 
   useEffect(() => {
@@ -26,7 +26,10 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
     setIsLoading(true);
     apiRecipe
       .get<Recipe[]>(path, {
-        params: { category: recipesQuery?.category },
+        params: {
+          category: recipesQuery?.category,
+          author: recipesQuery?.author,
+        },
       })
       .then((res) => {
         setRecipes(res.data);

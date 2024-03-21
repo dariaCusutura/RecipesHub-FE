@@ -20,6 +20,7 @@ import AddRecipe from "../components/AddRecipe";
 
 export interface RecipesQuery {
   category: string;
+  author: string;
 }
 
 function RecipesPage() {
@@ -34,7 +35,7 @@ function RecipesPage() {
     "Potatoes",
   ];
   const [path, setPath] = useState("/recipes");
-  const [heading, setHeading] = useState("");
+  const [heading, setHeading] = useState("All Recipes");
   const [selectedIngredients, setSelectedIngr] = useState([]);
   const [searchResult, setSearchResult] = useState("");
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
@@ -107,7 +108,7 @@ function RecipesPage() {
                 onSelectAll={() => {
                   setRecipesQuery({} as RecipesQuery);
                   setPath("/recipes");
-                  setHeading("");
+                  setHeading("All Recipes");
                   setSearchResult("");
                 }}
               />
@@ -117,7 +118,7 @@ function RecipesPage() {
                 manageClick={() => {
                   setPath("/recipes/favorites/list");
                   setRecipesQuery({} as RecipesQuery);
-                  setHeading("Favorite");
+                  setHeading("My Favorite Recipes");
                   setSearchResult("");
                 }}
               />
@@ -125,7 +126,7 @@ function RecipesPage() {
             <ListItem>
               <CategorySelector
                 onSelectCategory={(category) => {
-                  setHeading(category);
+                  setHeading(category + " " + "Recipes");
                   setPath("/recipes");
                   setRecipesQuery({ ...recipesQuery, category });
                   setSearchResult("");
@@ -139,17 +140,25 @@ function RecipesPage() {
                 setSelectedIngr={handleSelectIngredientsChange}
               />
             </ListItem>
-            <ListItem><AddRecipe/></ListItem>
+            <ListItem>
+              <AddRecipe />
+            </ListItem>
           </List>
         </GridItem>
       </Show>
       <GridItem area="main">
-        <Heading marginY={3}>{"My" + " " + heading + " " + "Recipes"}</Heading>
+        <Heading marginY={3}>{heading}</Heading>
         <RecipesGrid
           result={searchResult}
           path={path}
           recipesQuery={recipesQuery}
           selectedIngredients={selectedIngredients}
+          selectAuthor={(author) => {
+            setHeading("Recipes by " + author);
+            setPath("/recipes");
+            setRecipesQuery({ ...recipesQuery, author });
+            setSearchResult("");
+          }}
         />
       </GridItem>
     </Grid>

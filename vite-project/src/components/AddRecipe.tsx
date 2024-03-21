@@ -92,7 +92,7 @@ const AddRecipe = () => {
             />
             <Input
               id="Image"
-              placeholder="Image address"
+              placeholder="Image address (optional)"
               marginBottom={5}
               onChange={(e) => {
                 setImageAddress(e.target.value);
