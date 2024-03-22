@@ -52,12 +52,13 @@ const AddRecipe = () => {
         setError(err.response.data);
       })
       .then((res) => {
-        if (res !== undefined && (res as AxiosResponse).status === 200)
+        if (res !== undefined && (res as AxiosResponse).status === 200) {
           onClose();
-        toast.success("Recipe Saved");
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+          toast.success("Recipe Saved");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
       });
   };
 
@@ -71,10 +72,12 @@ const AddRecipe = () => {
       >
         Add recipe
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+      <Modal isOpen={isOpen} onClose={()=> {onClose(); setError("")}}>
+        <ModalOverlay/>
         <ModalContent>
-          <ModalHeader>Add a new recipe</ModalHeader>
+          <ModalHeader fontSize={25} marginTop={3}>
+            Add a new recipe
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Input
@@ -129,7 +132,9 @@ const AddRecipe = () => {
             {error && <Text color={"red"}>{error}</Text>}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={manageSave}>Save</Button>
+            <Button onClick={manageSave} colorScheme="green">
+              Save
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
