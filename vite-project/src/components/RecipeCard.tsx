@@ -1,19 +1,21 @@
 import {
+  Box,
   Button,
   Card,
   CardBody,
   Divider,
-  HStack,
+  Flex,
   Heading,
   Image,
   Text,
   Tooltip,
-  VStack,
 } from "@chakra-ui/react";
 import img from "./NoImg.jpg";
 import { Recipe } from "../hooks/useRecipes";
 import HeartButton from "./HeartButton";
 import React from "react";
+import RecipeMenuButton from "./RecipeMenuButton";
+import useUserData from "../hooks/useUserData";
 
 interface Props {
   recipe: Recipe;
@@ -21,6 +23,8 @@ interface Props {
 }
 
 const RecipeCard = React.memo(({ recipe, selectAuthor }: Props) => {
+  const { name } = useUserData();
+
   return (
     <Card padding="10px" borderRadius={10} direction="row" overflow="hidden">
       <Image
@@ -32,20 +36,29 @@ const RecipeCard = React.memo(({ recipe, selectAuthor }: Props) => {
         objectFit="cover"
       />
       <CardBody marginBlock={-5}>
-        <HStack justifyContent="space-between">
-          <VStack alignItems="flex-start">
-            <Heading marginBottom={-1}>{recipe.name}</Heading>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Box>
+            <Heading>{recipe.name}</Heading>
             <Button
               variant={"link"}
               marginBottom={1}
               fontSize={15}
               onClick={() => selectAuthor(recipe.author)}
             >
-              by {recipe.author}
+              {recipe.author === name ? "by you" : `by  ${recipe.author}`}
             </Button>
-          </VStack>
-          <HeartButton recipe={recipe} />
-        </HStack>
+          </Box>
+          <Box
+            display="flex"
+            alignItems="revert"
+            flexDirection="column"
+            height={75}
+            paddingTop={recipe.author === name ? 0 : 7}
+          >
+            {recipe.author === name && <RecipeMenuButton />}
+            <HeartButton recipe={recipe} />
+          </Box>
+        </Flex>
         <Divider marginBottom={1} />
         <Tooltip
           label={recipe.ingredients.join(", ")}
