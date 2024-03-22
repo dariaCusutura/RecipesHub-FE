@@ -58,7 +58,7 @@ const RecipesGrid = React.memo(
             ))}
           {/* show recipes */}
           {filteredRecipes.map((recipe) => (
-            <ListItem paddingRight={5} marginY={3} key={recipe.name}>
+            <ListItem paddingRight={5} marginY={3} key={recipe._id}>
               <RecipeCard
                 recipe={recipe}
                 selectAuthor={() => selectAuthor(recipe.author)}

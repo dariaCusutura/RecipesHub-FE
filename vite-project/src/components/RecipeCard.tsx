@@ -23,6 +23,7 @@ interface Props {
 }
 
 const RecipeCard = React.memo(({ recipe, selectAuthor }: Props) => {
+  
   const { name } = useUserData();
 
   return (
@@ -55,7 +56,7 @@ const RecipeCard = React.memo(({ recipe, selectAuthor }: Props) => {
             height={75}
             paddingTop={recipe.author === name ? 0 : 7}
           >
-            {recipe.author === name && <RecipeMenuButton />}
+            {recipe.author === name && <RecipeMenuButton recipe={recipe}/>}
             <HeartButton recipe={recipe} />
           </Box>
         </Flex>

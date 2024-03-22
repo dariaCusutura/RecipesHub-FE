@@ -21,6 +21,7 @@ import { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { LuPlusSquare } from "react-icons/lu";
 import useUserData from "../hooks/useUserData";
+import toast from "react-hot-toast";
 
 const AddRecipe = () => {
   const [recipeName, setName] = useState("");
@@ -53,6 +54,10 @@ const AddRecipe = () => {
       .then((res) => {
         if (res !== undefined && (res as AxiosResponse).status === 200)
           onClose();
+        toast.success("Recipe Saved");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       });
   };
 

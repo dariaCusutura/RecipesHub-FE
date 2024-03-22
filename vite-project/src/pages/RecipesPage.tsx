@@ -17,6 +17,8 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import IngredientsSelector from "../components/IngredientsSelector";
 import AddRecipe from "../components/AddRecipe";
+import useUserData from "../hooks/useUserData";
+import { Toaster } from "react-hot-toast";
 
 export interface RecipesQuery {
   category: string;
@@ -24,6 +26,7 @@ export interface RecipesQuery {
 }
 
 function RecipesPage() {
+  const { name } = useUserData();
   const ingredients = [
     "Eggs",
     "Milk",
@@ -79,89 +82,94 @@ function RecipesPage() {
   };
 
   return (
-    <Grid
-      templateAreas={{
-        base: `"nav" "main"`,
-        lg: `"nav nav" "aside main"`,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "200px 1fr",
-      }}
-    >
-      <GridItem area="nav">
-        <NavBar
-          Logout={() => manageLogout()}
-          submitInput={(result) => setSearchResult(result)}
-          manageClick={() => {
-            setHeading("");
-            setPath("/recipes");
-            setRecipesQuery({} as RecipesQuery);
-          }}
-        />
-      </GridItem>
-      <Show above="lg">
-        <GridItem area="aside" marginY={5}>
-          <List paddingLeft={3} spacing={4}>
-            <ListItem>
-              <AllRecipesSelector
-                onSelectAll={() => {
-                  setRecipesQuery({} as RecipesQuery);
-                  setPath("/recipes");
-                  setHeading("All Recipes");
-                  setSearchResult("");
-                }}
-              />
-            </ListItem>
-            <ListItem>
-              <FavouritesSelector
-                manageClick={() => {
-                  setPath("/recipes/favorites/list");
-                  setRecipesQuery({} as RecipesQuery);
-                  setHeading("My Favorite Recipes");
-                  setSearchResult("");
-                }}
-              />
-            </ListItem>
-            <ListItem>
-              <CategorySelector
-                onSelectCategory={(category) => {
-                  setHeading(category + " " + "Recipes");
-                  setPath("/recipes");
-                  setRecipesQuery({ ...recipesQuery, category });
-                  setSearchResult("");
-                }}
-              />
-            </ListItem>
-            <ListItem>
-              <IngredientsSelector
-                ingredients={ingredients}
-                selectedIngredients={selectedIngredients}
-                setSelectedIngr={handleSelectIngredientsChange}
-              />
-            </ListItem>
-            <ListItem>
-              <AddRecipe />
-            </ListItem>
-          </List>
+    <>
+      <Grid
+        templateAreas={{
+          base: `"nav" "main"`,
+          lg: `"nav nav" "aside main"`,
+        }}
+        templateColumns={{
+          base: "1fr",
+          lg: "200px 1fr",
+        }}
+      >
+        <GridItem area="nav">
+          <NavBar
+            Logout={() => manageLogout()}
+            submitInput={(result) => setSearchResult(result)}
+            manageClick={() => {
+              setHeading("");
+              setPath("/recipes");
+              setRecipesQuery({} as RecipesQuery);
+            }}
+          />
         </GridItem>
-      </Show>
-      <GridItem area="main">
-        <Heading marginY={3}>{heading}</Heading>
-        <RecipesGrid
-          result={searchResult}
-          path={path}
-          recipesQuery={recipesQuery}
-          selectedIngredients={selectedIngredients}
-          selectAuthor={(author) => {
-            setHeading("Recipes by " + author);
-            setPath("/recipes");
-            setRecipesQuery({ ...recipesQuery, author });
-            setSearchResult("");
-          }}
-        />
-      </GridItem>
-    </Grid>
+        <Show above="lg">
+          <GridItem area="aside" marginY={5}>
+            <List paddingLeft={3} spacing={4}>
+              <ListItem>
+                <AllRecipesSelector
+                  onSelectAll={() => {
+                    setRecipesQuery({} as RecipesQuery);
+                    setPath("/recipes");
+                    setHeading("All Recipes");
+                    setSearchResult("");
+                  }}
+                />
+              </ListItem>
+              <ListItem>
+                <FavouritesSelector
+                  manageClick={() => {
+                    setPath("/recipes/favorites/list");
+                    setRecipesQuery({} as RecipesQuery);
+                    setHeading("My Favorite Recipes");
+                    setSearchResult("");
+                  }}
+                />
+              </ListItem>
+              <ListItem>
+                <CategorySelector
+                  onSelectCategory={(category) => {
+                    setHeading(category + " " + "Recipes");
+                    setPath("/recipes");
+                    setRecipesQuery({ ...recipesQuery, category });
+                    setSearchResult("");
+                  }}
+                />
+              </ListItem>
+              <ListItem>
+                <IngredientsSelector
+                  ingredients={ingredients}
+                  selectedIngredients={selectedIngredients}
+                  setSelectedIngr={handleSelectIngredientsChange}
+                />
+              </ListItem>
+              <ListItem>
+                <AddRecipe />
+              </ListItem>
+            </List>
+          </GridItem>
+        </Show>
+        <GridItem area="main">
+          <Heading marginY={3}>{heading}</Heading>
+          <RecipesGrid
+            result={searchResult}
+            path={path}
+            recipesQuery={recipesQuery}
+            selectedIngredients={selectedIngredients}
+            selectAuthor={(author) => {
+              setHeading(
+                author === name ? "My Recipes" : "Recipes by " + author
+              );
+              setPath("/recipes");
+              setRecipesQuery({ ...recipesQuery, author });
+              setSearchResult("");
+            }}
+          />
+        </GridItem>
+      </Grid>
+      <Toaster position="bottom-center" />
+    </>
   );
 }
 
