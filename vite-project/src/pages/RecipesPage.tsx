@@ -27,7 +27,7 @@ export interface RecipesQuery {
 }
 
 function RecipesPage() {
-  const { name } = useUserData();
+  const { name, email } = useUserData();
   const ingredients = [
     "Eggs",
     "Milk",
@@ -97,6 +97,8 @@ function RecipesPage() {
       >
         <GridItem area="nav">
           <NavBar
+            email={email}
+            name={name}
             Logout={() => manageLogout()}
             submitInput={(result) => setSearchResult(result)}
             manageClick={() => {
