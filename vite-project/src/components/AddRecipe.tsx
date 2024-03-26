@@ -20,10 +20,13 @@ import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { LuPlusSquare } from "react-icons/lu";
-import useUserData from "../hooks/useUserData";
 import toast from "react-hot-toast";
 
-const AddRecipe = () => {
+interface Props {
+  name: string;
+}
+
+const AddRecipe = ({ name }: Props) => {
   const [recipeName, setName] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [imageAddress, setImageAddress] = useState("");
@@ -31,8 +34,6 @@ const AddRecipe = () => {
   const [error, setError] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const categories = ["Sweet", "Savoury"];
-
-  const { name } = useUserData();
 
   const manageSave = async () => {
     await axios
@@ -72,8 +73,14 @@ const AddRecipe = () => {
       >
         Add recipe
       </Button>
-      <Modal isOpen={isOpen} onClose={()=> {onClose(); setError("")}}>
-        <ModalOverlay/>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+          setError("");
+        }}
+      >
+        <ModalOverlay />
         <ModalContent>
           <ModalHeader fontSize={25} marginTop={3}>
             Add a new recipe

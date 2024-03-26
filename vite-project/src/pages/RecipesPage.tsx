@@ -149,7 +149,7 @@ function RecipesPage() {
                 />
               </ListItem>
               <ListItem>
-                <AddRecipe />
+                <AddRecipe name={name} />
               </ListItem>
             </List>
           </GridItem>
