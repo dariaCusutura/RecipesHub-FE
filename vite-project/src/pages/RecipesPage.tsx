@@ -157,6 +157,7 @@ function RecipesPage() {
         <GridItem area="main">
           <Heading marginY={3}>{heading}</Heading>
           <RecipesGrid
+            name={name}
             result={searchResult}
             recipes={recipes}
             error={error}

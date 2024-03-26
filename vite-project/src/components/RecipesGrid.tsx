@@ -2,7 +2,8 @@ import { Recipe } from "../hooks/useRecipes";
 import { Heading, List, ListItem } from "@chakra-ui/react";
 import RecipeCard from "./RecipeCard";
 import RecipesSkeletons from "./RecipesSkeletons";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import apiRecipe from "../services/api-recipe";
 
 interface Props {
   recipes: Recipe[];
@@ -11,6 +12,7 @@ interface Props {
   selectedIngredients: string[];
   result: string;
   selectAuthor: (author: string) => void;
+  name: string;
 }
 
 const RecipesGrid = React.memo(
@@ -21,8 +23,20 @@ const RecipesGrid = React.memo(
     selectedIngredients,
     result,
     selectAuthor,
+    name,
   }: Props) => {
-    
+    const [favArray, setFavArray] = useState<number[]>([]);
+    const [liked, setLiked] = useState(false);
+
+    useEffect(() => {
+      apiRecipe
+        .get<number[]>("/recipes/favorites/array")
+        .then((res) => {
+          setFavArray(res.data);
+        })
+        .catch((err) => console.log(err.message));
+    }, [liked]);
+
     // Function to check if a recipe contains all selected ingredients
     const hasAllIngredients = (recipeIngredients: string[]) => {
       return selectedIngredients.every((ingredient) =>
@@ -57,8 +71,11 @@ const RecipesGrid = React.memo(
           {filteredRecipes.map((recipe) => (
             <ListItem paddingRight={5} marginY={3} key={recipe._id}>
               <RecipeCard
+                favArray={favArray}
+                name={name}
                 recipe={recipe}
                 selectAuthor={() => selectAuthor(recipe.author)}
+                updateFavArray={() => setLiked(!liked)}
               />
             </ListItem>
           ))}

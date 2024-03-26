@@ -1,25 +1,17 @@
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { IconButton } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Recipe } from "../hooks/useRecipes";
 import axios from "axios";
-import apiRecipe from "../services/api-recipe";
 
 interface Props {
   recipe: Recipe;
+  favArray: number[];
+  updateFavArray: () => void;
 }
 
-const HeartButton = ({ recipe }: Props) => {
-  const [favArray, setFavArray] = useState<number[]>([]);
+const HeartButton = ({ recipe, favArray, updateFavArray }: Props) => {
   const [liked, setLiked] = useState(favArray.includes(recipe._id));
-  useEffect(() => {
-    apiRecipe
-      .get<number[]>("/recipes/favorites/array")
-      .then((res) => {
-        setFavArray(res.data);
-      })
-      .catch((err) => console.log(err.message));
-  }, [liked]);
 
   const manageClick = async () => {
     await axios
@@ -38,7 +30,10 @@ const HeartButton = ({ recipe }: Props) => {
     <IconButton
       aria-label="heart"
       icon={favArray.includes(recipe._id) ? <FaHeart /> : <FaRegHeart />}
-      onClick={() => manageClick()}
+      onClick={() => {
+        manageClick();
+        updateFavArray();
+      }}
     />
   );
 };
