@@ -19,6 +19,7 @@ import IngredientsSelector from "../components/IngredientsSelector";
 import AddRecipe from "../components/AddRecipe";
 import useUserData from "../hooks/useUserData";
 import { Toaster } from "react-hot-toast";
+import useRecipes from "../hooks/useRecipes";
 
 export interface RecipesQuery {
   category: string;
@@ -47,6 +48,7 @@ function RecipesPage() {
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([]);
+  const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
 
   const handleSelectIngredientsChange = (ingredient) => {
     const isSelected = selectedIngredients.includes(ingredient.toLowerCase());
@@ -154,8 +156,9 @@ function RecipesPage() {
           <Heading marginY={3}>{heading}</Heading>
           <RecipesGrid
             result={searchResult}
-            path={path}
-            recipesQuery={recipesQuery}
+            recipes={recipes}
+            error={error}
+            isLoading={isLoading}
             selectedIngredients={selectedIngredients}
             selectAuthor={(author) => {
               setHeading(

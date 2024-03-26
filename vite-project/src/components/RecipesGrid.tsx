@@ -1,13 +1,13 @@
-import useRecipes from "../hooks/useRecipes";
+import { Recipe } from "../hooks/useRecipes";
 import { Heading, List, ListItem } from "@chakra-ui/react";
 import RecipeCard from "./RecipeCard";
-import { RecipesQuery } from "../pages/RecipesPage";
 import RecipesSkeletons from "./RecipesSkeletons";
 import React from "react";
 
 interface Props {
-  path: string;
-  recipesQuery: RecipesQuery;
+  recipes: Recipe[];
+  error: string;
+  isLoading: boolean;
   selectedIngredients: string[];
   result: string;
   selectAuthor: (author: string) => void;
@@ -15,17 +15,14 @@ interface Props {
 
 const RecipesGrid = React.memo(
   ({
-    path,
-    recipesQuery,
+    recipes,
+    error,
+    isLoading,
     selectedIngredients,
     result,
     selectAuthor,
   }: Props) => {
-    const { recipes, error, isLoading } = useRecipes(
-      { path: path },
-      recipesQuery
-    );
-
+    
     // Function to check if a recipe contains all selected ingredients
     const hasAllIngredients = (recipeIngredients: string[]) => {
       return selectedIngredients.every((ingredient) =>

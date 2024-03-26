@@ -1,9 +1,14 @@
-import { Button } from '@chakra-ui/react'
+import { Button, MenuItem } from '@chakra-ui/react'
 import React from 'react'
+import { Recipe } from '../hooks/useRecipes'
 
-const EditRecipeButton = () => {
+interface Props {
+    recipe: Recipe;
+}
+
+const EditRecipeButton = ({recipe} : Props) => {
   return (
-    <Button variant={"ghost"}>Edit recipe</Button>
+    <MenuItem>Edit recipe</MenuItem>
   )
 }
 
