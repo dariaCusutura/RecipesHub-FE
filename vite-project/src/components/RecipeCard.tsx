@@ -56,7 +56,7 @@ const RecipeCard = React.memo(
               height={75}
               paddingTop={recipe.author === name ? 0 : 7}
             >
-              {recipe.author === name && <RecipeMenuButton recipe={recipe} />}
+              {recipe.author === name && <RecipeMenuButton recipe={recipe} name={name} />}
               <HeartButton
                 recipe={recipe}
                 favArray={favArray}

@@ -24,16 +24,14 @@ const HeartButton = ({ recipe, favArray, updateFavArray }: Props) => {
         console.log(err);
       });
     setLiked(!liked);
+    updateFavArray();
   };
 
   return (
     <IconButton
       aria-label="heart"
       icon={favArray.includes(recipe._id) ? <FaHeart /> : <FaRegHeart />}
-      onClick={() => {
-        manageClick();
-        updateFavArray();
-      }}
+      onClick={() => manageClick()}
     />
   );
 };

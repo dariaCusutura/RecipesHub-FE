@@ -97,6 +97,7 @@ function RecipesPage() {
       >
         <GridItem area="nav">
           <NavBar
+          recipes={recipes}
             email={email}
             name={name}
             Logout={() => manageLogout()}

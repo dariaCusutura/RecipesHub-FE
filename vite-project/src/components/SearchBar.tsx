@@ -7,17 +7,16 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { IoSearchOutline, IoClose } from "react-icons/io5";
-import useRecipes from "../hooks/useRecipes";
-import { RecipesQuery } from "../pages/RecipesPage";
+import { Recipe } from "../hooks/useRecipes";
 import { useEffect, useRef, useState } from "react";
 
 interface Props {
   submitInput: (result: string) => void;
   manageClick: () => void;
+  recipes: Recipe[];
 }
 
-const SearchBar = ({ submitInput, manageClick }: Props) => {
-  const { recipes } = useRecipes({ path: "/recipes" }, {} as RecipesQuery);
+const SearchBar = ({ submitInput, manageClick, recipes }: Props) => {
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
@@ -65,7 +64,7 @@ const SearchBar = ({ submitInput, manageClick }: Props) => {
             input.length === 0 ? (
               <IoSearchOutline />
             ) : (
-              <IoClose onClick={clearInput} />
+              <IoClose onClick={clearInput} style={{ cursor: "pointer" }} />
             )
           }
         />
@@ -91,6 +90,7 @@ const SearchBar = ({ submitInput, manageClick }: Props) => {
         >
           {results.map((result) => (
             <Card
+              style={{ cursor: "pointer" }}
               bg={"gray.800"}
               marginBlock={1}
               marginRight={1}
