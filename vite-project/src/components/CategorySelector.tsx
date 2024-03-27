@@ -13,7 +13,7 @@ const CategorySelector = ({ onSelectCategory }: Props) => {
       <MenuButton
         as={Button}
         rightIcon={<BsChevronDown />}
-        leftIcon={<BiFoodMenu />}
+        leftIcon={<BiFoodMenu size={19} />}
         width={160}
       >
         Categories

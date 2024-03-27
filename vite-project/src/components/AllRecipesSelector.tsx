@@ -10,7 +10,7 @@ const AllRecipesSelector = ({ onSelectAll }: Props) => {
     <Button
       width={160}
       justifyContent={"left"}
-      leftIcon={<IoHomeOutline />}
+      leftIcon={<IoHomeOutline size={19}/>}
       onClick={() => onSelectAll()}
     >
       All recipes

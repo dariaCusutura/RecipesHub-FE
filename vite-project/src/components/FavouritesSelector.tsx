@@ -11,7 +11,7 @@ const FavouritesSelector = ({ manageClick }: Props) => {
       width={160}
       justifyContent={"left"}
       onClick={() => manageClick()}
-      leftIcon={<FaRegHeart />}
+      leftIcon={<FaRegHeart size={19}/>}
     >
       {" "}
       Favorites{" "}

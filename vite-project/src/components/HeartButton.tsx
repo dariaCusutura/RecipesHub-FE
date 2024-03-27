@@ -16,7 +16,7 @@ const HeartButton = ({ recipe, favArray, updateFavArray }: Props) => {
   const manageClick = async () => {
     await axios
       .put(
-        "http://localhost:3000/liked",
+        `http://localhost:3000/recipes/liked/${recipe._id}`,
         { recipe: recipe._id, liked: favArray.includes(recipe._id) },
         { withCredentials: true }
       )

@@ -20,6 +20,7 @@ import AddRecipe from "../components/AddRecipe";
 import useUserData from "../hooks/useUserData";
 import { Toaster } from "react-hot-toast";
 import useRecipes from "../hooks/useRecipes";
+import MyRecipesSelector from "../components/MyRecipesSelector";
 
 export interface RecipesQuery {
   category: string;
@@ -97,7 +98,7 @@ function RecipesPage() {
       >
         <GridItem area="nav">
           <NavBar
-          recipes={recipes}
+            recipes={recipes}
             email={email}
             name={name}
             Logout={() => manageLogout()}
@@ -118,6 +119,16 @@ function RecipesPage() {
                     setRecipesQuery({} as RecipesQuery);
                     setPath("/recipes");
                     setHeading("All Recipes");
+                    setSearchResult("");
+                  }}
+                />
+              </ListItem>
+              <ListItem>
+                <MyRecipesSelector
+                  selectMyRecipes={() => {
+                    setHeading("My Recipes");
+                    setPath("/recipes");
+                    setRecipesQuery({ ...recipesQuery, author: name });
                     setSearchResult("");
                   }}
                 />
