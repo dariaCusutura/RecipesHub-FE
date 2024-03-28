@@ -49,7 +49,6 @@ const AddRecipe = ({ name }: Props) => {
         { withCredentials: true }
       )
       .catch((err) => {
-        console.log(err);
         setError(err.response.data);
         if (
           err.response.data === "Access denied." ||

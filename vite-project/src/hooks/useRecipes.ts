@@ -36,8 +36,16 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err.response.data);
+        console.log("useRecipes error:", err);
+        setError("An error occured");
         setIsLoading(false);
+        if (
+          err.response.data === "jwt must be provided" ||
+          err.response.data === "Access denied."
+        )
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
       });
 
     return () => {
