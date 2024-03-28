@@ -1,26 +1,14 @@
-import {
-  Grid,
-  GridItem,
-  Heading,
-  List,
-  ListItem,
-  Show,
-} from "@chakra-ui/react";
+import { Grid, GridItem, Heading, Show } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 import RecipesGrid from "../components/RecipesGrid";
-import CategorySelector from "../components/CategorySelector";
 import { useEffect, useState } from "react";
-import AllRecipesSelector from "../components/AllRecipesSelector";
-import FavouritesSelector from "../components/FavouritesSelector";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import IngredientsSelector from "../components/IngredientsSelector";
-import AddRecipe from "../components/AddRecipe";
 import useUserData from "../hooks/useUserData";
 import { Toaster } from "react-hot-toast";
 import useRecipes from "../hooks/useRecipes";
-import MyRecipesSelector from "../components/MyRecipesSelector";
+import Aside from "../components/Aside";
 
 export interface RecipesQuery {
   category: string;
@@ -28,17 +16,26 @@ export interface RecipesQuery {
 }
 
 function RecipesPage() {
-  const { name, email } = useUserData();
-  const ingredients = [
-    "Eggs",
-    "Milk",
-    "Rice",
-    "Flour",
-    "Chocolate",
-    "Cheese",
-    "Chicken",
-    "Potatoes",
-  ];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookie, setCookie, removeCookie] = useCookies([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      if (!cookie.jwt) {
+        return navigate("/login");
+      } else {
+        await axios.post("http://localhost:3000").then((res) => {
+          if (!res.status) {
+            removeCookie("jwt");
+            return navigate("/login");
+          }
+        });
+      }
+    };
+    verifyUser();
+  }, [cookie, removeCookie, navigate]);
+
   const [path, setPath] = useState("/recipes");
   const [heading, setHeading] = useState("All Recipes");
   const [selectedIngredients, setSelectedIngr] = useState([]);
@@ -46,9 +43,8 @@ function RecipesPage() {
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
-  const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies([]);
+
+  const { name, email } = useUserData();
   const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
 
   const handleSelectIngredientsChange = (ingredient) => {
@@ -64,25 +60,21 @@ function RecipesPage() {
     }
   };
 
-  useEffect(() => {
-    const verifyUser = async () => {
-      if (!cookie.jwt) navigate("/login");
-      else {
-        await axios.post("http://localhost:3000").then((res) => {
-          if (!res.status) {
-            removeCookie("jwt");
-            navigate("/login");
-          }
-        });
-      }
-    };
-    verifyUser();
-  }, [cookie, removeCookie, navigate]);
-
   const manageLogout = () => {
     removeCookie("jwt");
     navigate("/login");
   };
+
+  const ingredients = [
+    "Eggs",
+    "Milk",
+    "Rice",
+    "Flour",
+    "Chocolate",
+    "Cheese",
+    "Chicken",
+    "Potatoes",
+  ];
 
   return (
     <>
@@ -112,58 +104,19 @@ function RecipesPage() {
         </GridItem>
         <Show above="lg">
           <GridItem area="aside" marginY={5}>
-            <List paddingLeft={3} spacing={4}>
-              <ListItem>
-                <AllRecipesSelector
-                  onSelectAll={() => {
-                    setRecipesQuery({} as RecipesQuery);
-                    setPath("/recipes");
-                    setHeading("All Recipes");
-                    setSearchResult("");
-                  }}
-                />
-              </ListItem>
-              <ListItem>
-                <MyRecipesSelector
-                  selectMyRecipes={() => {
-                    setHeading("My Recipes");
-                    setPath("/recipes");
-                    setRecipesQuery({ ...recipesQuery, author: name });
-                    setSearchResult("");
-                  }}
-                />
-              </ListItem>
-              <ListItem>
-                <FavouritesSelector
-                  manageClick={() => {
-                    setPath("/recipes/favorites/list");
-                    setRecipesQuery({} as RecipesQuery);
-                    setHeading("My Favorite Recipes");
-                    setSearchResult("");
-                  }}
-                />
-              </ListItem>
-              <ListItem>
-                <CategorySelector
-                  onSelectCategory={(category) => {
-                    setHeading(category + " " + "Recipes");
-                    setPath("/recipes");
-                    setRecipesQuery({ ...recipesQuery, category });
-                    setSearchResult("");
-                  }}
-                />
-              </ListItem>
-              <ListItem>
-                <IngredientsSelector
-                  ingredients={ingredients}
-                  selectedIngredients={selectedIngredients}
-                  setSelectedIngr={handleSelectIngredientsChange}
-                />
-              </ListItem>
-              <ListItem>
-                <AddRecipe name={name} />
-              </ListItem>
-            </List>
+            <Aside
+              setPath={(path) => setPath(path)}
+              setHeading={(heading) => setHeading(heading)}
+              setSearchResult={(result) => setSearchResult(result)}
+              setRecipesQuery={(query) => setRecipesQuery(query)}
+              handleSelectIngredientsChange={(ingredient) =>
+                handleSelectIngredientsChange(ingredient)
+              }
+              recipesQuery={recipesQuery}
+              ingredients={ingredients}
+              name={name}
+              selectedIngredients={selectedIngredients}
+            />
           </GridItem>
         </Show>
         <GridItem area="main">

@@ -9,26 +9,27 @@ import {
 import { TbMeat } from "react-icons/tb";
 import { BsChevronDown } from "react-icons/bs";
 
+interface Props {
+  ingredients: string[];
+  selectedIngredients: string[];
+  setSelectedIngr: (ingredient: string) => void;
+}
+
 const IngredientsSelector = ({
   ingredients,
   selectedIngredients,
   setSelectedIngr,
-}) => {
+}: Props) => {
   return (
     <Menu closeOnSelect={false}>
       <MenuButton
         as={Button}
         width={160}
         leftIcon={<TbMeat size={19} />}
-        rightIcon={
-          selectedIngredients.length !== 0 ? (
-            selectedIngredients.length
-          ) : (
-            <BsChevronDown />
-          )
-        }
+        rightIcon={selectedIngredients.length === 0 && <BsChevronDown />}
       >
         Ingredients{" "}
+        {selectedIngredients.length !== 0 && selectedIngredients.length}
       </MenuButton>
       <MenuList>
         <MenuOptionGroup type="checkbox">
