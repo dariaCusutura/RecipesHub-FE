@@ -8,7 +8,7 @@ import {
   AlertDialogOverlay,
   Button,
 } from "@chakra-ui/react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import React from "react";
 import toast from "react-hot-toast";
 import { Recipe } from "../hooks/useRecipes";
@@ -24,13 +24,22 @@ const DeleteRecipeButton = ({ recipe }: Props) => {
   const manageDeleteRecipe = async () => {
     onClose();
     await axios
-      .delete(`http://localhost:3000/recipes/${recipe._id}`)
-      .catch((err) => console.log(err))
-      .then(() => {
-        toast.success("Recipe deleted");
+      .delete(`http://localhost:3000/recipes/${recipe._id}`, {
+        withCredentials: true,
+      })
+      .catch((err) => {
         setTimeout(() => {
           window.location.reload();
         }, 1000);
+        return toast.error(err.response.data);
+      })
+      .then((res: AxiosResponse) => {
+        if (res !== undefined && (res as AxiosResponse).status === 200) {
+          toast.success(res.data);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
       });
   };
 

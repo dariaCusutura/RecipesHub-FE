@@ -15,11 +15,11 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Recipe } from "../hooks/useRecipes";
 import { BsChevronDown } from "react-icons/bs";
 import axios, { AxiosResponse } from "axios";
-import img from "./NoImg.jpg";
+import noImage from "./NoImg.jpg";
 import toast from "react-hot-toast";
 
 interface Props {
@@ -45,13 +45,20 @@ const EditRecipeButton = ({ recipe, name }: Props) => {
           ingredients: ingredients === "" ? 0 : ingredients.split(","),
           category,
           author: name,
-          image: imageAddress !== "" ? imageAddress : img,
+          image: imageAddress !== "" ? imageAddress : noImage,
         },
         { withCredentials: true }
       )
       .catch((err) => {
         console.log(err);
         setError(err.response.data);
+        if (
+          err.response.data === "Access denied." ||
+          err.response.data === "Invalid token"
+        )
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
       })
       .then((res) => {
         if (res !== undefined && (res as AxiosResponse).status === 200) {
@@ -102,7 +109,7 @@ const EditRecipeButton = ({ recipe, name }: Props) => {
               }}
             />
             <Input
-              defaultValue={recipe.image !== img ? recipe.image : ""}
+              defaultValue={recipe.image !== noImage ? recipe.image : ""}
               id="Image"
               placeholder="Image address (optional)"
               marginBottom={5}

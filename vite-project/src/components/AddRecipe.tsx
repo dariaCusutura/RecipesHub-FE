@@ -51,6 +51,13 @@ const AddRecipe = ({ name }: Props) => {
       .catch((err) => {
         console.log(err);
         setError(err.response.data);
+        if (
+          err.response.data === "Access denied." ||
+          err.response.data === "Invalid token"
+        )
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
       })
       .then((res) => {
         if (res !== undefined && (res as AxiosResponse).status === 200) {
