@@ -21,11 +21,19 @@ interface Props {
   selectAuthor: (author: string) => void;
   name: string;
   favArray: number[];
+  isAdmin: boolean;
   updateFavArray: () => void;
 }
 
 const RecipeCard = React.memo(
-  ({ recipe, selectAuthor, name, favArray, updateFavArray }: Props) => {
+  ({
+    recipe,
+    selectAuthor,
+    name,
+    favArray,
+    updateFavArray,
+    isAdmin,
+  }: Props) => {
     return (
       <Card padding="10px" borderRadius={10} direction="row" overflow="hidden">
         <Image
@@ -56,12 +64,16 @@ const RecipeCard = React.memo(
               height={75}
               paddingTop={recipe.author === name ? 0 : 7}
             >
-              {recipe.author === name && <RecipeMenuButton recipe={recipe} name={name} />}
-              <HeartButton
-                recipe={recipe}
-                favArray={favArray}
-                updateFavArray={() => updateFavArray()}
-              />
+              {(recipe.author === name || isAdmin) && (
+                <RecipeMenuButton recipe={recipe} />
+              )}
+              {!isAdmin && (
+                <HeartButton
+                  recipe={recipe}
+                  favArray={favArray}
+                  updateFavArray={() => updateFavArray()}
+                />
+              )}
             </Box>
           </Flex>
           <Divider marginBottom={1} />

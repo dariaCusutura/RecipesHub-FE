@@ -15,7 +15,6 @@ export interface RecipesQuery {
   author: string;
 }
 
-
 function RecipesPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([]);
@@ -124,6 +123,7 @@ function RecipesPage() {
         <GridItem area="main">
           <Heading marginY={3}>{heading}</Heading>
           <RecipesGrid
+            isAdmin={isAdmin}
             name={name}
             result={searchResult}
             recipes={recipes}

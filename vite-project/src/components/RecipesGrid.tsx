@@ -13,6 +13,7 @@ interface Props {
   result: string;
   selectAuthor: (author: string) => void;
   name: string;
+  isAdmin: boolean;
 }
 
 const RecipesGrid = React.memo(
@@ -24,6 +25,7 @@ const RecipesGrid = React.memo(
     result,
     selectAuthor,
     name,
+    isAdmin,
   }: Props) => {
     const [favArray, setFavArray] = useState<number[]>([]);
     const [liked, setLiked] = useState(false);
@@ -71,6 +73,7 @@ const RecipesGrid = React.memo(
           {filteredRecipes.map((recipe) => (
             <ListItem paddingRight={5} marginY={3} key={recipe._id}>
               <RecipeCard
+                isAdmin={isAdmin}
                 favArray={favArray}
                 name={name}
                 recipe={recipe}

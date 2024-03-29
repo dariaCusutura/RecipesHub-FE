@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import { RecipesQuery } from "./RecipesPage";
 import axios from "axios";
 import useUserData from "../hooks/useUserData";
+import RecipesGrid from "../components/RecipesGrid";
+import { Toaster } from "react-hot-toast";
 
 const Admin = () => {
   const [cookie, , removeCookie] = useCookies([]);
@@ -39,11 +41,11 @@ const Admin = () => {
 
   const [path, setPath] = useState("/recipes");
   const [, setHeading] = useState("All Recipes");
-  const [, setSearchResult] = useState("");
+  const [searchResult, setSearchResult] = useState("");
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
-  const { recipes } = useRecipes({ path }, recipesQuery);
+  const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
   const { name, email, isAdmin } = useUserData();
 
   const manageLogout = () => {
@@ -87,16 +89,33 @@ const Admin = () => {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <p>one!</p>
+                 <p>One</p>
                 </TabPanel>
                 <TabPanel>
-                  <p>two!</p>
+                <RecipesGrid
+                  isAdmin={isAdmin}
+                  name={name}
+                  result={searchResult}
+                  recipes={recipes}
+                  error={error}
+                  selectedIngredients={[]}
+                  isLoading={isLoading}
+                  selectAuthor={(author) => {
+                    setHeading(
+                      author === name ? "My Recipes" : "Recipes by " + author
+                    );
+                    setPath("/recipes");
+                    setRecipesQuery({ ...recipesQuery, author });
+                    setSearchResult("");
+                  }}
+                  />
                 </TabPanel>
               </TabPanels>
             </Tabs>
           </Flex>
         </GridItem>
       </Grid>
+      <Toaster position="bottom-center" />
     </>
   );
 };

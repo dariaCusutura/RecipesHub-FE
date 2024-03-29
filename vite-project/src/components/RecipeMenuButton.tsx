@@ -6,10 +6,9 @@ import DeleteRecipeButton from "./DeleteRecipeButton";
 
 interface Props {
   recipe: Recipe;
-  name: string;
 }
 
-const RecipeMenuButton = ({ recipe, name }: Props) => {
+const RecipeMenuButton = ({ recipe }: Props) => {
   return (
     <>
       <Menu>
@@ -17,7 +16,7 @@ const RecipeMenuButton = ({ recipe, name }: Props) => {
           <HiOutlineDotsHorizontal size={25} />
         </MenuButton>
         <MenuList marginTop={-2} marginRight={-2}>
-          <EditRecipeButton name={name} recipe={recipe}/>
+          <EditRecipeButton recipe={recipe}/>
           <DeleteRecipeButton recipe={recipe} />
         </MenuList>
       </Menu>

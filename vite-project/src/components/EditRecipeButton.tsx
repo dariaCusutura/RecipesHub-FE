@@ -24,10 +24,9 @@ import toast from "react-hot-toast";
 
 interface Props {
   recipe: Recipe;
-  name: string;
 }
 
-const EditRecipeButton = ({ recipe, name }: Props) => {
+const EditRecipeButton = ({ recipe }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [recipeName, setName] = useState(recipe.name);
   const [ingredients, setIngredients] = useState(recipe.ingredients.join(", "));
@@ -44,7 +43,7 @@ const EditRecipeButton = ({ recipe, name }: Props) => {
           name: recipeName,
           ingredients: ingredients === "" ? 0 : ingredients.split(","),
           category,
-          author: name,
+          author: recipe.author,
           image: imageAddress !== "" ? imageAddress : noImage,
         },
         { withCredentials: true }
