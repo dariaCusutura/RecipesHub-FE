@@ -14,9 +14,10 @@ interface Props {
   logout: () => void;
   email: string;
   name: string;
+  isAdmin: boolean;
 }
 
-const MyAccountMenu = ({ logout, email, name }: Props) => {
+const MyAccountMenu = ({ logout, email, name, isAdmin }: Props) => {
   return (
     <Menu>
       <MenuButton
@@ -26,7 +27,7 @@ const MyAccountMenu = ({ logout, email, name }: Props) => {
         paddingStart={2}
         marginEnd={4}
       >
-        My Account
+        {isAdmin === true ? "Admin Account" : "My Account"}
       </MenuButton>
       <MenuList>
         <MenuGroup title={name} fontSize={17} />

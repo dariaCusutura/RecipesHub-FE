@@ -5,15 +5,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import useUserData from "../hooks/useUserData";
 import { Toaster } from "react-hot-toast";
 import useRecipes from "../hooks/useRecipes";
 import Aside from "../components/Aside";
+import useUserData from "../hooks/useUserData";
 
 export interface RecipesQuery {
   category: string;
   author: string;
 }
+
 
 function RecipesPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -44,8 +45,8 @@ function RecipesPage() {
     {} as RecipesQuery
   );
 
-  const { name, email } = useUserData();
   const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
+  const { name, email, isAdmin } = useUserData();
 
   const handleSelectIngredientsChange = (ingredient) => {
     const isSelected = selectedIngredients.includes(ingredient.toLowerCase());
@@ -90,6 +91,7 @@ function RecipesPage() {
       >
         <GridItem area="nav">
           <NavBar
+            isAdmin={isAdmin}
             recipes={recipes}
             email={email}
             name={name}

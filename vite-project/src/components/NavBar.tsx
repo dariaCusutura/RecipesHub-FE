@@ -11,18 +11,32 @@ interface Props {
   email: string;
   name: string;
   recipes: Recipe[];
+  isAdmin: boolean;
 }
 
-const NavBar = ({ Logout, submitInput, manageClick, email, name, recipes }: Props) => {
+const NavBar = ({
+  Logout,
+  submitInput,
+  manageClick,
+  email,
+  name,
+  recipes,
+  isAdmin,
+}: Props) => {
   return (
     <HStack justifyContent="space-between" padding="5px">
       <Image src={logo} boxSize="60px" />
       <SearchBar
-      recipes={recipes}
+        recipes={recipes}
         submitInput={(result) => submitInput(result)}
         manageClick={manageClick}
       />
-      <MyAccountMenu logout={Logout} email={email} name={name} />
+      <MyAccountMenu
+        logout={Logout}
+        email={email}
+        name={name}
+        isAdmin={isAdmin}
+      />
     </HStack>
   );
 };
