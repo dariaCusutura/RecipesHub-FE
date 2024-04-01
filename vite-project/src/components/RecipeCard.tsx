@@ -62,7 +62,7 @@ const RecipeCard = React.memo(
               alignItems="revert"
               flexDirection="column"
               height={75}
-              paddingTop={recipe.author === name ? 0 : 7}
+              paddingTop={isAdmin ? 7 : recipe.author === name ? 0 : 7}
             >
               {(recipe.author === name || isAdmin) && (
                 <RecipeMenuButton recipe={recipe} />

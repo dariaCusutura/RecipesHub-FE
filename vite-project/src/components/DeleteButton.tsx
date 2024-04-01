@@ -12,19 +12,23 @@ import axios, { AxiosResponse } from "axios";
 import React from "react";
 import toast from "react-hot-toast";
 import { Recipe } from "../hooks/useRecipes";
+import { User } from "../hooks/useUsers";
 
 interface Props {
   recipe: Recipe;
+  mode: string;
+  user: User;
 }
 
-const DeleteRecipeButton = ({ recipe }: Props) => {
+const DeleteButton = ({ recipe, mode, user }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
 
   const manageDeleteRecipe = async () => {
     onClose();
     await axios
-      .delete(`http://localhost:3000/recipes/${recipe._id}`, {
+      .delete(mode === "recipe" ?  `http://localhost:3000/recipes/${recipe._id}` : 
+      `http://localhost:3000/users/${user._id}`, {
         withCredentials: true,
       })
       .catch((err) => {
@@ -45,7 +49,7 @@ const DeleteRecipeButton = ({ recipe }: Props) => {
 
   return (
     <>
-      <MenuItem onClick={onOpen}>Delete recipe</MenuItem>
+      <MenuItem onClick={onOpen}>{mode === "recipe" ? "Delete recipe" : "Delete user"}</MenuItem>
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
@@ -54,7 +58,7 @@ const DeleteRecipeButton = ({ recipe }: Props) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogBody marginTop={3} fontSize={20}>
-              Are you sure you want to delete this recipe?
+              Are you sure you want to delete this {mode === "recipe" ? "recipe" : "user"}?
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
@@ -71,4 +75,4 @@ const DeleteRecipeButton = ({ recipe }: Props) => {
   );
 };
 
-export default DeleteRecipeButton;
+export default DeleteButton;

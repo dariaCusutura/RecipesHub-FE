@@ -2,6 +2,8 @@ import {
   Flex,
   Grid,
   GridItem,
+  List,
+  ListItem,
   Tab,
   TabList,
   TabPanel,
@@ -18,6 +20,8 @@ import axios from "axios";
 import useUserData from "../hooks/useUserData";
 import RecipesGrid from "../components/RecipesGrid";
 import { Toaster } from "react-hot-toast";
+import useUsers from "../hooks/useUsers";
+import UserCard from "../components/UserCard";
 
 const Admin = () => {
   const [cookie, , removeCookie] = useCookies([]);
@@ -47,6 +51,7 @@ const Admin = () => {
   );
   const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
   const { name, email, isAdmin } = useUserData();
+  const users = useUsers();
 
   const manageLogout = () => {
     removeCookie("jwt");
@@ -88,26 +93,32 @@ const Admin = () => {
                 <Tab width={800}>Manage Recipes</Tab>
               </TabList>
               <TabPanels>
-                <TabPanel>
-                 <p>One</p>
+                <TabPanel key={1}>
+                  <List>
+                    {users.map((user) => (
+                      <ListItem key={user._id} paddingRight={5} marginY={3}>
+                        <UserCard user={user} />
+                      </ListItem>
+                    ))}
+                  </List>
                 </TabPanel>
-                <TabPanel>
-                <RecipesGrid
-                  isAdmin={isAdmin}
-                  name={name}
-                  result={searchResult}
-                  recipes={recipes}
-                  error={error}
-                  selectedIngredients={[]}
-                  isLoading={isLoading}
-                  selectAuthor={(author) => {
-                    setHeading(
-                      author === name ? "My Recipes" : "Recipes by " + author
-                    );
-                    setPath("/recipes");
-                    setRecipesQuery({ ...recipesQuery, author });
-                    setSearchResult("");
-                  }}
+                <TabPanel key={2}>
+                  <RecipesGrid
+                    isAdmin={isAdmin}
+                    name={name}
+                    result={searchResult}
+                    recipes={recipes}
+                    error={error}
+                    selectedIngredients={[]}
+                    isLoading={isLoading}
+                    selectAuthor={(author) => {
+                      setHeading(
+                        author === name ? "My Recipes" : "Recipes by " + author
+                      );
+                      setPath("/recipes");
+                      setRecipesQuery({ ...recipesQuery, author });
+                      setSearchResult("");
+                    }}
                   />
                 </TabPanel>
               </TabPanels>

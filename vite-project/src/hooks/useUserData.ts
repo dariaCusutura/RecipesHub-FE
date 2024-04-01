@@ -8,7 +8,7 @@ const useUserData = () => {
 
   useEffect(() => {
     apiRecipe
-      .get("/userData")
+      .get("/users/userData")
       .then((res) => {
         setEmail(res.data.email);
         setName(res.data.name);
