@@ -20,6 +20,7 @@ interface Props {
   user: User;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DeleteButton = ({ recipe, mode, user }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
@@ -27,8 +28,7 @@ const DeleteButton = ({ recipe, mode, user }: Props) => {
   const manageDeleteRecipe = async () => {
     onClose();
     await axios
-      .delete(mode === "recipe" ?  `http://localhost:3000/recipes/${recipe._id}` : 
-      `http://localhost:3000/users/${user._id}`, {
+      .delete(`http://localhost:3000/${mode}s/${eval(mode)._id}`, {
         withCredentials: true,
       })
       .catch((err) => {
@@ -49,7 +49,7 @@ const DeleteButton = ({ recipe, mode, user }: Props) => {
 
   return (
     <>
-      <MenuItem onClick={onOpen}>{mode === "recipe" ? "Delete recipe" : "Delete user"}</MenuItem>
+      <MenuItem onClick={onOpen}>Delete {mode}</MenuItem>
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
@@ -58,7 +58,7 @@ const DeleteButton = ({ recipe, mode, user }: Props) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogBody marginTop={3} fontSize={20}>
-              Are you sure you want to delete this {mode === "recipe" ? "recipe" : "user"}?
+              Are you sure you want to delete this {mode}?
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
