@@ -36,13 +36,10 @@ const Login = () => {
       )
       .catch((err) => setError(err.response.data))
       .then((res) => {
-        if (
-          res !== undefined &&
-          (res as AxiosResponse).status === 200 &&
-          (res as AxiosResponse).data.isAdmin === true
-        )
-          navigate("/admin");
-        else navigate("/");
+        if (res !== undefined && (res as AxiosResponse).status === 200) {
+          if ((res as AxiosResponse).data.isAdmin === true) navigate("/admin");
+          else navigate("/");
+        }
       });
   };
   return (

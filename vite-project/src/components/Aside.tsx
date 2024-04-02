@@ -4,8 +4,9 @@ import MyRecipesSelector from "./MyRecipesSelector";
 import FavouritesSelector from "./FavouritesSelector";
 import CategorySelector from "./CategorySelector";
 import IngredientsSelector from "./IngredientsSelector";
-import AddRecipe from "./AddRecipe";
+import AddEditRecipe from "./AddEditRecipe";
 import { RecipesQuery } from "../pages/RecipesPage";
+import { Recipe } from "../hooks/useRecipes";
 
 interface Props {
   setPath: (path: string) => void;
@@ -81,8 +82,9 @@ const Aside = ({
           }
         />
       </ListItem>
+      {/* add recipe button */}
       <ListItem>
-        <AddRecipe name={name} />
+        <AddEditRecipe name={name} mode="add" recipe={{} as Recipe} />
       </ListItem>
     </List>
   );
