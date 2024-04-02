@@ -115,7 +115,7 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
           <ModalHeader fontSize={25} marginTop={3}>
             {mode === "add" ? "Add a new recipe" : "Edit recipe"}
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton marginTop={3} />
           <ModalBody>
             <Input
               defaultValue={mode !== "add" ? recipe.name : ""}
