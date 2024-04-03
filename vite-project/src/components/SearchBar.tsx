@@ -9,27 +9,42 @@ import {
 import { IoSearchOutline, IoClose } from "react-icons/io5";
 import { Recipe } from "../hooks/useRecipes";
 import { useEffect, useRef, useState } from "react";
+import { User } from "../hooks/useUsers";
 
 interface Props {
   submitInput: (result: string) => void;
   manageClick: () => void;
   recipes: Recipe[];
+  mode: string;
+  users: User[];
 }
 
-const SearchBar = ({ submitInput, manageClick, recipes }: Props) => {
+const SearchBar = ({
+  submitInput,
+  manageClick,
+  recipes,
+  mode,
+  users,
+}: Props) => {
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
   const resultsBoxRef = useRef(null);
 
   useEffect(() => {
-    setResults(
-      recipes.filter((recipe) =>
-        recipe.name.toLowerCase().includes(input.toLowerCase())
-      )
-    );
+    mode === "recipes"
+      ? setResults(
+          recipes.filter((recipe) =>
+            recipe.name.toLowerCase().includes(input.toLowerCase())
+          )
+        )
+      : setResults(
+          users.filter((user) =>
+            user.name.toLowerCase().includes(input.toLowerCase())
+          )
+        );
     if (input.length === 0) setResults([]);
-  }, [input]);
+  }, [input, mode]);
 
   const clearInput = () => {
     setInput("");
@@ -71,7 +86,7 @@ const SearchBar = ({ submitInput, manageClick, recipes }: Props) => {
         <Input
           width={"100%"}
           id="SearchRecipe"
-          placeholder="Search a recipe..."
+          placeholder={mode === "recipes" ? "Search a recipe..." : "Search user..."}
           onChange={(e) => setInput(e.target.value)}
           ref={inputRef}
           onClick={manageClick}

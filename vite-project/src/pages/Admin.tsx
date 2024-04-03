@@ -45,10 +45,12 @@ const Admin = () => {
 
   const [path, setPath] = useState("/recipes");
   const [, setHeading] = useState("All Recipes");
-  const [searchResult, setSearchResult] = useState("");
+  const [recipeSearchResult, setRecipeSearchResult] = useState("");
+  const [userSearchResult, setUserSearchResult] = useState("");
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
+  const [mode, setMode] = useState("users");
   const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
   const { name, email, isAdmin } = useUserData();
   const users = useUsers();
@@ -57,6 +59,11 @@ const Admin = () => {
     removeCookie("jwt");
     navigate("/login");
   };
+
+  const filteredUsers =
+    userSearchResult !== ""
+      ? users.filter((user) => user.name === userSearchResult)
+      : users;
 
   return (
     <>
@@ -72,12 +79,18 @@ const Admin = () => {
       >
         <GridItem area="nav">
           <NavBar
+            mode={mode}
+            users={users}
             isAdmin={isAdmin}
             recipes={recipes}
             email={email}
             name={name}
             Logout={() => manageLogout()}
-            submitInput={(result) => setSearchResult(result)}
+            submitInput={(result) =>
+              mode === "recipes"
+                ? setRecipeSearchResult(result)
+                : setUserSearchResult(result)
+            }
             manageClick={() => {
               setHeading("");
               setPath("/recipes");
@@ -89,13 +102,28 @@ const Admin = () => {
           <Flex justifyContent={"space-around"}>
             <Tabs isFitted>
               <TabList mb="1em">
-                <Tab>Manage Users</Tab>
-                <Tab width={800}>Manage Recipes</Tab>
+                <Tab
+                  onClick={() => {
+                    setMode("users");
+                    setRecipeSearchResult("");
+                  }}
+                >
+                  Manage Users
+                </Tab>
+                <Tab
+                  width={800}
+                  onClick={() => {
+                    setMode("recipes");
+                    setUserSearchResult("");
+                  }}
+                >
+                  Manage Recipes
+                </Tab>
               </TabList>
               <TabPanels>
                 <TabPanel key={1}>
                   <List>
-                    {users.map((user) => (
+                    {filteredUsers.map((user) => (
                       <ListItem key={user._id} paddingRight={5} marginY={3}>
                         <UserCard user={user} />
                       </ListItem>
@@ -106,7 +134,7 @@ const Admin = () => {
                   <RecipesGrid
                     isAdmin={isAdmin}
                     name={name}
-                    result={searchResult}
+                    result={recipeSearchResult}
                     recipes={recipes}
                     error={error}
                     selectedIngredients={[]}
@@ -117,7 +145,7 @@ const Admin = () => {
                       );
                       setPath("/recipes");
                       setRecipesQuery({ ...recipesQuery, author });
-                      setSearchResult("");
+                      setRecipeSearchResult("");
                     }}
                   />
                 </TabPanel>

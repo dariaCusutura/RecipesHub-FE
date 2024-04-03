@@ -90,6 +90,8 @@ function RecipesPage() {
       >
         <GridItem area="nav">
           <NavBar
+            mode="recipes"
+            users={[]}
             isAdmin={isAdmin}
             recipes={recipes}
             email={email}

@@ -3,6 +3,7 @@ import logo from "./logo.png";
 import SearchBar from "./SearchBar";
 import MyAccountMenu from "./MyAccountMenu";
 import { Recipe } from "../hooks/useRecipes";
+import { User } from "../hooks/useUsers";
 
 interface Props {
   Logout: () => void;
@@ -12,6 +13,8 @@ interface Props {
   name: string;
   recipes: Recipe[];
   isAdmin: boolean;
+  mode: string;
+  users: User[];
 }
 
 const NavBar = ({
@@ -22,6 +25,8 @@ const NavBar = ({
   name,
   recipes,
   isAdmin,
+  mode,
+  users,
 }: Props) => {
   return (
     <HStack justifyContent="space-between" padding="5px">
@@ -30,6 +35,8 @@ const NavBar = ({
         recipes={recipes}
         submitInput={(result) => submitInput(result)}
         manageClick={manageClick}
+        mode={mode}
+        users={users}
       />
       <MyAccountMenu
         logout={Logout}
