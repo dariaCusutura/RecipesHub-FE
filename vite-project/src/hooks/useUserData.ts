@@ -5,6 +5,7 @@ const useUserData = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [_id, setId] = useState();
 
   useEffect(() => {
     apiRecipe
@@ -13,6 +14,7 @@ const useUserData = () => {
         setEmail(res.data.email);
         setName(res.data.name);
         setIsAdmin(res.data.isAdmin);
+        setId(res.data._id);
       })
       .catch((err) => {
         console.log("useUserData error:", err);
@@ -22,7 +24,7 @@ const useUserData = () => {
           }, 1000);
       });
   }, []);
-  return { email, name, isAdmin };
+  return { email, name, isAdmin, _id };
 };
 
 export default useUserData;

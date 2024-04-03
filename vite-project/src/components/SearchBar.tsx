@@ -2,9 +2,11 @@ import {
   Box,
   Card,
   CardBody,
+  Heading,
   Input,
   InputGroup,
   InputRightElement,
+  Text,
 } from "@chakra-ui/react";
 import { IoSearchOutline, IoClose } from "react-icons/io5";
 import { Recipe } from "../hooks/useRecipes";
@@ -86,7 +88,9 @@ const SearchBar = ({
         <Input
           width={"100%"}
           id="SearchRecipe"
-          placeholder={mode === "recipes" ? "Search a recipe..." : "Search user..."}
+          placeholder={
+            mode === "recipes" ? "Search recipe..." : "Search user..."
+          }
           onChange={(e) => setInput(e.target.value)}
           ref={inputRef}
           onClick={manageClick}
@@ -116,7 +120,10 @@ const SearchBar = ({
                 clearInput();
               }}
             >
-              <CardBody>{result.name}</CardBody>
+              <CardBody>
+                <Heading fontSize={19}>{result.name}</Heading>
+                {mode === "users" && <Text>{result.email}</Text>}
+              </CardBody>
             </Card>
           ))}
         </Box>

@@ -18,7 +18,12 @@ const RecipeMenuButton = ({ recipe }: Props) => {
         </MenuButton>
         <MenuList marginTop={-2} marginRight={-2}>
           <AddEditRecipe recipe={recipe} name="" mode="edit" />
-          <DeleteButton recipe={recipe} mode="recipe" user={{} as User} />
+          <DeleteButton
+            recipe={recipe}
+            mode="recipe"
+            user={{} as User}
+            deleteMyAccount={false}
+          />
         </MenuList>
       </Menu>
     </>

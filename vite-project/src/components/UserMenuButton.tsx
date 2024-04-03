@@ -15,7 +15,12 @@ const UserMenuButton = ({ user }: Props) => {
         <HiOutlineDotsHorizontal size={25} />
       </MenuButton>
       <MenuList marginTop={-2} marginRight={-2}>
-        <DeleteButton recipe={{} as Recipe} mode="user" user={user} />
+        <DeleteButton
+          recipe={{} as Recipe}
+          mode="user"
+          user={user}
+          deleteMyAccount={false}
+        />
       </MenuList>
     </Menu>
   );

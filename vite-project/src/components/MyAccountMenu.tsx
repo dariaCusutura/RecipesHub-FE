@@ -19,9 +19,10 @@ interface Props {
   email: string;
   name: string;
   isAdmin: boolean;
+  _id: number;
 }
 
-const MyAccountMenu = ({ logout, email, name, isAdmin }: Props) => {
+const MyAccountMenu = ({ logout, email, name, isAdmin, _id }: Props) => {
   return (
     <Menu>
       <MenuButton
@@ -37,7 +38,7 @@ const MyAccountMenu = ({ logout, email, name, isAdmin }: Props) => {
         <MenuGroup title={name} fontSize={17} />
         <MenuGroup title={email} fontSize={17} />
         <MenuDivider />
-        <ManageAccount name={name} email={email}/>
+        <ManageAccount name={name} email={email} _id={_id} />
         <MenuItem id="logout" paddingLeft={4} onClick={logout}>
           <HStack spacing={1}>
             <MdLogout size={19} />

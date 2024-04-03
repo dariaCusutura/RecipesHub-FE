@@ -52,7 +52,7 @@ const Admin = () => {
   );
   const [mode, setMode] = useState("users");
   const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
-  const { name, email, isAdmin } = useUserData();
+  const { name, email, isAdmin, _id } = useUserData();
   const users = useUsers();
 
   const manageLogout = () => {
@@ -79,6 +79,7 @@ const Admin = () => {
       >
         <GridItem area="nav">
           <NavBar
+            _id={_id}
             mode={mode}
             users={users}
             isAdmin={isAdmin}

@@ -45,7 +45,7 @@ function RecipesPage() {
   );
 
   const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
-  const { name, email, isAdmin } = useUserData();
+  const { name, email, isAdmin, _id } = useUserData();
 
   const handleSelectIngredientsChange = (ingredient) => {
     const isSelected = selectedIngredients.includes(ingredient.toLowerCase());
@@ -91,6 +91,7 @@ function RecipesPage() {
         <GridItem area="nav">
           <NavBar
             mode="recipes"
+            _id={_id}
             users={[]}
             isAdmin={isAdmin}
             recipes={recipes}

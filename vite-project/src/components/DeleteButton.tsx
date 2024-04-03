@@ -13,17 +13,27 @@ import React from "react";
 import toast from "react-hot-toast";
 import { Recipe } from "../hooks/useRecipes";
 import { User } from "../hooks/useUsers";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 interface Props {
   recipe: Recipe;
   mode: string;
   user: User;
+  deleteMyAccount: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const DeleteButton = ({ recipe, mode, user }: Props) => {
+const DeleteButton = ({ recipe, mode, user, deleteMyAccount }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [, , removeCookie] = useCookies([]);
+  const navigate = useNavigate();
   const cancelRef = React.useRef();
+
+  const manageDeleteAccount = () => {
+    removeCookie("jwt");
+    navigate("/login");
+  };
 
   const manageDeleteRecipe = async () => {
     onClose();
@@ -40,16 +50,26 @@ const DeleteButton = ({ recipe, mode, user }: Props) => {
       .then((res: AxiosResponse) => {
         if (res !== undefined && (res as AxiosResponse).status === 200) {
           toast.success(res.data);
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
+          deleteMyAccount
+            ? setTimeout(() => {
+                manageDeleteAccount();
+              }, 1000)
+            : setTimeout(() => {
+                window.location.reload();
+              }, 1000);
         }
       });
   };
 
   return (
     <>
-      <MenuItem onClick={onOpen}>Delete {mode}</MenuItem>
+      {deleteMyAccount ? (
+        <Button onClick={onOpen} ml={3} marginStart={-1}>
+          Delete your account
+        </Button>
+      ) : (
+        <MenuItem onClick={onOpen}>Delete {mode}</MenuItem>
+      )}
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
@@ -58,7 +78,8 @@ const DeleteButton = ({ recipe, mode, user }: Props) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogBody marginTop={3} fontSize={20}>
-              Are you sure you want to delete this {mode}?
+              Are you sure you want to delete{" "}
+              {deleteMyAccount ? "your account" : `this ${mode}`}?
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>

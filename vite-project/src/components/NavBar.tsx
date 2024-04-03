@@ -15,6 +15,7 @@ interface Props {
   isAdmin: boolean;
   mode: string;
   users: User[];
+  _id: number;
 }
 
 const NavBar = ({
@@ -27,6 +28,7 @@ const NavBar = ({
   isAdmin,
   mode,
   users,
+  _id
 }: Props) => {
   return (
     <HStack justifyContent="space-between" padding="5px">
@@ -43,6 +45,7 @@ const NavBar = ({
         email={email}
         name={name}
         isAdmin={isAdmin}
+        _id={_id}
       />
     </HStack>
   );
