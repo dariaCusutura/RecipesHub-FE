@@ -11,6 +11,7 @@ const CategorySelector = ({ onSelectCategory }: Props) => {
   return (
     <Menu>
       <MenuButton
+        variant="primary"
         as={Button}
         rightIcon={<BsChevronDown />}
         leftIcon={<BiFoodMenu size={19} />}

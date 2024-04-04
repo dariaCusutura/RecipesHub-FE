@@ -1,4 +1,4 @@
-import { Grid, GridItem, Heading, Show } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Show } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 import RecipesGrid from "../components/RecipesGrid";
 import { useEffect, useState } from "react";
@@ -77,7 +77,7 @@ function RecipesPage() {
   ];
 
   return (
-    <>
+    <Box bg="background">
       <Grid
         templateAreas={{
           base: `"nav" "main"`,
@@ -145,7 +145,7 @@ function RecipesPage() {
         </GridItem>
       </Grid>
       <Toaster position="bottom-center" />
-    </>
+    </Box>
   );
 }
 

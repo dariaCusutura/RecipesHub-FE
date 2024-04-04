@@ -23,6 +23,7 @@ const IngredientsSelector = ({
   return (
     <Menu closeOnSelect={false}>
       <MenuButton
+        variant="primary"
         as={Button}
         width={160}
         leftIcon={<TbMeat size={19} />}

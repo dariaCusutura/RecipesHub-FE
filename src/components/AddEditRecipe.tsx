@@ -92,6 +92,7 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
     <>
       {mode === "add" ? (
         <Button
+          variant="primary"
           onClick={onOpen}
           width={160}
           justifyContent={"left"}
@@ -151,6 +152,7 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
             />
             <Menu>
               <MenuButton
+                variant="primary"
                 as={Button}
                 rightIcon={<BsChevronDown />}
                 marginBottom={5}

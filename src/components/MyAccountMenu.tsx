@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { VscAccount } from "react-icons/vsc";
-import ColorModeSwitch from "./ColorModeSwitch";
+// import ColorModeSwitch from "./ColorModeSwitch";
 import ManageAccount from "./ManageAccount";
 import { MdLogout } from "react-icons/md";
 
@@ -26,6 +26,7 @@ const MyAccountMenu = ({ logout, email, name, isAdmin, _id }: Props) => {
   return (
     <Menu>
       <MenuButton
+        variant="primary"
         as={Button}
         leftIcon={<VscAccount size={25} />}
         px={8}
@@ -45,9 +46,9 @@ const MyAccountMenu = ({ logout, email, name, isAdmin, _id }: Props) => {
             <Text>Log Out</Text>
           </HStack>
         </MenuItem>
-        <MenuItem id="colormode" paddingLeft={4}>
+        {/* <MenuItem id="colormode" paddingLeft={4}>
           <ColorModeSwitch />
-        </MenuItem>
+        </MenuItem> */}
       </MenuList>
     </Menu>
   );

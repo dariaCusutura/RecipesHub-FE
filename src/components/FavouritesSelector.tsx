@@ -8,10 +8,11 @@ interface Props {
 const FavouritesSelector = ({ manageClick }: Props) => {
   return (
     <Button
+      variant="primary"
       width={160}
       justifyContent={"left"}
       onClick={() => manageClick()}
-      leftIcon={<FaRegHeart size={19}/>}
+      leftIcon={<FaRegHeart size={19} />}
     >
       {" "}
       Favorites{" "}

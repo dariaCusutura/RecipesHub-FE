@@ -8,6 +8,7 @@ interface Props {
 const MyRecipesSelector = ({ selectMyRecipes }: Props) => {
   return (
     <Button
+      variant="primary"
       width={160}
       justifyContent={"left"}
       onClick={() => selectMyRecipes()}

@@ -8,9 +8,10 @@ interface Props {
 const AllRecipesSelector = ({ onSelectAll }: Props) => {
   return (
     <Button
+      variant="primary"
       width={160}
       justifyContent={"left"}
-      leftIcon={<IoHomeOutline size={19}/>}
+      leftIcon={<IoHomeOutline size={19} />}
       onClick={() => onSelectAll()}
     >
       All recipes
