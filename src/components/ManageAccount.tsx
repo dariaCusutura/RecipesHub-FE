@@ -83,7 +83,7 @@ const ManageAccount = ({ name, email, _id }: Props) => {
       >
         <ModalOverlay>
           <ModalContent>
-            <ModalHeader fontSize={30} marginTop={3}>
+            <ModalHeader fontSize={30}>
               Manage Account
             </ModalHeader>
             <ModalCloseButton marginTop={3} />
@@ -144,7 +144,7 @@ const ManageAccount = ({ name, email, _id }: Props) => {
               {error && <Text color={"red"}>{error}</Text>}
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme={"green"} onClick={handleSubmit}>
+              <Button variant="primary" onClick={handleSubmit}>
                 Save
               </Button>
             </ModalFooter>

@@ -2,12 +2,14 @@ import {
   Button,
   Menu,
   MenuButton,
+  MenuDivider,
   MenuItemOption,
   MenuList,
   MenuOptionGroup,
 } from "@chakra-ui/react";
 import { TbMeat } from "react-icons/tb";
 import { BsChevronDown } from "react-icons/bs";
+import React from "react";
 
 interface Props {
   ingredients: string[];
@@ -34,15 +36,17 @@ const IngredientsSelector = ({
       </MenuButton>
       <MenuList>
         <MenuOptionGroup type="checkbox">
-          {ingredients.map((ingredient) => (
-            <MenuItemOption
-              key={ingredient}
-              onClick={() => setSelectedIngr(ingredient)}
-              isChecked={selectedIngredients.includes(ingredient.toLowerCase())}
-              value={ingredient}
-            >
-              {ingredient}
-            </MenuItemOption>
+        {ingredients.map((ingredient, index) => (
+            <React.Fragment key={ingredient + "-" + index}>
+              <MenuItemOption
+                onClick={() => setSelectedIngr(ingredient)}
+                isChecked={selectedIngredients.includes(ingredient.toLowerCase())}
+                value={ingredient}
+              >
+                {ingredient}
+              </MenuItemOption>
+              {index !== ingredients.length - 1 && <MenuDivider />}
+            </React.Fragment>
           ))}
         </MenuOptionGroup>
       </MenuList>

@@ -113,7 +113,7 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader fontSize={25} marginTop={3}>
+          <ModalHeader fontSize={25}>
             {mode === "add" ? "Add a new recipe" : "Edit recipe"}
           </ModalHeader>
           <ModalCloseButton marginTop={3} />
@@ -176,7 +176,7 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
             {error && <Text color={"red"}>{error}</Text>}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={handleSubmit} colorScheme="green">
+            <Button onClick={handleSubmit} variant="primary">
               {mode === "add" ? "Save" : "Update Recipe"}
             </Button>
           </ModalFooter>

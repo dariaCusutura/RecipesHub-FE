@@ -49,6 +49,7 @@ const RecipeCard = React.memo(
             <Box>
               <Heading>{recipe.name}</Heading>
               <Button
+                color="thirdColor"
                 variant={"link"}
                 marginBottom={1}
                 fontSize={15}
@@ -83,9 +84,9 @@ const RecipeCard = React.memo(
             offset={[0, 2]}
             fontSize={15}
           >
-            <Text>Ingredients: {recipe.ingredients.length}</Text>
+            <Text color="thirdColor">Ingredients: {recipe.ingredients.length}</Text>
           </Tooltip>
-          <Text>Category: {recipe.category}</Text>
+          <Text color="thirdColor">Category: {recipe.category}</Text>
         </CardBody>
       </Card>
     );
