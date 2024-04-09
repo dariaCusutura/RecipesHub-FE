@@ -31,6 +31,7 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
           category: recipesQuery?.category,
           author: recipesQuery?.author,
           page: recipesQuery?.page,
+          ingredients: recipesQuery?.ingredients,
         },
       })
       .then((res) => {
@@ -59,6 +60,7 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
     path,
     recipesQuery?.author,
     recipesQuery?.category,
+    recipesQuery?.ingredients,
     recipesQuery?.page,
     serializedRecipesQuery,
   ]);

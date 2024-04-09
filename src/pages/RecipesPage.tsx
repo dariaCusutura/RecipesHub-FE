@@ -15,6 +15,7 @@ export interface RecipesQuery {
   category: string;
   author: string;
   page: number;
+  ingredients: string[];
 }
 
 function RecipesPage() {
@@ -40,7 +41,7 @@ function RecipesPage() {
 
   const [path, setPath] = useState("/recipes");
   const [heading, setHeading] = useState("All Recipes");
-  const [selectedIngredients, setSelectedIngr] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [searchResult, setSearchResult] = useState("");
   const [page, setPage] = useState(0);
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
@@ -54,16 +55,19 @@ function RecipesPage() {
   const { name, email, isAdmin, _id } = useUserData();
 
   const handleSelectIngredientsChange = (ingredient) => {
-    const isSelected = selectedIngredients.includes(ingredient.toLowerCase());
-    if (isSelected) {
-      // If ingredient is already selected, remove it from the array
-      setSelectedIngr(
-        selectedIngredients.filter((item) => item !== ingredient.toLowerCase())
+    setSelectedIngredients((prevSelectedIngredients) => {
+      const isSelected = prevSelectedIngredients.includes(
+        ingredient.toLowerCase()
       );
-    } else {
-      // If ingredient is not selected, add it to the array
-      setSelectedIngr([...selectedIngredients, ingredient.toLowerCase()]);
-    }
+      const newIngr = isSelected
+        ? prevSelectedIngredients.filter(
+            (item) => item !== ingredient.toLowerCase()
+          )
+        : [...prevSelectedIngredients, ingredient.toLowerCase()];
+
+      setRecipesQuery({ ...recipesQuery, ingredients: newIngr });
+      return newIngr;
+    });
   };
 
   const manageLogout = () => {
@@ -115,6 +119,7 @@ function RecipesPage() {
         <Show above="lg">
           <GridItem area="aside" marginY={5}>
             <Aside
+              setPage={(page) => setPage(page)}
               setPath={(path) => setPath(path)}
               setHeading={(heading) => setHeading(heading)}
               setSearchResult={(result) => setSearchResult(result)}
@@ -138,7 +143,6 @@ function RecipesPage() {
             recipes={recipes}
             error={error}
             isLoading={isLoading}
-            selectedIngredients={selectedIngredients}
             selectAuthor={(author) => {
               setHeading(
                 author === name ? "My Recipes" : "Recipes by " + author

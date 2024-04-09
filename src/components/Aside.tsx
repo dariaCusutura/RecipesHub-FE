@@ -10,6 +10,7 @@ import { Recipe } from "../hooks/useRecipes";
 
 interface Props {
   setPath: (path: string) => void;
+  setPage: (page: number) => void;
   setHeading: (heading: string) => void;
   setSearchResult: (result: string) => void;
   setRecipesQuery: (query: RecipesQuery) => void;
@@ -22,6 +23,7 @@ interface Props {
 
 const Aside = ({
   setPath,
+  setPage,
   setHeading,
   setSearchResult,
   setRecipesQuery,
@@ -36,7 +38,8 @@ const Aside = ({
       <ListItem>
         <AllRecipesSelector
           onSelectAll={() => {
-            setRecipesQuery({} as RecipesQuery);
+            setPage(0);
+            setRecipesQuery({ page: 0 } as RecipesQuery);
             setPath("/recipes");
             setHeading("All Recipes");
             setSearchResult("");
@@ -46,9 +49,10 @@ const Aside = ({
       <ListItem>
         <MyRecipesSelector
           selectMyRecipes={() => {
+            setPage(0);
             setHeading("My Recipes");
             setPath("/recipes");
-            setRecipesQuery({ ...recipesQuery, author: name });
+            setRecipesQuery({ ...recipesQuery, author: name, page: 0 });
             setSearchResult("");
           }}
         />
@@ -57,9 +61,10 @@ const Aside = ({
         <FavouritesSelector
           manageClick={() => {
             setPath("/recipes/favorites/list");
-            setRecipesQuery({} as RecipesQuery);
+            setRecipesQuery({ page: 0 } as RecipesQuery);
             setHeading("My Favorite Recipes");
             setSearchResult("");
+            setPage(0);
           }}
         />
       </ListItem>

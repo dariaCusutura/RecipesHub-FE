@@ -9,7 +9,6 @@ interface Props {
   recipes: Recipe[];
   error: string;
   isLoading: boolean;
-  selectedIngredients: string[];
   result: string;
   selectAuthor: (author: string) => void;
   name: string;
@@ -21,7 +20,6 @@ const RecipesGrid = React.memo(
     recipes,
     error,
     isLoading,
-    selectedIngredients,
     result,
     selectAuthor,
     name,
@@ -39,17 +37,9 @@ const RecipesGrid = React.memo(
         .catch((err) => console.log(err.message));
     }, [liked]);
 
-    // Function to check if a recipe contains all selected ingredients
-    const hasAllIngredients = (recipeIngredients: string[]) => {
-      return selectedIngredients.every((ingredient) =>
-        recipeIngredients.includes(ingredient)
-      );
-    };
     // Filter recipes based on conditions
     const filteredRecipes = result
       ? recipes.filter((recipe) => recipe.name === result)
-      : selectedIngredients.length !== 0
-      ? recipes.filter((recipe) => hasAllIngredients(recipe.ingredients))
       : recipes;
     const skeletons = [1, 2, 3];
 

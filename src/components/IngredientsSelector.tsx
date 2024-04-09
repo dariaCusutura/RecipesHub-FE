@@ -22,6 +22,7 @@ const IngredientsSelector = ({
   selectedIngredients,
   setSelectedIngr,
 }: Props) => {
+  
   return (
     <Menu closeOnSelect={false}>
       <MenuButton
