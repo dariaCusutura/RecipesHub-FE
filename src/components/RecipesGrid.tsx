@@ -70,7 +70,7 @@ const RecipesGrid = React.memo(
               </ListItem>
             ))}
           {/* show recipes */}
-          {filteredRecipes.map((recipe) => (
+          {filteredRecipes?.map((recipe) => (
             <ListItem paddingRight={5} marginY={3} key={recipe._id}>
               <RecipeCard
                 isAdmin={isAdmin}

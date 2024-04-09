@@ -9,10 +9,12 @@ import { Toaster } from "react-hot-toast";
 import useRecipes from "../hooks/useRecipes";
 import Aside from "../components/Aside";
 import useUserData from "../hooks/useUserData";
+import Pagination from "../components/Pagination";
 
 export interface RecipesQuery {
   category: string;
   author: string;
+  page: number;
 }
 
 function RecipesPage() {
@@ -40,11 +42,15 @@ function RecipesPage() {
   const [heading, setHeading] = useState("All Recipes");
   const [selectedIngredients, setSelectedIngr] = useState([]);
   const [searchResult, setSearchResult] = useState("");
+  const [page, setPage] = useState(0);
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
 
-  const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
+  const { recipes, error, isLoading, totalRecipesCount } = useRecipes(
+    { path },
+    recipesQuery
+  );
   const { name, email, isAdmin, _id } = useUserData();
 
   const handleSelectIngredientsChange = (ingredient) => {
@@ -144,6 +150,18 @@ function RecipesPage() {
           />
         </GridItem>
       </Grid>
+      <Pagination
+        changePage={(direction) => {
+          setPage((prevPage) => {
+            const nextPage = direction === "next" ? prevPage + 1 : prevPage - 1;
+            setRecipesQuery({ ...recipesQuery, page: nextPage });
+            return nextPage;
+          });
+        }}
+        page={page}
+        totalRecipesCount={totalRecipesCount}
+        displayedRecipesCount={recipes?.length}
+      />
       <Toaster position="bottom-center" />
     </Box>
   );

@@ -18,6 +18,7 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [totalRecipesCount, setTotalRecipes] = useState();
   // Serializing recipesQuery for dependency array
   const serializedRecipesQuery = JSON.stringify(recipesQuery);
 
@@ -25,14 +26,16 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
     const controller = new AbortController();
     setIsLoading(true);
     apiRecipe
-      .get<Recipe[]>(path, {
+      .get(path, {
         params: {
           category: recipesQuery?.category,
           author: recipesQuery?.author,
+          page: recipesQuery?.page,
         },
       })
       .then((res) => {
-        setRecipes(res.data);
+        setRecipes(res.data.recipes);
+        setTotalRecipes(res.data.totalRecipesCount);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -52,9 +55,15 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
       setError("");
       controller.abort();
     };
-  }, [path, recipesQuery?.category, serializedRecipesQuery]);
+  }, [
+    path,
+    recipesQuery?.author,
+    recipesQuery?.category,
+    recipesQuery?.page,
+    serializedRecipesQuery,
+  ]);
 
-  return { recipes, error, isLoading };
+  return { recipes, error, isLoading, totalRecipesCount };
 };
 
 export default useRecipes;
