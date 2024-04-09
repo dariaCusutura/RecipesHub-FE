@@ -20,7 +20,7 @@ const Pagination = ({
         isDisabled={page === 0}
         variant="primary"
         leftIcon={<MdOutlineArrowBackIosNew size={20} />}
-        marginRight={1}
+        marginRight={1.5}
         onClick={() => changePage("prev")}
       >
         Prev
@@ -30,7 +30,7 @@ const Pagination = ({
         variant="primary"
         rightIcon={<MdArrowForwardIos size={20} />}
         onClick={() => changePage("next")}
-        marginLeft={1}
+        marginLeft={1.5}
         isDisabled={
           displayedRecipesCount !== 5 || totalRecipesCount === (page + 1) * 5
         }

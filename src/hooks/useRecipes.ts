@@ -41,7 +41,7 @@ const useRecipes = ({ path }: Props, recipesQuery: RecipesQuery) => {
       })
       .catch((err) => {
         console.log("useRecipes error:", err);
-        setError("An error occured");
+        setError(err.response.data);
         setIsLoading(false);
         if (
           err.response.data === "jwt must be provided" ||
