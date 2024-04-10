@@ -59,14 +59,18 @@ function RecipesPage() {
       const isSelected = prevSelectedIngredients.includes(
         ingredient.toLowerCase()
       );
-      const newIngr = isSelected
+      const newSelectedIngredients = isSelected
         ? prevSelectedIngredients.filter(
             (item) => item !== ingredient.toLowerCase()
           )
         : [...prevSelectedIngredients, ingredient.toLowerCase()];
-
-      setRecipesQuery({ ...recipesQuery, ingredients: newIngr });
-      return newIngr;
+      setPage(0);
+      setRecipesQuery({
+        ...recipesQuery,
+        ingredients: newSelectedIngredients,
+        page: 0,
+      });
+      return newSelectedIngredients;
     });
   };
 

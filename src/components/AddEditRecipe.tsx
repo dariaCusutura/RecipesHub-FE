@@ -63,6 +63,7 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
           ingredients: ingredients === "" ? 0 : ingredients.split(","),
           image: imageAddress || noImage,
           author: mode === "add" ? name : recipe.author,
+          date: mode === "add" ? new Date() : recipe.date,
         },
         { withCredentials: true }
       );

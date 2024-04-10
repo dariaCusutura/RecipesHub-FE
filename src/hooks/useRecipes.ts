@@ -9,6 +9,7 @@ export interface Recipe {
   category: string;
   author: string;
   image: string;
+  date: Date;
 }
 interface Props {
   path: string;
