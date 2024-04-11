@@ -17,6 +17,7 @@ import HeartButton from "./HeartButton";
 import React from "react";
 import RecipeMenuButton from "./RecipeMenuButton";
 import { BsDot } from "react-icons/bs";
+import PostDate from "./PostDate";
 
 interface Props {
   recipe: Recipe;
@@ -36,55 +37,6 @@ const RecipeCard = React.memo(
     updateFavArray,
     isAdmin,
   }: Props) => {
-    function timeSince(dateParam: Date | string): string {
-      const date = new Date(dateParam);
-      const seconds = Math.floor(
-        (new Date().getTime() - date.getTime()) / 1000
-      );
-      const months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
-
-      let interval = seconds / 31536000; // 60 * 60 * 24 * 365
-
-      if (interval > 1) {
-        return `${
-          months[date.getMonth()]
-        } ${date.getDate()}, ${date.getFullYear()}`;
-      }
-      interval = seconds / 2592000; // 60 * 60 * 24 * 30
-      if (interval > 1) {
-        return `${months[date.getMonth()]} ${date.getDate()}`;
-      }
-      interval = seconds / 86400; // 60 * 60 * 24
-      if (interval > 1) {
-        return Math.floor(interval) > 6
-          ? `${months[date.getMonth()]} ${date.getDate()}`
-          : Math.floor(interval) + "d";
-      }
-      interval = seconds / 3600; // 60 * 60
-      if (interval > 1) {
-        return Math.floor(interval) + "h";
-      }
-      interval = seconds / 60;
-      if (interval > 1) {
-        return Math.floor(interval) + "m";
-      }
-      return Math.floor(seconds) + "s";
-    }
-    const displayDate = timeSince(recipe.date);
-
     return (
       <Card padding="10px" borderRadius={10} direction="row" overflow="hidden">
         <Image
@@ -100,17 +52,16 @@ const RecipeCard = React.memo(
             <Box>
               <Heading>{recipe.name}</Heading>
               <HStack>
+                <PostDate recipe={recipe} />
+                <BsDot />
                 <Button
                   color="thirdColor"
                   variant={"link"}
-                  marginBottom={1}
                   fontSize={15}
                   onClick={() => selectAuthor(recipe.author)}
                 >
                   {recipe.author === name ? "by you" : `by  ${recipe.author}`}
                 </Button>
-                <BsDot />
-                <Text>{displayDate}</Text>
               </HStack>
             </Box>
             <Box
