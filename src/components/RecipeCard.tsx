@@ -10,6 +10,7 @@ import {
   Image,
   Text,
   Tooltip,
+  useTheme
 } from "@chakra-ui/react";
 import img from "./NoImg.jpg";
 import { Recipe } from "../hooks/useRecipes";
@@ -37,6 +38,9 @@ const RecipeCard = React.memo(
     updateFavArray,
     isAdmin,
   }: Props) => {
+    const theme = useTheme();
+    const color = theme.colors.thirdColor;
+    
     return (
       <Card padding="10px" borderRadius={10} direction="row" overflow="hidden">
         <Image
@@ -50,10 +54,10 @@ const RecipeCard = React.memo(
         <CardBody marginBlock={-5}>
           <Flex justifyContent="space-between" alignItems="center">
             <Box>
-              <Heading>{recipe.name}</Heading>
+              <Heading color={"accent"}>{recipe.name}</Heading>
               <HStack>
                 <PostDate recipe={recipe} />
-                <BsDot />
+                <BsDot color={color} />
                 <Button
                   color="thirdColor"
                   variant={"link"}
@@ -84,17 +88,15 @@ const RecipeCard = React.memo(
             </Box>
           </Flex>
           <Divider marginBottom={1} />
-          <Tooltip
-            label={recipe.ingredients.join(", ")}
-            placement="bottom-start"
-            offset={[0, 2]}
-            fontSize={15}
-          >
-            <Text color="thirdColor">
-              Ingredients: {recipe.ingredients.length}
-            </Text>
-          </Tooltip>
-          <Text color="thirdColor">Category: {recipe.category}</Text>
+            <Tooltip
+              label={recipe.ingredients.join(", ")}
+              placement="bottom-start"
+              offset={[0, 2]}
+              fontSize={15}
+            >
+              <Text>Ingredients: {recipe.ingredients.length}</Text>
+            </Tooltip>
+          <Text>Category: {recipe.category}</Text>
         </CardBody>
       </Card>
     );

@@ -139,7 +139,7 @@ function RecipesPage() {
           </GridItem>
         </Show>
         <GridItem area="main">
-          <Heading marginY={3}>{heading}</Heading>
+          <Heading marginY={3} color={"thirdColor"}>{heading}</Heading>
           <RecipesGrid
             isAdmin={isAdmin}
             name={name}

@@ -1,4 +1,4 @@
-import { Menu, MenuButton, MenuList } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, useTheme } from "@chakra-ui/react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { Recipe } from "../hooks/useRecipes";
 import DeleteButton from "./DeleteButton";
@@ -10,11 +10,13 @@ interface Props {
 }
 
 const RecipeMenuButton = ({ recipe }: Props) => {
+  const theme=useTheme();
+  const color = theme.colors.darkest;
   return (
     <>
       <Menu>
         <MenuButton marginBottom={1} borderRadius="9999px" alignSelf="center">
-          <HiOutlineDotsHorizontal size={25} />
+          <HiOutlineDotsHorizontal size={25} color={color}/>
         </MenuButton>
         <MenuList marginTop={-2} marginRight={-2}>
           <AddEditRecipe recipe={recipe} name="" mode="edit" />

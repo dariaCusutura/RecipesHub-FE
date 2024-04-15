@@ -9,9 +9,11 @@ const theme = extendTheme({
   colors: {
     background: "#314357",
     secondColor: "#456672",
+    cardColor: "#3E5668",
     thirdColor: "#e3b587",
     forthColor: "#c98c70",
     accent: "#D4974A",
+    darkest: "#142E4B"
   },
   components: {
     Button: {
@@ -76,8 +78,9 @@ const theme = extendTheme({
             bg: "background",
             color: "thirdColor",
             _hover: {
-              border: "3px solid",
               borderColor: "accent",
+              boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.5)",
+              transition: "0.7s"
             },
           },
         },
@@ -85,6 +88,25 @@ const theme = extendTheme({
       defaultProps: {
         variant: "backgroundFix",
       },
+    },
+    Card: {
+      baseStyle: {
+        container: {
+          bg: "cardColor",
+          boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.5)",
+        },
+      },
+    },
+    Text: {
+      baseStyle: {
+        color: "thirdColor",
+      }
+    },
+    Tooltip: {
+      baseStyle: {
+        bg: "thirdColor",
+        color: "background"
+      }
     },
   },
 });

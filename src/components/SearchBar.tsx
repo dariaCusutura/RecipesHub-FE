@@ -105,12 +105,11 @@ const SearchBar = ({
           borderRadius={"4px"}
           position={"absolute"}
           zIndex="999"
-          bg={"gray.700"}
+          bg={"background"}
         >
           {results.map((result) => (
             <Card
               style={{ cursor: "pointer" }}
-              bg={"gray.800"}
               marginBlock={1}
               marginRight={1}
               marginLeft={1}

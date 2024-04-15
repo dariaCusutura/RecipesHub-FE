@@ -71,7 +71,7 @@ const ManageAccount = ({ name, email, _id }: Props) => {
       <MenuItem paddingLeft={4} onClick={onOpen}>
         <HStack spacing={1}>
           <GrUserSettings size={20} />
-          <Text>Manage Account</Text>
+          <Text  color={"background"}>Manage Account</Text>
         </HStack>
       </MenuItem>
       <Modal
@@ -83,7 +83,7 @@ const ManageAccount = ({ name, email, _id }: Props) => {
       >
         <ModalOverlay>
           <ModalContent>
-            <ModalHeader fontSize={30}>
+            <ModalHeader fontSize={30} color={"accent"}>
               Manage Account
             </ModalHeader>
             <ModalCloseButton marginTop={3} />
@@ -104,7 +104,7 @@ const ManageAccount = ({ name, email, _id }: Props) => {
                 <Text fontSize={18}>Name</Text>
                 <Input value={name} id="name" readOnly width={320} />
               </HStack>
-              <Heading fontSize={20} marginBottom={5}>
+              <Heading fontSize={20} marginBottom={5} color={"thirdColor"}>
                 Change password
               </Heading>
               <form>

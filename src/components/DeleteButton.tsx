@@ -64,7 +64,7 @@ const DeleteButton = ({ recipe, mode, user, deleteMyAccount }: Props) => {
   return (
     <>
       {deleteMyAccount ? (
-        <Button onClick={onOpen} ml={3} marginStart={-1}>
+        <Button onClick={onOpen} ml={3} marginStart={-1} variant={"primary"}>
           Delete your account
         </Button>
       ) : (
@@ -77,12 +77,12 @@ const DeleteButton = ({ recipe, mode, user, deleteMyAccount }: Props) => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogBody  fontSize={20}>
+            <AlertDialogBody fontSize={20} borderRadius={3} color={"thirdColor"}>
               Are you sure you want to delete{" "}
               {deleteMyAccount ? "your account" : `this ${mode}`}?
             </AlertDialogBody>
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button ref={cancelRef} onClick={onClose} color={"thirdColor"}>
                 Cancel
               </Button>
               <Button colorScheme="red" onClick={manageDeleteRecipe} ml={3}>

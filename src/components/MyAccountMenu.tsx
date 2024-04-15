@@ -36,14 +36,14 @@ const MyAccountMenu = ({ logout, email, name, isAdmin, _id }: Props) => {
         {isAdmin === true ? "Admin Account" : "My Account"}
       </MenuButton>
       <MenuList>
-        <MenuGroup title={name} fontSize={17} />
-        <MenuGroup title={email} fontSize={17} />
+        <MenuGroup title={name} fontSize={17} color={"background"} />
+        <MenuGroup title={email} fontSize={17} color={"background"} />
         <MenuDivider />
         <ManageAccount name={name} email={email} _id={_id} />
-        <MenuItem id="logout" paddingLeft={4} onClick={logout}>
+        <MenuItem id="logout" paddingLeft={4} onClick={logout} >
           <HStack spacing={1}>
             <MdLogout size={19} />
-            <Text>Log Out</Text>
+            <Text color={"background"}>Log Out</Text>
           </HStack>
         </MenuItem>
         {/* <MenuItem id="colormode" paddingLeft={4}>

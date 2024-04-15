@@ -14,6 +14,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  Box,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -114,7 +115,7 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader fontSize={25}>
+          <ModalHeader fontSize={25} color={"thirdColor"}>
             {mode === "add" ? "Add a new recipe" : "Edit recipe"}
           </ModalHeader>
           <ModalCloseButton marginTop={3} />
@@ -174,7 +175,13 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
                 ))}
               </MenuList>
             </Menu>
-            {error && <Text color={"red"}>{error}</Text>}
+            {error && (
+              <Box>
+                <Text color={"accent"} as={"b"}>
+                  {error}
+                </Text>
+              </Box>
+            )}
           </ModalBody>
           <ModalFooter>
             <Button onClick={handleSubmit} variant="primary">

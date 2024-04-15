@@ -1,5 +1,5 @@
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { IconButton } from "@chakra-ui/react";
+import { IconButton, useTheme } from "@chakra-ui/react";
 import { useState } from "react";
 import { Recipe } from "../hooks/useRecipes";
 import axios from "axios";
@@ -26,11 +26,20 @@ const HeartButton = ({ recipe, favArray, updateFavArray }: Props) => {
     setLiked(!liked);
     updateFavArray();
   };
+  const theme = useTheme();
+  const color = theme.colors.darkest;
 
   return (
     <IconButton
       aria-label="heart"
-      icon={favArray.includes(recipe._id) ? <FaHeart /> : <FaRegHeart />}
+      bgColor="rgba(164, 193, 225, 0.2)"
+      icon={
+        favArray.includes(recipe._id) ? (
+          <FaHeart color={color} />
+        ) : (
+          <FaRegHeart color={color} />
+        )
+      }
       onClick={() => manageClick()}
     />
   );
