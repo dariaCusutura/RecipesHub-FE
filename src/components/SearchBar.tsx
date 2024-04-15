@@ -12,34 +12,28 @@ import { IoSearchOutline, IoClose } from "react-icons/io5";
 import { Recipe } from "../hooks/useRecipes";
 import { useEffect, useRef, useState } from "react";
 import { User } from "../hooks/useUsers";
+import axios from "axios";
 
 interface Props {
-  submitInput: (result: string) => void;
-  manageClick: () => void;
+  submitInput: (result: Recipe) => void;
   recipes: Recipe[];
   mode: string;
   users: User[];
 }
 
-const SearchBar = ({
-  submitInput,
-  manageClick,
-  recipes,
-  mode,
-  users,
-}: Props) => {
+const SearchBar = ({ submitInput, mode, users }: Props) => {
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
   const resultsBoxRef = useRef(null);
 
   useEffect(() => {
-    mode === "recipes"
-      ? setResults(
-          recipes.filter((recipe) =>
-            recipe.name.toLowerCase().includes(input.toLowerCase())
-          )
-        )
+    mode === "recipes" && input !== ""
+      ? axios
+          .get(`http://localhost:3000/recipes/search?search=${input}`)
+          .then((res) => {
+            setResults(res.data);
+          })
       : setResults(
           users.filter((user) =>
             user.name.toLowerCase().includes(input.toLowerCase())
@@ -93,10 +87,9 @@ const SearchBar = ({
           }
           onChange={(e) => setInput(e.target.value)}
           ref={inputRef}
-          onClick={manageClick}
         />
       </InputGroup>
-      {results.length !== 0 && (
+      {results.length !== 0 && input !== "" && (
         <Box
           ref={resultsBoxRef}
           top={"100%"}
@@ -107,24 +100,25 @@ const SearchBar = ({
           zIndex="999"
           bg={"background"}
         >
-          {results.map((result) => (
-            <Card
-              style={{ cursor: "pointer" }}
-              marginBlock={1}
-              marginRight={1}
-              marginLeft={1}
-              key={result.name + "search"}
-              onClick={() => {
-                submitInput(result.name);
-                clearInput();
-              }}
-            >
-              <CardBody>
-                <Heading fontSize={19}>{result.name}</Heading>
-                {mode === "users" && <Text>{result.email}</Text>}
-              </CardBody>
-            </Card>
-          ))}
+          {results &&
+            results.map((result) => (
+              <Card
+                style={{ cursor: "pointer" }}
+                marginBlock={1}
+                marginRight={1}
+                marginLeft={1}
+                key={result.name + "search"}
+                onClick={() => {
+                  submitInput(result);
+                  clearInput();
+                }}
+              >
+                <CardBody>
+                  <Heading fontSize={19}>{result.name}</Heading>
+                  {mode === "users" && <Text>{result.email}</Text>}
+                </CardBody>
+              </Card>
+            ))}
         </Box>
       )}
     </Box>

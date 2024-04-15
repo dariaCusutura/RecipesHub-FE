@@ -89,12 +89,12 @@ const RecipeCard = React.memo(
           </Flex>
           <Divider marginBottom={1} />
             <Tooltip
-              label={recipe.ingredients.join(", ")}
+              label={recipe.ingredients?.join(", ")}
               placement="bottom-start"
               offset={[0, 2]}
               fontSize={15}
             >
-              <Text>Ingredients: {recipe.ingredients.length}</Text>
+              <Text>Ingredients: {recipe.ingredients?.length}</Text>
             </Tooltip>
           <Text>Category: {recipe.category}</Text>
         </CardBody>

@@ -12,7 +12,7 @@ interface Props {
   setPath: (path: string) => void;
   setPage: (page: number) => void;
   setHeading: (heading: string) => void;
-  setSearchResult: (result: string) => void;
+  setDisplayRecipes: () => void;
   setRecipesQuery: (query: RecipesQuery) => void;
   handleSelectIngredientsChange: (ingredient: string) => void;
   recipesQuery: RecipesQuery;
@@ -25,7 +25,7 @@ const Aside = ({
   setPath,
   setPage,
   setHeading,
-  setSearchResult,
+  setDisplayRecipes,
   setRecipesQuery,
   handleSelectIngredientsChange,
   recipesQuery,
@@ -42,7 +42,7 @@ const Aside = ({
             setRecipesQuery({ page: 0 } as RecipesQuery);
             setPath("/recipes");
             setHeading("All Recipes");
-            setSearchResult("");
+            setDisplayRecipes();
           }}
         />
       </ListItem>
@@ -53,7 +53,7 @@ const Aside = ({
             setHeading("My Recipes");
             setPath("/recipes");
             setRecipesQuery({ ...recipesQuery, author: name, page: 0 });
-            setSearchResult("");
+            setDisplayRecipes();
           }}
         />
       </ListItem>
@@ -63,7 +63,7 @@ const Aside = ({
             setPath("/recipes/favorites/list");
             setRecipesQuery({ page: 0 } as RecipesQuery);
             setHeading("My Favorite Recipes");
-            setSearchResult("");
+            setDisplayRecipes();
             setPage(0);
           }}
         />
@@ -74,7 +74,7 @@ const Aside = ({
             setHeading(category + " " + "Recipes");
             setPath("/recipes");
             setRecipesQuery({ ...recipesQuery, category });
-            setSearchResult("");
+            setDisplayRecipes();
           }}
         />
       </ListItem>

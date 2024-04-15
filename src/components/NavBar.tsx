@@ -7,8 +7,7 @@ import { User } from "../hooks/useUsers";
 
 interface Props {
   Logout: () => void;
-  submitInput: (result: string) => void;
-  manageClick: () => void;
+  submitInput: (result: Recipe) => void;
   email: string;
   name: string;
   recipes: Recipe[];
@@ -21,14 +20,13 @@ interface Props {
 const NavBar = ({
   Logout,
   submitInput,
-  manageClick,
   email,
   name,
   recipes,
   isAdmin,
   mode,
   users,
-  _id
+  _id,
 }: Props) => {
   return (
     <HStack justifyContent="space-between" padding="5px">
@@ -36,7 +34,6 @@ const NavBar = ({
       <SearchBar
         recipes={recipes}
         submitInput={(result) => submitInput(result)}
-        manageClick={manageClick}
         mode={mode}
         users={users}
       />

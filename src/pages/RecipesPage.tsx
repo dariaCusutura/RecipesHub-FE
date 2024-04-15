@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
-import useRecipes from "../hooks/useRecipes";
+import useRecipes, { Recipe } from "../hooks/useRecipes";
 import Aside from "../components/Aside";
 import useUserData from "../hooks/useUserData";
 import Pagination from "../components/Pagination";
@@ -42,11 +42,11 @@ function RecipesPage() {
   const [path, setPath] = useState("/recipes");
   const [heading, setHeading] = useState("All Recipes");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const [searchResult, setSearchResult] = useState("");
   const [page, setPage] = useState(0);
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
+  const [displayRecipes, setDisplayRecipes] = useState<Recipe[]>([]);
 
   const { recipes, error, isLoading, totalRecipesCount } = useRecipes(
     { path },
@@ -78,7 +78,9 @@ function RecipesPage() {
     removeCookie("jwt");
     navigate("/login");
   };
-
+  useEffect(() => {
+    setDisplayRecipes(recipes);
+  }, [recipes]);
   const ingredients = [
     "Eggs",
     "Milk",
@@ -112,12 +114,7 @@ function RecipesPage() {
             email={email}
             name={name}
             Logout={() => manageLogout()}
-            submitInput={(result) => setSearchResult(result)}
-            manageClick={() => {
-              setHeading("");
-              setPath("/recipes");
-              setRecipesQuery({} as RecipesQuery);
-            }}
+            submitInput={(result) => setDisplayRecipes([result])}
           />
         </GridItem>
         <Show above="lg">
@@ -126,7 +123,7 @@ function RecipesPage() {
               setPage={(page) => setPage(page)}
               setPath={(path) => setPath(path)}
               setHeading={(heading) => setHeading(heading)}
-              setSearchResult={(result) => setSearchResult(result)}
+              setDisplayRecipes={() => setDisplayRecipes(recipes)}
               setRecipesQuery={(query) => setRecipesQuery(query)}
               handleSelectIngredientsChange={(ingredient) =>
                 handleSelectIngredientsChange(ingredient)
@@ -139,12 +136,13 @@ function RecipesPage() {
           </GridItem>
         </Show>
         <GridItem area="main">
-          <Heading marginY={3} color={"thirdColor"}>{heading}</Heading>
+          <Heading marginY={3} color={"thirdColor"}>
+            {heading}
+          </Heading>
           <RecipesGrid
             isAdmin={isAdmin}
             name={name}
-            result={searchResult}
-            recipes={recipes}
+            recipes={displayRecipes}
             error={error}
             isLoading={isLoading}
             selectAuthor={(author) => {
@@ -153,7 +151,6 @@ function RecipesPage() {
               );
               setPath("/recipes");
               setRecipesQuery({ ...recipesQuery, author });
-              setSearchResult("");
             }}
           />
         </GridItem>
@@ -167,6 +164,7 @@ function RecipesPage() {
           });
         }}
         page={page}
+        displayRecipes={displayRecipes}
         totalRecipesCount={totalRecipesCount}
         displayedRecipesCount={recipes?.length}
       />

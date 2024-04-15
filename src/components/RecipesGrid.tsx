@@ -9,7 +9,6 @@ interface Props {
   recipes: Recipe[];
   error: string;
   isLoading: boolean;
-  result: string;
   selectAuthor: (author: string) => void;
   name: string;
   isAdmin: boolean;
@@ -20,7 +19,6 @@ const RecipesGrid = React.memo(
     recipes,
     error,
     isLoading,
-    result,
     selectAuthor,
     name,
     isAdmin,
@@ -37,15 +35,11 @@ const RecipesGrid = React.memo(
         .catch((err) => console.log(err.message));
     }, [liked]);
 
-    // Filter recipes based on conditions
-    const filteredRecipes = result
-      ? recipes.filter((recipe) => recipe.name === result)
-      : recipes;
     const skeletons = [1, 2, 3];
 
     if (error) {
       return (
-        <Heading marginY={3} size="lg" key={error}>
+        <Heading marginY={3} size="lg" key={error} color={"thirdColor"}>
           {error}
         </Heading>
       );
@@ -60,16 +54,18 @@ const RecipesGrid = React.memo(
               </ListItem>
             ))}
           {/* show recipes */}
-          {filteredRecipes?.map((recipe) => (
-            <ListItem paddingRight={5} marginY={3} key={recipe._id}>
-              <RecipeCard
-                isAdmin={isAdmin}
-                favArray={favArray}
-                name={name}
-                recipe={recipe}
-                selectAuthor={() => selectAuthor(recipe.author)}
-                updateFavArray={() => setLiked(!liked)}
-              />
+          {recipes?.map((recipe) => (
+            <ListItem paddingRight={5} marginY={3} key={recipe?._id}>
+              {recipe && (
+                <RecipeCard
+                  isAdmin={isAdmin}
+                  favArray={favArray}
+                  name={name}
+                  recipe={recipe}
+                  selectAuthor={() => selectAuthor(recipe.author)}
+                  updateFavArray={() => setLiked(!liked)}
+                />
+              )}
             </ListItem>
           ))}
         </List>
