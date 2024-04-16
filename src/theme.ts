@@ -84,6 +84,23 @@ const theme = extendTheme({
             },
           },
         },
+        loginFix: {
+          field: {
+            _placeholder: {
+              color: "thirdColor",
+            },
+            boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.2)",
+            border: "2px solid",
+            borderColor: "thirdColor",
+            bg: "secondColor",
+            color: "thirdColor",
+            _hover: {
+              borderColor: "accent",
+              boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.5)",
+              transition: "0.7s"
+            },
+          },
+        },
       },
       defaultProps: {
         variant: "backgroundFix",

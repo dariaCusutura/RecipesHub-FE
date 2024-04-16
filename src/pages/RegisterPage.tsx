@@ -4,13 +4,13 @@ import {
   Button,
   Container,
   FormControl,
-  FormErrorMessage,
   Heading,
   Input,
   InputGroup,
   InputLeftElement,
   Link,
   Text,
+  useTheme,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -46,9 +46,11 @@ const Register = () => {
           navigate("/");
       });
   };
+  const theme = useTheme();
+  const color = theme.colors.thirdColor;
 
   return (
-    <Box position="relative" h="400px">
+    <Box position="relative" h="400px" bgColor={"background"}>
       <AbsoluteCenter axis="both">
         <Container
           paddingBlock={4}
@@ -56,8 +58,12 @@ const Register = () => {
           bg={"#202020"}
           maxW="2xl"
           centerContent={true}
+          bgColor={"secondColor"}
+          style={{ boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.5)" }}
         >
-          <Heading size="lg">Register</Heading>
+          <Heading size="lg" color={"accent"} marginBottom={5}>
+            Register
+          </Heading>
           <form
             onSubmit={(e) => {
               handleSubmit();
@@ -71,18 +77,19 @@ const Register = () => {
             >
               <InputGroup marginBottom={5}>
                 <InputLeftElement>
-                  <VscAccount size={20} />
+                  <VscAccount size={20} color={color} />
                 </InputLeftElement>
                 <Input
                   id="name"
                   type="text"
                   placeholder="Name"
                   onChange={(e) => setName(e.target.value)}
+                  variant={"loginFix"}
                 />
               </InputGroup>
               <InputGroup marginBottom={5}>
                 <InputLeftElement>
-                  <MdOutlineEmail size={20} />
+                  <MdOutlineEmail size={20} color={color} />
                 </InputLeftElement>
                 <Input
                   id="RegisterEmail"
@@ -90,11 +97,12 @@ const Register = () => {
                   placeholder="Email"
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="username"
+                  variant={"loginFix"}
                 />
               </InputGroup>
-              <InputGroup>
+              <InputGroup marginBottom={3}>
                 <InputLeftElement>
-                  <RiLockPasswordLine size={20} />
+                  <RiLockPasswordLine size={20} color={color} />
                 </InputLeftElement>
                 <Input
                   id="RegisterPassword"
@@ -102,17 +110,18 @@ const Register = () => {
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
+                  variant={"loginFix"}
                 />
               </InputGroup>
-              {error && <FormErrorMessage>{error}</FormErrorMessage>}
+              {error && <Text color={"accent"}>{error}</Text>}
             </FormControl>
-            <Button marginTop={3} type="submit" width="100%">
+            <Button type="submit" width="100%" variant={"primary"}>
               Submit
             </Button>
           </form>
           <Text marginTop={3}>
             Already have an account?{" "}
-            <Link color="gray.500" href="/login">
+            <Link href="/login" color="accent" fontWeight="bold">
               Login
             </Link>
           </Text>
