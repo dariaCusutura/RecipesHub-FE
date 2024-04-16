@@ -15,13 +15,11 @@ import { User } from "../hooks/useUsers";
 import axios from "axios";
 
 interface Props {
-  submitInput: (result: Recipe) => void;
-  recipes: Recipe[];
+  submitInput: (result: Recipe | User) => void;
   mode: string;
-  users: User[];
 }
 
-const SearchBar = ({ submitInput, mode, users }: Props) => {
+const SearchBar = ({ submitInput, mode }: Props) => {
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
@@ -34,11 +32,13 @@ const SearchBar = ({ submitInput, mode, users }: Props) => {
           .then((res) => {
             setResults(res.data);
           })
-      : setResults(
-          users.filter((user) =>
-            user.name.toLowerCase().includes(input.toLowerCase())
-          )
-        );
+          .catch((err) => console.log(err))
+      : axios
+          .get(`http://localhost:3000/users/search?search=${input}`)
+          .then((res) => {
+            setResults(res.data);
+          })
+          .catch((err) => console.log(err));
     if (input.length === 0) setResults([]);
   }, [input, mode]);
 

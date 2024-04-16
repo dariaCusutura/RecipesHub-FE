@@ -1,4 +1,5 @@
 import {
+  Box,
   Flex,
   Grid,
   GridItem,
@@ -11,7 +12,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
-import useRecipes from "../hooks/useRecipes";
+import useRecipes, { Recipe } from "../hooks/useRecipes";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -20,7 +21,7 @@ import axios from "axios";
 import useUserData from "../hooks/useUserData";
 import RecipesGrid from "../components/RecipesGrid";
 import { Toaster } from "react-hot-toast";
-import useUsers from "../hooks/useUsers";
+import useUsers, { User } from "../hooks/useUsers";
 import UserCard from "../components/UserCard";
 
 const Admin = () => {
@@ -44,29 +45,35 @@ const Admin = () => {
   }, [cookie, removeCookie, navigate]);
 
   const [path, setPath] = useState("/recipes");
-  const [, setHeading] = useState("All Recipes");
-  const [recipeSearchResult, setRecipeSearchResult] = useState("");
-  const [userSearchResult, setUserSearchResult] = useState("");
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
+  const [displayRecipes, setDisplayRecipes] = useState<Recipe[]>([]);
+  const [displayUsers, setDisplayUsers] = useState<User[]>([]);
   const [mode, setMode] = useState("users");
-  const { recipes, error, isLoading } = useRecipes({ path }, recipesQuery);
+  const [, setHeading] = useState("All Recipes");
+  const { recipes, error, isLoading, totalRecipesCount } = useRecipes(
+    { path },
+    recipesQuery
+  );
   const { name, email, isAdmin, _id } = useUserData();
-  const users = useUsers();
+  const { users, totalUsersCount } = useUsers({ page: 0 });
 
   const manageLogout = () => {
     removeCookie("jwt");
     navigate("/login");
   };
 
-  const filteredUsers =
-    userSearchResult !== ""
-      ? users.filter((user) => user.name === userSearchResult)
-      : users;
+  useEffect(() => {
+    setDisplayRecipes(recipes);
+  }, [recipes, totalRecipesCount]);
+
+  useEffect(() => {
+    setDisplayUsers(users);
+  }, [users, totalUsersCount]);
 
   return (
-    <>
+    <Box bg="background">
       <Grid
         templateAreas={{
           base: `"nav" "main"`,
@@ -81,22 +88,15 @@ const Admin = () => {
           <NavBar
             _id={_id}
             mode={mode}
-            users={users}
             isAdmin={isAdmin}
-            recipes={recipes}
             email={email}
             name={name}
             Logout={() => manageLogout()}
             submitInput={(result) =>
               mode === "recipes"
-                ? setRecipeSearchResult(result)
-                : setUserSearchResult(result)
+                ? setDisplayRecipes([result] as Recipe[])
+                : setDisplayUsers([result] as User[])
             }
-            manageClick={() => {
-              setHeading("");
-              setPath("/recipes");
-              setRecipesQuery({} as RecipesQuery);
-            }}
           />
         </GridItem>
         <GridItem area="main">
@@ -106,7 +106,7 @@ const Admin = () => {
                 <Tab
                   onClick={() => {
                     setMode("users");
-                    setRecipeSearchResult("");
+                    setDisplayUsers(users);
                   }}
                 >
                   Manage Users
@@ -115,7 +115,7 @@ const Admin = () => {
                   width={800}
                   onClick={() => {
                     setMode("recipes");
-                    setUserSearchResult("");
+                    setDisplayRecipes(recipes);
                   }}
                 >
                   Manage Recipes
@@ -124,7 +124,7 @@ const Admin = () => {
               <TabPanels>
                 <TabPanel key={1}>
                   <List>
-                    {filteredUsers.map((user) => (
+                    {displayUsers.map((user) => (
                       <ListItem key={user._id} paddingRight={5} marginY={3}>
                         <UserCard user={user} />
                       </ListItem>
@@ -133,12 +133,11 @@ const Admin = () => {
                 </TabPanel>
                 <TabPanel key={2}>
                   <RecipesGrid
+                    mode="admin"
                     isAdmin={isAdmin}
                     name={name}
-                    result={recipeSearchResult}
-                    recipes={recipes}
+                    recipes={displayRecipes}
                     error={error}
-                    selectedIngredients={[]}
                     isLoading={isLoading}
                     selectAuthor={(author) => {
                       setHeading(
@@ -146,7 +145,6 @@ const Admin = () => {
                       );
                       setPath("/recipes");
                       setRecipesQuery({ ...recipesQuery, author });
-                      setRecipeSearchResult("");
                     }}
                   />
                 </TabPanel>
@@ -156,7 +154,7 @@ const Admin = () => {
         </GridItem>
       </Grid>
       <Toaster position="bottom-center" />
-    </>
+    </Box>
   );
 };
 

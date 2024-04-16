@@ -10,13 +10,13 @@ interface Props {
 }
 
 const RecipeMenuButton = ({ recipe }: Props) => {
-  const theme=useTheme();
+  const theme = useTheme();
   const color = theme.colors.darkest;
   return (
     <>
       <Menu>
         <MenuButton marginBottom={1} borderRadius="9999px" alignSelf="center">
-          <HiOutlineDotsHorizontal size={25} color={color}/>
+          <HiOutlineDotsHorizontal size={25} color={color} />
         </MenuButton>
         <MenuList marginTop={-2} marginRight={-2}>
           <AddEditRecipe recipe={recipe} name="" mode="edit" />

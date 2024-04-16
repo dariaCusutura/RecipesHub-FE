@@ -10,7 +10,7 @@ import {
   Image,
   Text,
   Tooltip,
-  useTheme
+  useTheme,
 } from "@chakra-ui/react";
 import img from "./NoImg.jpg";
 import { Recipe } from "../hooks/useRecipes";
@@ -26,12 +26,14 @@ interface Props {
   name: string;
   favArray: number[];
   isAdmin: boolean;
+  mode: string;
   updateFavArray: () => void;
 }
 
 const RecipeCard = React.memo(
   ({
     recipe,
+    mode,
     selectAuthor,
     name,
     favArray,
@@ -40,7 +42,7 @@ const RecipeCard = React.memo(
   }: Props) => {
     const theme = useTheme();
     const color = theme.colors.thirdColor;
-    
+
     return (
       <Card padding="10px" borderRadius={10} direction="row" overflow="hidden">
         <Image
@@ -63,6 +65,11 @@ const RecipeCard = React.memo(
                   variant={"link"}
                   fontSize={15}
                   onClick={() => selectAuthor(recipe.author)}
+                  isDisabled={mode === "admin"}
+                  _disabled={{
+                    opacity: "1",
+                    cursor: "not-allowed",
+                  }}
                 >
                   {recipe.author === name ? "by you" : `by  ${recipe.author}`}
                 </Button>
@@ -88,14 +95,14 @@ const RecipeCard = React.memo(
             </Box>
           </Flex>
           <Divider marginBottom={1} />
-            <Tooltip
-              label={recipe.ingredients?.join(", ")}
-              placement="bottom-start"
-              offset={[0, 2]}
-              fontSize={15}
-            >
-              <Text>Ingredients: {recipe.ingredients?.length}</Text>
-            </Tooltip>
+          <Tooltip
+            label={recipe.ingredients?.join(", ")}
+            placement="bottom-start"
+            offset={[0, 2]}
+            fontSize={15}
+          >
+            <Text>Ingredients: {recipe.ingredients?.length}</Text>
+          </Tooltip>
           <Text>Category: {recipe.category}</Text>
         </CardBody>
       </Card>

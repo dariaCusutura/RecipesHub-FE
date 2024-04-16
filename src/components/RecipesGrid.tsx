@@ -12,11 +12,13 @@ interface Props {
   selectAuthor: (author: string) => void;
   name: string;
   isAdmin: boolean;
+  mode: string;
 }
 
 const RecipesGrid = React.memo(
   ({
     recipes,
+    mode,
     error,
     isLoading,
     selectAuthor,
@@ -59,6 +61,7 @@ const RecipesGrid = React.memo(
               {recipe && (
                 <RecipeCard
                   isAdmin={isAdmin}
+                  mode={mode}
                   favArray={favArray}
                   name={name}
                   recipe={recipe}

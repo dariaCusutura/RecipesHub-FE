@@ -2,22 +2,29 @@ import { useEffect, useState } from "react";
 import apiRecipe from "../services/api-recipe";
 import { AxiosResponse } from "axios";
 
-export interface User  {
-    _id: number;
+export interface User {
+  _id: number;
   name: string;
   email: string;
   isAdmin: boolean;
 }
 
-const useUsers = () => {
+interface Props {
+  page: number;
+}
+
+const useUsers = ({page}: Props) => {
   const [users, setUsers] = useState<User[]>([]);
+  const [totalUsersCount, setTotalUsersCount] = useState();
 
   useEffect(() => {
     apiRecipe
-      .get("/users")
+      .get(`/users?page=${page}`)
       .then((res) => {
-        if(res !== undefined && (res as AxiosResponse).status === 200)
-        setUsers(res.data);
+        if (res !== undefined && (res as AxiosResponse).status === 200) {
+          setUsers(res.data.users);
+          setTotalUsersCount(res.data.totalUsersCount);
+        }
       })
       .catch((err) => {
         console.log("useUsers error:", err);
@@ -27,6 +34,6 @@ const useUsers = () => {
           }, 1000);
       });
   }, []);
-  return users;
+  return { users, totalUsersCount };
 };
 export default useUsers;

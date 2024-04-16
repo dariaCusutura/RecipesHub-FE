@@ -1,21 +1,18 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { MdArrowForwardIos, MdOutlineArrowBackIosNew } from "react-icons/md";
-import { Recipe } from "../hooks/useRecipes";
 
 interface Props {
   changePage: (direction: string) => void;
   page: number;
-  totalRecipesCount: number;
-  displayedRecipesCount: number;
-  displayRecipes: Recipe[];
+  totalCardsCount: number;
+  displayedCardsCount: number;
 }
 
 const Pagination = ({
   changePage,
   page,
-  totalRecipesCount,
-  displayedRecipesCount,
-  displayRecipes,
+  totalCardsCount,
+  displayedCardsCount,
 }: Props) => {
   return (
     <Flex placeContent={"center"} paddingBottom={5} paddingTop={3}>
@@ -35,9 +32,8 @@ const Pagination = ({
         onClick={() => changePage("next")}
         marginLeft={1.5}
         isDisabled={
-          displayedRecipesCount !== 5 ||
-          totalRecipesCount === (page + 1) * 5 ||
-          displayRecipes.length < 5
+          displayedCardsCount !== 5 ||
+          totalCardsCount === (page + 1) * 5
         }
       >
         Next

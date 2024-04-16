@@ -10,6 +10,7 @@ import useRecipes, { Recipe } from "../hooks/useRecipes";
 import Aside from "../components/Aside";
 import useUserData from "../hooks/useUserData";
 import Pagination from "../components/Pagination";
+import { User } from "../hooks/useUsers";
 
 export interface RecipesQuery {
   category: string;
@@ -46,7 +47,7 @@ function RecipesPage() {
   const [recipesQuery, setRecipesQuery] = useState<RecipesQuery>(
     {} as RecipesQuery
   );
-  const [displayRecipes, setDisplayRecipes] = useState<Recipe[]>([]);
+  const [displayRecipes, setDisplayRecipes] = useState<Recipe[] | User[]>([]);
 
   const { recipes, error, isLoading, totalRecipesCount } = useRecipes(
     { path },
@@ -108,13 +109,11 @@ function RecipesPage() {
           <NavBar
             mode="recipes"
             _id={_id}
-            users={[]}
             isAdmin={isAdmin}
-            recipes={recipes}
             email={email}
             name={name}
             Logout={() => manageLogout()}
-            submitInput={(result) => setDisplayRecipes([result])}
+            submitInput={(result) => setDisplayRecipes([result] as Recipe[])}
           />
         </GridItem>
         <Show above="lg">
@@ -141,8 +140,9 @@ function RecipesPage() {
           </Heading>
           <RecipesGrid
             isAdmin={isAdmin}
+            mode="user"
             name={name}
-            recipes={displayRecipes}
+            recipes={displayRecipes as Recipe[]}
             error={error}
             isLoading={isLoading}
             selectAuthor={(author) => {
@@ -164,9 +164,8 @@ function RecipesPage() {
           });
         }}
         page={page}
-        displayRecipes={displayRecipes}
-        totalRecipesCount={totalRecipesCount}
-        displayedRecipesCount={recipes?.length}
+        totalCardsCount={totalRecipesCount}
+        displayedCardsCount={displayRecipes.length}
       />
       <Toaster position="bottom-center" />
     </Box>
