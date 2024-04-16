@@ -92,7 +92,7 @@ const theme = extendTheme({
             boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.2)",
             border: "2px solid",
             borderColor: "thirdColor",
-            bg: "secondColor",
+            bg: "cardColor",
             color: "thirdColor",
             _hover: {
               borderColor: "accent",

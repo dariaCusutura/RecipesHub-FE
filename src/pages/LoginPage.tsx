@@ -1,7 +1,7 @@
 import {
-  AbsoluteCenter,
   Box,
   Button,
+  Center,
   Container,
   FormControl,
   Heading,
@@ -18,6 +18,7 @@ import axios, { AxiosResponse } from "axios";
 import { useCookies } from "react-cookie";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
+import pattern from "../components/pattern.svg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,16 +47,24 @@ const Login = () => {
   const color = theme.colors.thirdColor;
 
   return (
-    <Box position="relative" h="400px" bgColor={"background"}>
-      <AbsoluteCenter axis="both">
+    <Box
+      bgImage={`url(${pattern})`} 
+      bgSize="cover"
+      bgPosition="center"
+      h="100vh"
+      w="100vw"
+      m={0}
+      p={0}
+    >
+      <Center>
         <Container
+          marginTop="20vh"
           paddingBlock={4}
-          borderRadius="4px"
-          bg={"#202020"}
-          maxW="2xl"
+          borderRadius="8px"
           centerContent={true}
-          bgColor={"secondColor"}
+          bgColor={"cardColor"}
           style={{ boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.5)" }}
+          maxW="300px"
         >
           <Heading size="lg" marginBottom={5} color={"accent"}>
             Login
@@ -110,7 +119,7 @@ const Login = () => {
             </Link>
           </Text>
         </Container>
-      </AbsoluteCenter>
+      </Center>
     </Box>
   );
 };

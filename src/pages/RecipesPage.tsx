@@ -11,6 +11,7 @@ import Aside from "../components/Aside";
 import useUserData from "../hooks/useUserData";
 import Pagination from "../components/Pagination";
 import { User } from "../hooks/useUsers";
+import pattern from "../components/pattern.svg";
 
 export interface RecipesQuery {
   category: string;
@@ -94,7 +95,13 @@ function RecipesPage() {
   ];
 
   return (
-    <Box bg="background">
+    <Box bgImage={`url(${pattern})`}
+    bgSize="cover"
+    bgPosition="center"
+    h="100vh"
+    w="100vw"
+    m={0}
+    p={0} >
       <Grid
         templateAreas={{
           base: `"nav" "main"`,
