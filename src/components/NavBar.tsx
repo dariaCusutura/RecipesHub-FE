@@ -1,9 +1,9 @@
-import { HStack, Image } from "@chakra-ui/react";
-import logo from "./logo.png";
+import {  HStack, useBreakpointValue } from "@chakra-ui/react";
 import SearchBar from "./SearchBar";
 import MyAccountMenu from "./MyAccountMenu";
 import { Recipe } from "../hooks/useRecipes";
 import { User } from "../hooks/useUsers";
+import Logo from "./Logo";
 
 interface Props {
   Logout: () => void;
@@ -24,9 +24,10 @@ const NavBar = ({
   mode,
   _id,
 }: Props) => {
+  const isLogoVisible = useBreakpointValue({ base: false, lg: true });
   return (
     <HStack justifyContent="space-between" padding="5px">
-      <Image src={logo} boxSize="60px" />
+      {isLogoVisible && <Logo size="" />}
       <SearchBar submitInput={(result) => submitInput(result)} mode={mode} />
       <MyAccountMenu
         logout={Logout}

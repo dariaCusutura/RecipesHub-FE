@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Heading, Show } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Show, useBreakpointValue } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 import RecipesGrid from "../components/RecipesGrid";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ export interface RecipesQuery {
 
 function RecipesPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies([]);
+  const [cookie,, removeCookie] = useCookies([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -93,6 +93,9 @@ function RecipesPage() {
     "Chicken",
     "Potatoes",
   ];
+  const navItemWidth = useBreakpointValue({ base: "100%", lg: "100%" });
+  const mainTemplate = useBreakpointValue({ base: `"nav" "main"`, lg: `"nav nav" "aside main"` });
+  const asideDisplay = useBreakpointValue({ base: "none", lg: "block" });
 
   return (
     <Box
@@ -110,16 +113,13 @@ function RecipesPage() {
       overflowY="auto"
     >
       <Grid
-        templateAreas={{
-          base: `"nav" "main"`,
-          lg: `"nav nav" "aside main"`,
-        }}
+        templateAreas={mainTemplate}
         templateColumns={{
           base: "1fr",
           lg: "200px 1fr",
         }}
       >
-        <GridItem area="nav">
+        <GridItem area="nav" width={navItemWidth}>
           <NavBar
             mode="recipes"
             _id={_id}

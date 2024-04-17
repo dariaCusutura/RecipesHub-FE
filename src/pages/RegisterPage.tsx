@@ -28,7 +28,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies([]);
+  const [cookie,, removeCookie] = useCookies([]);
   if (cookie.jwt) removeCookie("jwt");
   const handleSubmit = async () => {
     await axios
@@ -44,7 +44,7 @@ const Register = () => {
       })
       .then((res) => {
         if (res !== undefined && (res as AxiosResponse).status === 200)
-          navigate("/");
+          navigate("/userPage");
       });
   };
   const theme = useTheme();

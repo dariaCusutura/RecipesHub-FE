@@ -26,7 +26,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies([]);
+  const [cookie,, removeCookie] = useCookies([]);
   if (cookie.jwt) removeCookie("jwt");
   const handleSubmit = async () => {
     await axios
@@ -39,7 +39,7 @@ const Login = () => {
       .then((res) => {
         if (res !== undefined && (res as AxiosResponse).status === 200) {
           if ((res as AxiosResponse).data.isAdmin === true) navigate("/admin");
-          else navigate("/");
+          else navigate("/userPage");
         }
       });
   };

@@ -29,7 +29,7 @@ const MyAccountMenu = ({ logout, email, name, isAdmin, _id }: Props) => {
         variant="primary"
         as={Button}
         leftIcon={<VscAccount size={25} />}
-        px={8}
+        paddingRight={"55px"}
         paddingStart={2}
         marginEnd={4}
       >
@@ -40,7 +40,7 @@ const MyAccountMenu = ({ logout, email, name, isAdmin, _id }: Props) => {
         <MenuGroup title={email} fontSize={17} color={"background"} />
         <MenuDivider />
         <ManageAccount name={name} email={email} _id={_id} />
-        <MenuItem id="logout" paddingLeft={4} onClick={logout} >
+        <MenuItem id="logout" paddingLeft={4} onClick={logout}>
           <HStack spacing={1}>
             <MdLogout size={19} />
             <Text color={"background"}>Log Out</Text>
