@@ -1,4 +1,11 @@
-import { Box, Grid, GridItem, Heading, Show, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  Heading,
+  Show,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 import RecipesGrid from "../components/RecipesGrid";
 import { useEffect, useState } from "react";
@@ -22,7 +29,7 @@ export interface RecipesQuery {
 
 function RecipesPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookie,, removeCookie] = useCookies([]);
+  const [cookie, , removeCookie] = useCookies([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -94,7 +101,10 @@ function RecipesPage() {
     "Potatoes",
   ];
   const navItemWidth = useBreakpointValue({ base: "100%", lg: "100%" });
-  const mainTemplate = useBreakpointValue({ base: `"nav" "main"`, lg: `"nav nav" "aside main"` });
+  const mainTemplate = useBreakpointValue({
+    base: `"nav" "main"`,
+    lg: `"nav nav" "aside main"`,
+  });
   const asideDisplay = useBreakpointValue({ base: "none", lg: "block" });
 
   return (
@@ -131,7 +141,7 @@ function RecipesPage() {
           />
         </GridItem>
         <Show above="lg">
-          <GridItem area="aside" marginY={5}>
+          <GridItem area="aside" display={asideDisplay}>
             <Aside
               setPage={(page) => setPage(page)}
               setPath={(path) => setPath(path)}
@@ -148,7 +158,7 @@ function RecipesPage() {
             />
           </GridItem>
         </Show>
-        <GridItem area="main">
+        <GridItem area="main" marginLeft={{base: "10px"}}>
           <Heading marginY={3} color={"thirdColor"}>
             {heading}
           </Heading>

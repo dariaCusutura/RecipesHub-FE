@@ -10,6 +10,8 @@ import {
   Image,
   Text,
   Tooltip,
+  VStack,
+  useBreakpointValue,
   useTheme,
 } from "@chakra-ui/react";
 import img from "./NoImg.jpg";
@@ -42,13 +44,19 @@ const RecipeCard = React.memo(
   }: Props) => {
     const theme = useTheme();
     const color = theme.colors.thirdColor;
+    const isLargeScreen = useBreakpointValue({ base: false, lg: true });
 
     return (
-      <Card padding="10px" borderRadius={10} direction="row" overflow="hidden">
+      <Card
+        padding={{ base: "5px", lg: "10px" }}
+        borderRadius={10}
+        direction="row"
+        overflow="hidden"
+      >
         <Image
           borderRadius={10}
           src={recipe.image ? recipe.image : img}
-          boxSize="170px"
+          boxSize={{ base: "120px", lg: "170px" }}
           htmlWidth="100%"
           htmlHeight="100%"
           objectFit="cover"
@@ -57,23 +65,45 @@ const RecipeCard = React.memo(
           <Flex justifyContent="space-between" alignItems="center">
             <Box>
               <Heading color={"accent"}>{recipe.name}</Heading>
-              <HStack>
-                <PostDate recipe={recipe} />
-                <BsDot color={color} />
-                <Button
-                  color="thirdColor"
-                  variant={"link"}
-                  fontSize={15}
-                  onClick={() => selectAuthor(recipe.author)}
-                  isDisabled={mode === "admin"}
-                  _disabled={{
-                    opacity: "1",
-                    cursor: "not-allowed",
-                  }}
-                >
-                  {recipe.author === name ? "by you" : `by  ${recipe.author}`}
-                </Button>
-              </HStack>
+              {isLargeScreen ? (
+                // Render HStack for large screens
+                <HStack>
+                  <PostDate recipe={recipe} />
+                  <BsDot color={color} />
+                  <Button
+                    color="thirdColor"
+                    variant={"link"}
+                    fontSize={15}
+                    onClick={() => selectAuthor(recipe.author)}
+                    isDisabled={mode === "admin"}
+                    _disabled={{
+                      opacity: "1",
+                      cursor: "not-allowed",
+                    }}
+                  >
+                    {recipe.author === name ? "by you" : `by  ${recipe.author}`}
+                  </Button>
+                </HStack>
+              ) : (
+                // Render VStack for base screens
+                <VStack alignItems="start">
+                  <PostDate recipe={recipe} />
+                  <Button
+                    marginBottom={1}
+                    color="thirdColor"
+                    variant={"link"}
+                    fontSize={15}
+                    onClick={() => selectAuthor(recipe.author)}
+                    isDisabled={mode === "admin"}
+                    _disabled={{
+                      opacity: "1",
+                      cursor: "not-allowed",
+                    }}
+                  >
+                    {recipe.author === name ? "by you" : `by  ${recipe.author}`}
+                  </Button>
+                </VStack>
+              )}
             </Box>
             <Box
               display="flex"
