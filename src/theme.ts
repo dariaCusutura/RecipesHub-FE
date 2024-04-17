@@ -13,7 +13,7 @@ const theme = extendTheme({
     thirdColor: "#e3b587",
     forthColor: "#c98c70",
     accent: "#D4974A",
-    darkest: "#142E4B"
+    darkest: "#142E4B",
   },
   components: {
     Button: {
@@ -80,7 +80,7 @@ const theme = extendTheme({
             _hover: {
               borderColor: "accent",
               boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.5)",
-              transition: "0.7s"
+              transition: "0.7s",
             },
           },
         },
@@ -97,7 +97,7 @@ const theme = extendTheme({
             _hover: {
               borderColor: "accent",
               boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.5)",
-              transition: "0.7s"
+              transition: "0.7s",
             },
           },
         },
@@ -117,13 +117,29 @@ const theme = extendTheme({
     Text: {
       baseStyle: {
         color: "thirdColor",
-      }
+      },
     },
     Tooltip: {
       baseStyle: {
         bg: "thirdColor",
-        color: "background"
-      }
+        color: "background",
+      },
+    },
+    Tabs: {
+      baseStyle: {
+        tab: {
+          boxShadow: "5px 12px 12px 0 rgba(0,0,0,0.1)",
+        },
+      },
+    },
+    Divider: {
+      variants: {
+        primary: {
+          borderWidth: "15px",
+          borderStyle: "solid",
+          borderColor: "thirdColor",
+        },
+      },
     },
   },
 });

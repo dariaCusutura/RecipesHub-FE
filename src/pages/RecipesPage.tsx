@@ -95,13 +95,20 @@ function RecipesPage() {
   ];
 
   return (
-    <Box bgImage={`url(${pattern})`}
-    bgSize="cover"
-    bgPosition="center"
-    h="100vh"
-    w="100vw"
-    m={0}
-    p={0} >
+    <Box
+      bgImage={`url(${pattern})`}
+      bgSize="cover"
+      bgPosition="center"
+      bgAttachment="fixed"
+      position="fixed"
+      top={0}
+      left={0}
+      h="100vh"
+      w="100vw"
+      m={0}
+      p={0}
+      overflowY="auto"
+    >
       <Grid
         templateAreas={{
           base: `"nav" "main"`,

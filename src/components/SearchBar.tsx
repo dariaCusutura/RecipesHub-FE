@@ -26,7 +26,7 @@ const SearchBar = ({ submitInput, mode }: Props) => {
   const resultsBoxRef = useRef(null);
 
   useEffect(() => {
-    mode === "recipes" && input !== ""
+    mode !== "users"
       ? axios
           .get(`http://localhost:3000/recipes/search?search=${input}`)
           .then((res) => {
@@ -67,6 +67,13 @@ const SearchBar = ({ submitInput, mode }: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    setInput("");
+    setResults([]);
+    inputRef.current.value = "";
+    inputRef.current.focus();
+  }, [mode]);
+
   return (
     <Box position={"relative"} width={"100%"}>
       <InputGroup>
@@ -82,9 +89,7 @@ const SearchBar = ({ submitInput, mode }: Props) => {
         <Input
           width={"100%"}
           id="SearchRecipe"
-          placeholder={
-            mode === "recipes" ? "Search recipe..." : "Search user..."
-          }
+          placeholder={mode !== "users" ? "Search recipe..." : "Search user..."}
           onChange={(e) => setInput(e.target.value)}
           ref={inputRef}
         />
@@ -114,8 +119,11 @@ const SearchBar = ({ submitInput, mode }: Props) => {
                 }}
               >
                 <CardBody>
-                  <Heading fontSize={19}>{result.name}</Heading>
+                  <Heading fontSize={19} color={"accent"}>
+                    {result.name}
+                  </Heading>
                   {mode === "users" && <Text>{result.email}</Text>}
+                  {mode === "recipesAdmin" && <Text>by {result.author}</Text>}
                 </CardBody>
               </Card>
             ))}

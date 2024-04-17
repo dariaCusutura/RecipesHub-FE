@@ -52,11 +52,11 @@ const PostDate = ({ recipe }: Props) => {
         Math.floor(interval) === 1 ? "hour ago" : "hours ago"
       }`;
     }
-    //x months ago
+    //x minutes ago
     interval = seconds / 60;
     if (interval > 1) {
       return `${Math.floor(interval)} ${
-        Math.floor(interval) === 1 ? "month ago" : "months ago"
+        Math.floor(interval) === 1 ? "minute ago" : "minutes ago"
       }`;
     }
     //x seconds ago

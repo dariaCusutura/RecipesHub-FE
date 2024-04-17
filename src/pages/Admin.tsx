@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   Flex,
   Grid,
   GridItem,
@@ -23,6 +24,7 @@ import RecipesGrid from "../components/RecipesGrid";
 import { Toaster } from "react-hot-toast";
 import useUsers, { User } from "../hooks/useUsers";
 import UserCard from "../components/UserCard";
+import pattern from "../components/pattern.svg";
 
 const Admin = () => {
   const [cookie, , removeCookie] = useCookies([]);
@@ -73,7 +75,20 @@ const Admin = () => {
   }, [users, totalUsersCount]);
 
   return (
-    <Box bg="background">
+    <Box
+      bgImage={`url(${pattern})`}
+      bgSize="cover"
+      bgPosition="center"
+      bgAttachment="fixed"
+      position="fixed"
+      top={0}
+      left={0}
+      h="100vh"
+      w="100vw"
+      m={0}
+      p={0}
+      overflowY="auto"
+    >
       <Grid
         templateAreas={{
           base: `"nav" "main"`,
@@ -93,7 +108,7 @@ const Admin = () => {
             name={name}
             Logout={() => manageLogout()}
             submitInput={(result) =>
-              mode === "recipes"
+              mode !== "users"
                 ? setDisplayRecipes([result] as Recipe[])
                 : setDisplayUsers([result] as User[])
             }
@@ -104,6 +119,19 @@ const Admin = () => {
             <Tabs isFitted>
               <TabList mb="1em">
                 <Tab
+                  _hover={{
+                    color: "accent",
+                    boxShadow: "5px 12px 12px 0 rgba(0,0,0,0.3)",
+                    transition: "0.7s",
+                  }}
+                  _selected={{
+                    color: "accent",
+                    boxShadow: "5px 12px 12px 0 rgba(0,0,0,0.3)",
+                    transition: "0.7s",
+                  }}
+                  bgColor={"background"}
+                  fontSize={25}
+                  color={"thirdColor"}
                   onClick={() => {
                     setMode("users");
                     setDisplayUsers(users);
@@ -111,10 +139,24 @@ const Admin = () => {
                 >
                   Manage Users
                 </Tab>
+                <Divider orientation="vertical" variant={"primary"} />
                 <Tab
+                  _hover={{
+                    color: "accent",
+                    boxShadow: "5px 12px 12px 0 rgba(0,0,0,0.3)",
+                    transition: "0.7s",
+                  }}
+                  _selected={{
+                    color: "accent",
+                    boxShadow: "5px 12px 12px 0 rgba(0,0,0,0.3)",
+                    transition: "0.7s",
+                  }}
+                  bgColor={"background"}
+                  fontSize={25}
+                  color={"thirdColor"}
                   width={800}
                   onClick={() => {
-                    setMode("recipes");
+                    setMode("recipesAdmin");
                     setDisplayRecipes(recipes);
                   }}
                 >
