@@ -19,6 +19,7 @@ import { useCookies } from "react-cookie";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import pattern from "../components/pattern.svg";
+import Logo from "../components/Logo";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -56,9 +57,10 @@ const Login = () => {
       m={0}
       p={0}
     >
+      <Logo size="" onClick={() => navigate("/welcome")}/>
       <Center>
         <Container
-          marginTop="20vh"
+          marginTop="5vh"
           paddingBlock={4}
           borderRadius="8px"
           centerContent={true}

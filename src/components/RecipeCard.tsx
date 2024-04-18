@@ -56,7 +56,7 @@ const RecipeCard = React.memo(
         <Image
           borderRadius={10}
           src={recipe.image ? recipe.image : img}
-          boxSize={{ base: "120px", lg: "170px" }}
+          boxSize={{ md: "150px", lg: "170px", base: "120px" }}
           htmlWidth="100%"
           htmlHeight="100%"
           objectFit="cover"
@@ -64,7 +64,12 @@ const RecipeCard = React.memo(
         <CardBody marginBlock={-5}>
           <Flex justifyContent="space-between" alignItems="center">
             <Box>
-              <Heading color={"accent"}>{recipe.name}</Heading>
+              <Heading
+                color={"accent"}
+                fontSize={{ lg: "4xl", md: "3xl", base: "lg" }}
+              >
+                {recipe.name}
+              </Heading>
               {isLargeScreen ? (
                 // Render HStack for large screens
                 <HStack>

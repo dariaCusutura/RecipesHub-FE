@@ -1,5 +1,6 @@
 import {
   Box,
+  Flex,
   Grid,
   GridItem,
   Heading,
@@ -100,12 +101,12 @@ function RecipesPage() {
     "Chicken",
     "Potatoes",
   ];
-  const navItemWidth = useBreakpointValue({ base: "100%", lg: "100%" });
   const mainTemplate = useBreakpointValue({
     base: `"nav" "main"`,
     lg: `"nav nav" "aside main"`,
   });
   const asideDisplay = useBreakpointValue({ base: "none", lg: "block" });
+  const isSmall = useBreakpointValue({ base: true, lg: false });
 
   return (
     <Box
@@ -129,16 +130,42 @@ function RecipesPage() {
           lg: "200px 1fr",
         }}
       >
-        <GridItem area="nav" width={navItemWidth}>
-          <NavBar
-            mode="recipes"
-            _id={_id}
-            isAdmin={isAdmin}
-            email={email}
-            name={name}
-            Logout={() => manageLogout()}
-            submitInput={(result) => setDisplayRecipes([result] as Recipe[])}
-          />
+        <GridItem area="nav" width={"100%"}>
+          <Flex
+            width={"100%"}
+            marginLeft={{ lg: 1, md: -3, base: -4 }}
+            padding={{ base: "10px", lg: 0 }}
+          >
+            {isSmall && (
+              <Aside
+                isSmall={isSmall}
+                setPage={(page) => setPage(page)}
+                setPath={(path) => setPath(path)}
+                setHeading={(heading) => setHeading(heading)}
+                setDisplayRecipes={() => setDisplayRecipes(recipes)}
+                setRecipesQuery={(query) => setRecipesQuery(query)}
+                handleSelectIngredientsChange={(ingredient) =>
+                  handleSelectIngredientsChange(ingredient)
+                }
+                recipesQuery={recipesQuery}
+                ingredients={ingredients}
+                name={name}
+                selectedIngredients={selectedIngredients}
+              />
+            )}
+            <NavBar
+              mode="recipes"
+              _id={_id}
+              isAdmin={isAdmin}
+              email={email}
+              name={name}
+              Logout={() => manageLogout()}
+              submitInput={(result) => {
+                setDisplayRecipes([result] as Recipe[]);
+                setPage(0);
+              }}
+            />
+          </Flex>
         </GridItem>
         <Show above="lg">
           <GridItem area="aside" display={asideDisplay}>
@@ -155,10 +182,11 @@ function RecipesPage() {
               ingredients={ingredients}
               name={name}
               selectedIngredients={selectedIngredients}
+              isSmall={false}
             />
           </GridItem>
         </Show>
-        <GridItem area="main" marginLeft={{base: "10px"}}>
+        <GridItem area="main" marginLeft={{ base: "10px" }}>
           <Heading marginY={3} color={"thirdColor"}>
             {heading}
           </Heading>

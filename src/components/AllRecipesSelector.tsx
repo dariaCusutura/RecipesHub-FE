@@ -1,21 +1,33 @@
-import { Button } from "@chakra-ui/react";
+import { Button, MenuItem } from "@chakra-ui/react";
 import { IoHomeOutline } from "react-icons/io5";
 
 interface Props {
   onSelectAll: () => void;
+  isSmall: boolean;
 }
 
-const AllRecipesSelector = ({ onSelectAll }: Props) => {
+const AllRecipesSelector = ({ onSelectAll, isSmall }: Props) => {
   return (
-    <Button
-      variant="primary"
-      width={160}
-      justifyContent={"left"}
-      leftIcon={<IoHomeOutline size={19} />}
-      onClick={() => onSelectAll()}
-    >
-      All recipes
-    </Button>
+    <>
+      {isSmall ? (
+        <MenuItem
+          onClick={() => onSelectAll()}
+          icon={<IoHomeOutline size={19} />}
+        >
+          All recipes
+        </MenuItem>
+      ) : (
+        <Button
+          variant="primary"
+          width={160}
+          justifyContent={"left"}
+          leftIcon={<IoHomeOutline size={19} />}
+          onClick={() => onSelectAll()}
+        >
+          All recipes
+        </Button>
+      )}
+    </>
   );
 };
 

@@ -24,6 +24,7 @@ const theme = extendTheme({
           // border: "1.5px solid",
           // borderColor: "black",
           color: "background",
+          opacity: "0.95",
           _hover: {
             bg: "accent",
             boxShadow: "5px 12px 12px 0 rgba(0,0,0,0.3)",
@@ -76,6 +77,7 @@ const theme = extendTheme({
             border: "2px solid",
             borderColor: "thirdColor",
             bg: "background",
+            opacity: "0.95",
             color: "thirdColor",
             _hover: {
               borderColor: "accent",
@@ -110,6 +112,7 @@ const theme = extendTheme({
       baseStyle: {
         container: {
           bg: "cardColor",
+          opacity: "0.97",
           boxShadow: "5px 5px 12px 0 rgba(0,0,0,0.5)",
         },
       },
@@ -137,7 +140,7 @@ const theme = extendTheme({
         primary: {
           borderWidth: "15px",
           borderStyle: "solid",
-          borderColor: "thirdColor",
+          borderColor: "background",
         },
       },
     },

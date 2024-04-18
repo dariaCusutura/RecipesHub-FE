@@ -32,13 +32,13 @@ const SearchBar = ({ submitInput, mode }: Props) => {
           .then((res) => {
             setResults(res.data);
           })
-          .catch((err) => console.log(err))
+          .catch((err) => console.log(err.response.data))
       : axios
           .get(`http://localhost:3000/users/search?search=${input}`)
           .then((res) => {
             setResults(res.data);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(err.response.data));
     if (input.length === 0) setResults([]);
   }, [input, mode]);
 
@@ -119,7 +119,7 @@ const SearchBar = ({ submitInput, mode }: Props) => {
                 }}
               >
                 <CardBody>
-                  <Heading fontSize={19} color={"accent"}>
+                  <Heading fontSize={19} color={"thirdColor"}>
                     {result.name}
                   </Heading>
                   {mode === "users" && <Text>{result.email}</Text>}

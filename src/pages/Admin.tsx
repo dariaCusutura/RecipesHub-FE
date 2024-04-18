@@ -117,7 +117,7 @@ const Admin = () => {
         <GridItem area="main">
           <Flex justifyContent={"space-around"}>
             <Tabs isFitted>
-              <TabList mb="1em">
+              <TabList>
                 <Tab
                   _hover={{
                     color: "accent",
@@ -129,7 +129,8 @@ const Admin = () => {
                     boxShadow: "5px 12px 12px 0 rgba(0,0,0,0.3)",
                     transition: "0.7s",
                   }}
-                  bgColor={"background"}
+                  bgColor={"cardColor"}
+                  borderRadius={5}
                   fontSize={25}
                   color={"thirdColor"}
                   onClick={() => {
@@ -151,7 +152,8 @@ const Admin = () => {
                     boxShadow: "5px 12px 12px 0 rgba(0,0,0,0.3)",
                     transition: "0.7s",
                   }}
-                  bgColor={"background"}
+                  bgColor={"cardColor"}
+                  borderRadius={5}
                   fontSize={25}
                   color={"thirdColor"}
                   width={800}

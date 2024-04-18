@@ -18,7 +18,11 @@ const RecipeMenuButton = ({ recipe }: Props) => {
         <MenuButton marginBottom={1} borderRadius="9999px" alignSelf="center">
           <HiOutlineDotsHorizontal size={25} color={color} />
         </MenuButton>
-        <MenuList marginTop={-2} marginRight={-2}>
+        <MenuList
+          marginTop={-2}
+          marginRight={-2}
+          width={{ base: "150px", lg: "250px", md: "200px" }}
+        >
           <AddEditRecipe recipe={recipe} name="" mode="edit" />
           <DeleteButton
             recipe={recipe}

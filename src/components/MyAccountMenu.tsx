@@ -29,9 +29,9 @@ const MyAccountMenu = ({ logout, email, name, isAdmin, _id }: Props) => {
         variant="primary"
         as={Button}
         leftIcon={<VscAccount size={25} />}
-        paddingRight={"55px"}
+        paddingRight={{ lg: "53px", md: "35px", base: "65px" }}
         paddingStart={2}
-        marginEnd={4}
+        marginEnd={{ lg: 4, md: -2.5, base: -4 }}
       >
         {isAdmin === true ? "Admin Account" : "My Account"}
       </MenuButton>

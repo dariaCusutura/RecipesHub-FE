@@ -1,6 +1,5 @@
 import {
   Avatar,
-  AvatarGroup,
   Box,
   Button,
   Center,
@@ -29,7 +28,7 @@ const WelcomePage = () => {
   const theme = useTheme();
   const color = theme.colors.background;
   const marginBottom = useBreakpointValue({ base: 4, sm: 8, md: 12 });
-  const size= useBreakpointValue({ base: "60px", sm: "30px", md: "60px" });
+  const size = useBreakpointValue({ base: "45px", md: "60px", lg: "60px" });
 
   return (
     <Box
@@ -70,78 +69,82 @@ const WelcomePage = () => {
             area={"main"}
             marginTop={15}
             bgColor={"background"}
-            maxW="85%"
-            maxH="110%"
+            opacity={0.95}
             marginBottom={marginBottom}
+            placeItems="center"
+            width="100%"
           >
             <VStack spacing={6}>
               <Heading
                 textAlign="center"
                 bgColor={"background"}
-                fontSize={"40px"}
+                fontSize={{ lg: "40px", md: "40px", base: "35px" }}
               >
                 Welcome to
               </Heading>
-              <Logo size={size} />
+              <Logo size={size} onClick={() => {}} />
               <Heading
                 textAlign="center"
                 bgColor={"background"}
-                fontSize={"40px"}
+                fontSize={{ lg: "40px", md: "40px", base: "35px" }}
               >
                 Discover a world of delicious recipes <br /> and join our
                 vibrant community of food enthusiasts
               </Heading>
             </VStack>
-            <AvatarGroup
-              marginTop={50}
-              spacing="15rem"
-              bgColor={"background"}
+            <HStack
+              spacing={{ lg: "12rem", md: "10rem", base: "2rem" }}
               justifyContent={"center"}
+              marginTop={"5rem"}
             >
-              <Avatar
-                bg={"thirdColor"}
-                icon={<IoSearchOutline size={"2em"} color={color} />}
-                boxSize="4em"
-                _hover={{
-                  bg: "accent",
-                  transition: "0.9s",
-                }}
-              />
-              <Avatar
-                bg={"thirdColor"}
-                icon={<FaBowlFood size={"2em"} color={color} />}
-                boxSize="4em"
-                _hover={{
+              <VStack>
+                <Avatar
+                  bg={"thirdColor"}
+                  icon={<IoSearchOutline size={"2em"} color={color} />}
+                  boxSize="4em"
+                  _hover={{
                     bg: "accent",
                     transition: "0.9s",
                   }}
-              />
-              <Avatar
-                bg={"thirdColor"}
-                icon={<FaUserFriends size={"2em"} color={color} />}
-                boxSize="4em"
-                _hover={{
+                />
+                <Heading fontSize={{ lg: 25, md: 25, base: 20 }}>
+                  <Text textAlign="center">Search new</Text>
+                  <Text textAlign="center">recipes</Text>
+                  <br />
+                </Heading>
+              </VStack>
+              <VStack>
+                <Avatar
+                  bg={"thirdColor"}
+                  icon={<FaBowlFood size={"2em"} color={color} />}
+                  boxSize="4em"
+                  _hover={{
                     bg: "accent",
                     transition: "0.9s",
                   }}
-              />
-            </AvatarGroup>
-            <HStack spacing={"12rem"} justifyContent={"center"} marginTop={5}>
-              <Heading fontSize={25}>
-                <Text textAlign="center">Search new</Text>
-                <Text textAlign="center">recipes</Text>
-                <br />
-              </Heading>
-              <Heading fontSize={25}>
-                <Text textAlign="center">Post your</Text>
-                <Text textAlign="center">favorite</Text>
-                <Text textAlign="center">recipes</Text>
-              </Heading>
-              <Heading fontSize={25}>
-                <Text textAlign="center">Get inspired</Text>
-                <Text textAlign="center">by the</Text>
-                <Text textAlign="center">community</Text>
-              </Heading>
+                />
+                <Heading fontSize={{ lg: 25, md: 25, base: 20 }}>
+                  <Text textAlign="center">Post your</Text>
+                  <Text textAlign="center">favorite</Text>
+                  <Text textAlign="center">recipes</Text>
+                </Heading>
+              </VStack>
+              <VStack>
+                <Avatar
+                  bg={"thirdColor"}
+                  icon={<FaUserFriends size={"2em"} color={color} />}
+                  boxSize="4em"
+                  _hover={{
+                    bg: "accent",
+                    transition: "0.9s",
+                  }}
+                />
+                <Heading fontSize={{ lg: 25, md: 25, base: 20 }}>
+                  <Text textAlign="center">Get inspired</Text>
+                  <Text textAlign="center">by the</Text>
+                  <Text textAlign="center">community</Text>
+                </Heading>
+              </VStack>
             </HStack>
           </GridItem>
         </Center>

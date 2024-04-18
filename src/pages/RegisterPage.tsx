@@ -20,6 +20,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 import { RiLockPasswordLine } from "react-icons/ri";
 import pattern from "../components/pattern.svg";
+import Logo from "../components/Logo";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -60,9 +61,10 @@ const Register = () => {
       m={0}
       p={0}
     >
+      <Logo size="" onClick={() => navigate("/welcome")}/>
       <Center>
         <Container
-          marginTop="20vh"
+          marginTop="5vh"
           paddingBlock={4}
           borderRadius="8px"
           centerContent={true}
