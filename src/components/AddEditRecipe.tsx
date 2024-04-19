@@ -28,9 +28,10 @@ interface Props {
   name: string;
   mode: string;
   recipe: Recipe;
+  isSmall: boolean;
 }
 
-const AddEditRecipe = ({ name, mode, recipe }: Props) => {
+const AddEditRecipe = ({ name, mode, recipe, isSmall }: Props) => {
   const [recipeName, setRecipeName] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [imageAddress, setImageAddress] = useState("");
@@ -99,6 +100,7 @@ const AddEditRecipe = ({ name, mode, recipe }: Props) => {
           width={160}
           justifyContent={"left"}
           leftIcon={<LuPlusSquare size={19} />}
+          boxShadow={isSmall && 0}
         >
           Add recipe
         </Button>

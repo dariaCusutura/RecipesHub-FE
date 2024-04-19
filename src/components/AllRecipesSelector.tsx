@@ -11,6 +11,7 @@ const AllRecipesSelector = ({ onSelectAll, isSmall }: Props) => {
     <>
       {isSmall ? (
         <MenuItem
+          width={160}
           onClick={() => onSelectAll()}
           icon={<IoHomeOutline size={19} />}
         >

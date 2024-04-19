@@ -10,7 +10,11 @@ const FavouritesSelector = ({ manageClick, isSmall }: Props) => {
   return (
     <>
       {isSmall ? (
-        <MenuItem onClick={() => manageClick()} icon={<FaRegHeart size={19} />}>
+        <MenuItem
+          width={160}
+          onClick={() => manageClick()}
+          icon={<FaRegHeart size={19} />}
+        >
           Favorites
         </MenuItem>
       ) : (

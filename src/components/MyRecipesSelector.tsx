@@ -11,6 +11,7 @@ const MyRecipesSelector = ({ selectMyRecipes, isSmall }: Props) => {
     <>
       {isSmall ? (
         <MenuItem
+          width={160}
           onClick={() => selectMyRecipes()}
           icon={<VscAccount size={19} />}
         >

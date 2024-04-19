@@ -187,7 +187,7 @@ function RecipesPage() {
           </GridItem>
         </Show>
         <GridItem area="main" marginLeft={{ base: "10px" }}>
-          <Heading marginY={3} color={"thirdColor"}>
+          <Heading color={"thirdColor"} fontSize={{lg: "4xl", md: "3xl", base: "2xl"}}>
             {heading}
           </Heading>
           <RecipesGrid
