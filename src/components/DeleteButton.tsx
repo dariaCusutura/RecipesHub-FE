@@ -23,7 +23,6 @@ interface Props {
   deleteMyAccount: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DeleteButton = ({ recipe, mode, user, deleteMyAccount }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [, , removeCookie] = useCookies([]);
@@ -37,8 +36,13 @@ const DeleteButton = ({ recipe, mode, user, deleteMyAccount }: Props) => {
 
   const manageDeleteRecipe = async () => {
     onClose();
+    const url =
+      mode === "recipe"
+        ? `http://localhost:3000/recipes/${recipe._id}`
+        : `http://localhost:3000/users/${user._id}`;
+
     await axios
-      .delete(`http://localhost:3000/${mode}s/${eval(mode)._id}`, {
+      .delete(url, {
         withCredentials: true,
       })
       .catch((err) => {
