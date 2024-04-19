@@ -23,7 +23,7 @@ const RecipeMenuButton = ({ recipe }: Props) => {
           marginRight={-2}
           width={{ base: "150px", lg: "250px", md: "200px" }}
         >
-          <AddEditRecipe recipe={recipe} name="" mode="edit" />
+          <AddEditRecipe recipe={recipe} name="" mode="edit" isSmall={false} />
           <DeleteButton
             recipe={recipe}
             mode="recipe"

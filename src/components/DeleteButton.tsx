@@ -77,7 +77,11 @@ const DeleteButton = ({ recipe, mode, user, deleteMyAccount }: Props) => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogBody fontSize={20} borderRadius={3} color={"thirdColor"}>
+            <AlertDialogBody
+              fontSize={20}
+              borderRadius={3}
+              color={"thirdColor"}
+            >
               Are you sure you want to delete{" "}
               {deleteMyAccount ? "your account" : `this ${mode}`}?
             </AlertDialogBody>
